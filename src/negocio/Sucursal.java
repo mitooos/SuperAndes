@@ -1,6 +1,6 @@
 package negocio;
 
-public class Sede {
+public class Sucursal {
 
 	private Long id;
 	
@@ -15,7 +15,7 @@ public class Sede {
 	/**
 	 * Constructor por defecto
 	 */
-	public Sede() {
+	public Sucursal() {
 		this.id=0L;
 		this.nombre="";
 		this.ciudad="";
@@ -26,7 +26,7 @@ public class Sede {
 	/**
 	 * Constructor con valores
 	 */
-	public Sede(Long id0, String nombre0, String ciudad0, String direccion0, String segmentoMercado0) {
+	public Sucursal(Long id0, String nombre0, String ciudad0, String direccion0, String segmentoMercado0) {
 		
 		this.id = id0;
 		this.nombre = nombre0;
