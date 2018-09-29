@@ -10,6 +10,8 @@ public class Almacenamiento {
 	
 	private String categoria;
 	
+	private Integer cantidadProdcuto;
+
 	private Long idSucursal;
 	
 
@@ -34,7 +36,6 @@ public class Almacenamiento {
 		this.categoria = categoria0;
 		this.idSucursal = idSucursal0;
 	}
-	
 	
 	public Long getId() {
 		return id;
@@ -75,6 +76,16 @@ public class Almacenamiento {
 	public void setIdSucursal(Long idSucursal) {
 		this.idSucursal = idSucursal;
 	}
+	
+	
+	public Integer getCantidadProdcuto() {
+		return cantidadProdcuto;
+	}
+
+	public void setCantidadProdcuto(Integer cantidadProdcuto) {
+		this.cantidadProdcuto = cantidadProdcuto;
+	}
+
 
 
 
