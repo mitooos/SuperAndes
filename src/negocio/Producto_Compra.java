@@ -28,4 +28,29 @@ public class Producto_Compra {
 		this.idProducto = idProducto0;
 		this.cantidad = cantidad0;
 	}
+	
+	public Long getIdCompra() {
+		return idCompra;
+	}
+
+	public void setIdCompra(Long idCompra) {
+		this.idCompra = idCompra;
+	}
+
+	public Long getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(Long idProducto) {
+		this.idProducto = idProducto;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
 }
