@@ -26,6 +26,12 @@ public class Producto {
 	
 	private String categoria;
 	
+	private boolean esPromocion;
+
+	private boolean activa;
+	
+	private String descripcion;
+	
 	
 	/**
 	 * Constructor por defecto
@@ -44,13 +50,16 @@ public class Producto {
 		this.presentacion = "";
 		this.precioPorUnidad = 0;
 		this.categoria = "";
+		this.esPromocion = false;
+		this.activa = false;
+		this.descripcion = "";
 		
 	}
 	
 	/**
 	 * construcor con valores
 	 */
-	public Producto(Long id0, String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0) {
+	public Producto(Long id0, String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, boolean esPromocion0, boolean activa0, String descripcion0) {
 		
 		this.id = id0;
 		this.nombre = nombre0;
@@ -64,11 +73,14 @@ public class Producto {
 		this.presentacion = presentacion0;
 		this.precioPorUnidad = precioporUnidad0;
 		this.categoria = categoria0;
-		
+		this.esPromocion = esPromocion0;
+		this.activa = activa0;
+		this.descripcion = descripcion0;
 	}
 	
 	
-	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -164,6 +176,33 @@ public class Producto {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
+	
+	
+	public boolean isEsPromocion() {
+		return esPromocion;
+	}
+
+	public void setEsPromocion(boolean esPromocion) {
+		this.esPromocion = esPromocion;
+	}
+
+	public boolean isActiva() {
+		return activa;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
+	}
+	
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 
 
 
