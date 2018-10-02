@@ -3,6 +3,7 @@ package persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+
 import oracle.net.aso.t;
 
 public class SQLOrdenDeCompra_Producto {
