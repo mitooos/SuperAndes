@@ -26,4 +26,5 @@ public class SQLProducto {
 		q.setParameters(idPromocion);
 		return (long) q.executeUnique();
 	}
+	
 }

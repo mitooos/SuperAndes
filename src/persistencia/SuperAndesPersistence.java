@@ -23,6 +23,7 @@ public class SuperAndesPersistence {
 	private PersistenceManagerFactory pmf;
 	private List<String> tablas;
 	private SQLUtil sqlUtil;
+	private SQLCompraProducto sqlCompraProducto;
 	private SQLProducto sqlProducto;
 
 
@@ -75,11 +76,16 @@ public class SuperAndesPersistence {
 
 		sqlUtil = new SQLUtil(this);
 		sqlProducto = new SQLProducto(this);
+		sqlCompraProducto = new SQLCompraProducto(this);
 	}
 
 	public String darSeq()
 	{
 		return tablas.get(0);
+	}
+	
+	public String darTablaProdcutoCompra() {
+		return tablas.get(11);
 	}
 
 	public String darTablaProductos() {
