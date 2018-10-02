@@ -22,11 +22,18 @@ public class View {
 			
 			switch(option) {
 				case 1:
+					System.out.println("Ingrese el nit del proveedor");
+					Long nit = scan.nextLong();
+					System.out.println("Ingrese el nombre del proveedor");
+					String nombre = scan.next();
+					System.out.println("ingrese la calificacion del proveedor");
+					Integer calificacion = scan.nextInt();
+					Controller.registrarProveedor(nit, nombre, calificacion);
 					
 				break;
 				case 2:
 					System.out.println("Ingrese el nombre del producto");
-					String nombre = scan.next();
+					String nombreP = scan.next();
 					System.out.println("Ingrese el tamano del producto (solo el numero)");
 					int tamano = scan.nextInt();
 					System.out.println("ingrese las unidades del tamano (ej. gr)");
@@ -54,7 +61,7 @@ public class View {
 						System.out.println("ingrese la descripcion de la promocion");
 						desc = scan.nextLine();
 					}
-					Producto prod = Controller.registrarProdcuto(nombre, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat, desc, prom, prom);
+					Producto prod = Controller.registrarProdcuto(nombreP, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat, desc, prom, prom);
 					System.out.println("se ha creado el producto: \n" + prod);
 				break;
 				case 3:
