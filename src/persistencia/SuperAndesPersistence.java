@@ -12,6 +12,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import negocio.OrdenDeCompra;
+import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 
 public class SuperAndesPersistence {
@@ -25,6 +27,8 @@ public class SuperAndesPersistence {
 	private SQLUtil sqlUtil;
 	private SQLCompraProducto sqlCompraProducto;
 	private SQLProducto sqlProducto;
+	private SQLOrdenDeCompra sqlOrdenDeCompra;
+	private SQLOrdenDeCompra_Producto sqlOrdenDeCompraProducto;
 
 
 	public SuperAndesPersistence() {
@@ -77,11 +81,21 @@ public class SuperAndesPersistence {
 		sqlUtil = new SQLUtil(this);
 		sqlProducto = new SQLProducto(this);
 		sqlCompraProducto = new SQLCompraProducto(this);
+		sqlOrdenDeCompra= new SQLOrdenDeCompra(this);
 	}
 
 	public String darSeq()
 	{
 		return tablas.get(0);
+	}
+	
+	public String darTablaOrdenDeCompraProducto()
+	{
+	return tablas.get(9);	
+	}
+	public String darTablaOrdenDeCompra()
+	{
+	return tablas.get(10);	
 	}
 	
 	public String darTablaProdcutoCompra() {
@@ -104,6 +118,15 @@ public class SuperAndesPersistence {
 		return "";
 	}
 
+	public OrdenDeCompra_Producto adicionarOrdenDeCompraProducto(Long idOrdenCompra0, Long idProducto0,Integer precioAcordado0,Integer volumen0)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		return null;
+		
+		
+	}
+	
 	public Producto adicionarPromocionLong (String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
