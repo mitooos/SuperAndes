@@ -111,15 +111,35 @@ public class SuperAndesPersistence {
 			sqlProducto.adicionarPromocion(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 			tx.commit();
 
-			Producto rta = new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, true, true, descripcion0);
-			System.out.println(rta + "dfg");
-			return rta;
+			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, true, true, descripcion0);
+
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public int finalizarPromocion(Long idPromocion) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			sqlProducto.terminarPromocion(pmf.getPersistenceManager(), idPromocion);
+			tx.commit();
+			return 1;
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
 		finally {
 			if(tx.isActive()) {
 				tx.rollback();

@@ -35,8 +35,9 @@ public class Controller {
 		return sap.adicionarPromocionLong(nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, descripcion0);
 	}
 	
-	public static void finalizarUnaPromocion() {
-		
+	public static int finalizarUnaPromocion(Long idPromocion) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.finalizarPromocion(idPromocion);
 	}
 	
 	public static void registrarUnPediddoDeUnProductoAUnaSucursal() {
