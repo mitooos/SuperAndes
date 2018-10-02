@@ -13,9 +13,9 @@ public class SQLProveedor {
 		this.sap = sap;
 	}
 	
-	public long adicionarProveedor(PersistenceManager pm, Long id0, Long nit, String nombre, int calificacion) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaProveedores() + " (id,nit,nombre,calificacion) values(?,?,?;?");
-		q.setParameters(id0, nit, nombre, calificacion);
+	public long adicionarProveedor(PersistenceManager pm,Long nit, String nombre, int calificacion) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaProveedores() + " (nit,nombre,calificacion) values(?,?,?,?)");
+		q.setParameters(nit, nombre, calificacion);
 		return (long) q.executeUnique();	
 	}
 }

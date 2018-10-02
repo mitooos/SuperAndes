@@ -95,8 +95,6 @@ public class SuperAndesPersistence {
 	{
 		return tablas.get(0);
 	}
-
-
 	public String darTablaBodegaProducto()
 	{
 		return tablas.get(1);	
@@ -105,16 +103,9 @@ public class SuperAndesPersistence {
 	{
 		return tablas.get(2);	
 	}
-	public String darTablaOrdenDeCompraProducto()
-	{
-		return tablas.get(8);	
+	public String darTablaCliente() {
+		return tablas.get(3);
 	}
-	public String darTablaOrdenDeCompra()
-	{
-		return tablas.get(9);	
-	}
-
-
 	public String darTablaCompra() {
 		return tablas.get(4);
 	}
@@ -126,25 +117,36 @@ public class SuperAndesPersistence {
 	public String darTablaEstante() {
 		return tablas.get(6);
 	}
-
-
+	public String darTablaFactura() {
+		return tablas.get(7);
+	}
+	public String darTablaOrdenDeCompraProducto()
+	{
+		return tablas.get(8);	
+	}
+	public String darTablaOrdenDeCompra()
+	{
+		return tablas.get(9);	
+	}
 	public String darTablaProdcutoCompra() {
 		return tablas.get(10);
 	}
-
 	public String darTablaProductos() {
 		return tablas.get(11);
 	}
-
+	public String darTablaProveedorProducto() {
+		return tablas.get(12);
+	}
 	public String darTablaProveedores() {
 		return tablas.get(13);
 	}
-
-
 	public String darTablaSucursalProducto(){
 		return tablas.get(14);
 	}
-
+	public String darTablaSucursal() {
+		return tablas.get(15);
+	}
+	
 	private Long nextval() {
 		return sqlUtil.nextval(pmf.getPersistenceManager());
 	}
@@ -157,23 +159,14 @@ public class SuperAndesPersistence {
 		return "";
 	}
 
-	public OrdenDeCompra_Producto adicionarOrdenDeCompraProducto(Long idOrdenCompra0, Long idProducto0,Integer precioAcordado0,Integer volumen0)
-	{
-		PersistenceManager pm =pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		return null;
 
-
-	}
 
 	public Proveedor adicionarProveedor(Long nit, String nombre, Integer calificacion) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			// TODO quitar id
-			Long id = nextval();
-			sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(), id, nit, nombre, calificacion);
+			sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(),nit, nombre, calificacion);
 			return new Proveedor(nit, nombre, calificacion);
 		}
 		catch(Exception e){
