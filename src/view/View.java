@@ -25,21 +25,6 @@ public class View {
 					
 				break;
 				case 2:
-					
-				break;
-				case 3:
-					
-				break;
-				case 4:
-					
-				break;
-				case 5:
-					
-				break;
-				case 6:
-					
-				break;
-				case 7:
 					System.out.println("Ingrese el nombre del producto");
 					String nombre = scan.next();
 					System.out.println("Ingrese el tamano del producto (solo el numero)");
@@ -62,10 +47,55 @@ public class View {
 					int precioPUni = scan.nextInt();
 					System.out.println("ingrese la categoria del producto (Abarrote, Perecedero, No Perecedero");
 					String cat = scan.next();
+					System.out.println("ingrese si es una promocion(si:1, no:0)");
+					int prom = scan.nextInt();
+					String desc = "";
+					if(prom == 1) {
+						System.out.println("ingrese la descripcion de la promocion");
+						desc = scan.nextLine();
+					}
+					Producto prod = Controller.registrarProdcuto(nombre, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat, desc, prom, prom);
+					System.out.println("se ha creado el producto: \n" + prod);
+				break;
+				case 3:
+					
+				break;
+				case 4:
+					
+				break;
+				case 5:
+					
+				break;
+				case 6:
+					
+				break;
+				case 7:
+					System.out.println("Ingrese el nombre del producto");
+					String nombre1 = scan.next();
+					System.out.println("Ingrese el tamano del producto (solo el numero)");
+					int tamano1 = scan.nextInt();
+					System.out.println("ingrese las unidades del tamano (ej. gr)");
+					String uni1 = scan.next();
+					System.out.println("Ingrese la marca del producto");
+					String marca1 = scan.next();
+					System.out.println("inserte el precio unitario");
+					int precioUni1 = scan.nextInt();
+					System.out.println("ingrese el volumen del empaque");
+					int vol1 = scan.nextInt();
+					System.out.println("ingrese el peso del producto con empaque");
+					int peso1 = scan.nextInt();
+					System.out.println("ingrese el codigo hexadecimal del producto, sin el 0x al principio");
+					Integer hex1 = scan.nextInt(16);
+					System.out.println("ingrese la presentacion del producto (ej. 12 paquetes 5gr)7");
+					String presentacion1 = scan.next();
+					System.out.println("Ingrese el precio por unidad (solo el numero)");
+					int precioPUni1 = scan.nextInt();
+					System.out.println("ingrese la categoria del producto (Abarrote, Perecedero, No Perecedero");
+					String cat1 = scan.next();
 					System.out.println("ingrese la descripcion de la promocion");
-					String desc = scan.next();
-					Producto prom = Controller.registrarUnaPromocion(nombre, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat, desc);
-					System.out.println("se ha creado la promocion: \n" + prom);
+					String desc1 = scan.next();
+					Producto prom1 = Controller.registrarUnaPromocion(nombre1, tamano1, uni1, marca1, precioUni1, vol1, peso1, hex1, presentacion1, precioPUni1, cat1, desc1);
+					System.out.println("se ha creado la promocion: \n" + prom1);
 				break;
 				case 8:
 					System.out.println("Ingrese el id de la promocion");
