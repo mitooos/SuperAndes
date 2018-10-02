@@ -92,11 +92,11 @@ public class SuperAndesPersistence {
 	
 	public String darTablaOrdenDeCompraProducto()
 	{
-	return tablas.get(9);	
+	return tablas.get(8);	
 	}
 	public String darTablaOrdenDeCompra()
 	{
-	return tablas.get(10);	
+	return tablas.get(9);	
 	}
 	
 	
@@ -197,19 +197,17 @@ public class SuperAndesPersistence {
 		}
 	}
 	
-	public Compra agregarCompra(long idCliente, long idSucursal, List<Long> idProductos, List<Integer> cantidadProductos) {
+	public Compra agregarCompra(long idCliente, long idSucursal, Long idProducto, Integer cantidadProducto) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
+		
 		try {
 			Long id = nextval();
-			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProductos, cantidadProductos, idSucursal);
+			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1, idCliente, idSucursal);
-			int i = 0;
-			while(i<idProductos.size()) {
-				sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProductos.get(i), cantidadProductos.get(i));
-				i++;
-			}
-			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProductos, cantidadProductos, idSucursal);
+			sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProducto, cantidadProducto);
+
+			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			return new Compra(id, costo, true, idCliente, idSucursal);
 			
 		}

@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.List;
+
+import negocio.Compra;
 import negocio.Producto;
 import persistencia.SuperAndesPersistence;
 
@@ -48,8 +51,9 @@ public class Controller {
 		
 	}
 	
-	public static void registrarLaVentaDeUnProductoEnUnaSucursal() {
-		
+	public static Compra registrarLaVentaDeUnProductoEnUnaSucursal(Long idCliente, Long idSucursal, Long idProductos, Integer cantidadProductos) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.agregarCompra(idCliente, idSucursal, idProductos, cantidadProductos);
 	}
 	
 	// faltan metodos de consulta
