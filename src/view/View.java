@@ -1,8 +1,11 @@
 package view;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import controller.Controller;
+import negocio.Compra;
 import negocio.Producto;
 
 public class View {
@@ -77,7 +80,16 @@ public class View {
 					
 				break;
 				case 11:
-					
+					System.out.println("ingrese el id de la sucursal");
+					long idSucursal = scan.nextLong();
+					System.out.println("Ingrese el id del cliente");
+					long idCliente = scan.nextLong();
+					System.out.println("Ingrese el id del producto");
+					long idProducto = scan.nextLong();
+					System.out.println("ingrese la cantidad del producto");
+					int cantidadProductos = scan.nextInt();
+					Compra com = Controller.registrarLaVentaDeUnProductoEnUnaSucursal(idSucursal, idCliente, idProducto, cantidadProductos);
+					System.out.println(com);
 				break;
 				case 12:
 					
