@@ -14,6 +14,10 @@ public class OrdenDeCompra {
 	
 	private Long idProveedor;
 	
+	private Long idSucursal;
+	
+	
+	
 	/**
 	 * constructor por defecto
 	 */
@@ -24,6 +28,8 @@ public class OrdenDeCompra {
 		this.calificacion = 0;
 		this.fechaEntregado = "";
 		this.idProveedor = 0L;
+		this.idSucursal = 0L;
+		
 	}
 	
 	/**
@@ -34,13 +40,14 @@ public class OrdenDeCompra {
 	 * @param calificacion0
 	 * @param fechaEntregado0
 	 */
-	public OrdenDeCompra(Long id0, String fechaEstimadaEntrega0, boolean entregado0, Integer calificacion0, String fechaEntregado0, Long idProveedor0) {
+	public OrdenDeCompra(Long id0, String fechaEstimadaEntrega0, boolean entregado0, Integer calificacion0, String fechaEntregado0, Long idProveedor0,Long idSucursal0) {
 		this.id = id0;
 		this.fechaEstimadaEntrega = "";
 		this.entregado = entregado0;
 		this.calificacion = calificacion0;
 		this.fechaEntregado = fechaEntregado0;
 		this.idProveedor = idProveedor0;
+		this.idSucursal = idSucursal0;
 	}
 	
 	public Long getId() {
@@ -90,5 +97,15 @@ public class OrdenDeCompra {
 	public void setIdProveedor(Long idProveedor) {
 		this.idProveedor = idProveedor;
 	}
+
+	public Long getIdSucursal() {
+		return idSucursal;
+	}
+
+	public void setIdSucursal(Long idSucursal) {
+		this.idSucursal = idSucursal;
+	}
+	
+	
 	
 }
