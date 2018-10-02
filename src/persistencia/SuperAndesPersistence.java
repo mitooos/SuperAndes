@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
@@ -18,7 +17,7 @@ import negocio.Producto;
 public class SuperAndesPersistence {
 
 	public final static String SQL = "javax.jdo.query.SQL";
-	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
+//	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
 
 	private static SuperAndesPersistence instance;
 	private PersistenceManagerFactory pmf;
@@ -35,6 +34,8 @@ public class SuperAndesPersistence {
 		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C171820");
 		properties.setProperty("javax.jdo.option.ConnectionPassword","PrVvggcFFg");
 		properties.setProperty("javax.jdo.option.Mapping", "oracle");
+		properties.setProperty("datanucleus.schema.autoCreateAll", "false");
+		properties.setProperty("datanucleus.query.sql.allowAll", "true");
 		pmf = JDOHelper.getPersistenceManagerFactory(properties);
 		crearClaesSQL();
 
@@ -110,10 +111,12 @@ public class SuperAndesPersistence {
 			sqlProducto.adicionarPromocion(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 			tx.commit();
 
-			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, true, true, descripcion0);
+			Producto rta = new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, true, true, descripcion0);
+			System.out.println(rta + "dfg");
+			return rta;
 		}
 		catch(Exception e) {
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		
