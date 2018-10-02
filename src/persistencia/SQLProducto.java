@@ -18,6 +18,8 @@ public class SQLProducto {
 				+ "vol_empaque, peso_empaque, hexa, presentacion, precio_por_unidad, categoria, es_promocion, activa, descripcion)"
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?");
 		q.setParameters(id0, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
-		return (long) q.executeUnique();
+		long rta =  (long) q.executeUnique();
+		System.out.println(rta + "cambios efectuados");
+		return rta;
 	}
 }

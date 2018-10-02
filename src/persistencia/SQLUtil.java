@@ -14,7 +14,8 @@ public class SQLUtil {
 	}
 
 	public Long nextval(PersistenceManager pm) {
-		Query q = pm.newQuery(SQL,"SELECT" + sap.darSeq() + "nextval FROM DUAL");
+
+		Query q = pm.newQuery(SQL,"SELECT " + sap.darSeq() + ".nextval FROM DUAL");
 		q.setResultClass(Long.class);
 		return (Long) q.executeUnique();
 	}
