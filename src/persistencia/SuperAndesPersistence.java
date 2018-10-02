@@ -13,6 +13,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
 import negocio.Compra;
+import negocio.OrdenDeCompra;
 import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 import negocio.Proveedor;
@@ -20,7 +21,7 @@ import negocio.Proveedor;
 public class SuperAndesPersistence {
 
 	public final static String SQL = "javax.jdo.query.SQL";
-//	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
+	//	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
 
 	private static SuperAndesPersistence instance;
 	private PersistenceManagerFactory pmf;
@@ -86,35 +87,46 @@ public class SuperAndesPersistence {
 		sqlCompra = new SQLCompra(this);
 		sqlOrdenDeCompra= new SQLOrdenDeCompra(this);
 		sqlProveedor = new SQLProveedor(this);
+		sqlOrdenDeCompra = new SQLOrdenDeCompra(this);
+		sqlOrdenDeCompraProducto = new SQLOrdenDeCompra_Producto(this);
 	}
 
 	public String darSeq()
 	{
 		return tablas.get(0);
 	}
-	
+
+
+	public String darTablaBodegaProducto()
+	{
+		return tablas.get(1);	
+	}
+	public String darTablaBodega()
+	{
+		return tablas.get(2);	
+	}
 	public String darTablaOrdenDeCompraProducto()
 	{
-	return tablas.get(8);	
+		return tablas.get(8);	
 	}
 	public String darTablaOrdenDeCompra()
 	{
-	return tablas.get(9);	
+		return tablas.get(9);	
 	}
-	
-	
+
+
 	public String darTablaCompra() {
 		return tablas.get(4);
 	}
-	
+
 	public String darTablaEstanteProducto() {
 		return tablas.get(5);
 	}
-	
+
 	public String darTablaEstante() {
 		return tablas.get(6);
 	}
-	
+
 
 	public String darTablaProdcutoCompra() {
 		return tablas.get(10);
@@ -123,12 +135,12 @@ public class SuperAndesPersistence {
 	public String darTablaProductos() {
 		return tablas.get(11);
 	}
-	
+
 	public String darTablaProveedores() {
 		return tablas.get(13);
 	}
-	
-	
+
+
 	public String darTablaSucursalProducto(){
 		return tablas.get(14);
 	}
@@ -150,10 +162,10 @@ public class SuperAndesPersistence {
 		PersistenceManager pm =pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		return null;
-		
-		
+
+
 	}
-	
+
 	public Proveedor adicionarProveedor(Long nit, String nombre, Integer calificacion) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -175,7 +187,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public Producto adicionarProducto(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0, int prom, int activa) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -193,7 +205,7 @@ public class SuperAndesPersistence {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
-		
+
 		finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -201,7 +213,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public Producto adicionarPromocionLong (String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -222,7 +234,7 @@ public class SuperAndesPersistence {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
-		
+
 		finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -230,7 +242,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public int finalizarPromocion(Long idPromocion) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -251,11 +263,14 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
+
+
+
 	public Compra agregarCompra(long idCliente, long idSucursal, Long idProducto, Integer cantidadProducto) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		
+
 		try {
 			Long id = nextval();
 			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
@@ -264,7 +279,7 @@ public class SuperAndesPersistence {
 
 			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			return new Compra(id, costo, true, idCliente, idSucursal);
-			
+
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
@@ -277,5 +292,70 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
+
+
+	public OrdenDeCompra_Producto agregarOrdenProducto(long idProveedor,String fechaEstimadaEntrega, Long idProducto,Integer volumen ,Integer precioAcordado ,Long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			Long id =nextval();
+			OrdenDeCompra temporal = sqlOrdenDeCompra.darOrdenSinEntregarProveedor(pmf.getPersistenceManager(), idProveedor);
+			if(temporal == null)
+			{
+				temporal = sqlOrdenDeCompra.crearOrden(pmf.getPersistenceManager(), id, fechaEstimadaEntrega, false , 0, "", idProveedor,idSucursal);
+			}
+
+			return sqlOrdenDeCompraProducto.crearOrdenProducto(pmf.getPersistenceManager(), temporal.getId(), idProducto, precioAcordado, volumen);
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+	}
+
+	public OrdenDeCompra recibirOrden(long id ,Integer calificacion)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx= pm.currentTransaction();
+
+		try
+		{
+			OrdenDeCompra temporal= sqlOrdenDeCompra.darOrdenPorId(pmf.getPersistenceManager(), id);
+			if(temporal.isEntregado()==false)
+			{
+				sqlOrdenDeCompra.registrarLLegadaOrden(pmf.getPersistenceManager(), id, calificacion);
+				for (OrdenDeCompra_Producto orden : sqlOrdenDeCompraProducto.darOrdenesDeCompraProductos(pmf.getPersistenceManager(), id))
+				{
+					sqlOrdenDeCompra.actualizarInventarioDespuesDeOrden(pmf.getPersistenceManager(),orden.getIdProcducto(), orden.getVolumen(), temporal.getIdSucursal());
+				}
+			}
+			return temporal;
+		}
+
+		catch (Exception e)
+		{
+			System.out.println("Exception " + e.getMessage()+"\n"+ darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if(tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
 
 }
