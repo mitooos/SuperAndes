@@ -65,7 +65,10 @@ public class View {
 					System.out.println("se ha creado la promocion: \n" + prom);
 				break;
 				case 8:
-					
+					System.out.println("Ingrese el id de la promocion");
+					Long idProm = scan.nextLong();
+					Controller.finalizarUnaPromocion(idProm);
+					System.out.println("Se ha finalizado la promocion con el id: " + idProm);
 				break;
 				case 9:
 					
