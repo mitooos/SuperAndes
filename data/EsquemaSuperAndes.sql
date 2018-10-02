@@ -161,3 +161,4 @@ CREATE TABLE SUCURSAL_PRODUCTO(
             
         
 COMMIT;
+
