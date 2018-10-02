@@ -3,7 +3,7 @@ package view;
 import java.util.Scanner;
 
 import controller.Controller;
-import negocio.Promocion;
+import negocio.Producto;
 
 public class View {
 
@@ -37,7 +37,32 @@ public class View {
 					
 				break;
 				case 7:
-					Controller.registrarUnaPromocion();
+					System.out.println("Ingrese el nombre del producto");
+					String nombre = "";
+					System.out.println("Ingrese el tamano del producto (solo el numero)");
+					int tamano = 54;
+					System.out.println("ingrese las unidades del tamano (ej. gr)");
+					String uni = "gr";
+					System.out.println("Ingrese la marca del producto");
+					String marca = "dfgh";
+					System.out.println("inserte el precio unitario");
+					int precioUni = 67;
+					System.out.println("ingrese el volumen del empaque");
+					int vol = 5678;
+					System.out.println("ingrese el peso del producto con empaque");
+					int peso = 789;
+					System.out.println("ingrese el codigo hexadecimal del producto");
+					Integer hex = 0x5678;
+					System.out.println("ingrese la presentacion del producto (ej. 12 paquetes 5gr)7");
+					String presentacion = "fgh";
+					System.out.println("Ingrese el precio por unidad (solo el numero)");
+					int precioPUni = 567;
+					System.out.println("ingrese la categoria del producto");
+					String cat = "cat";
+					System.out.println("ingrese la descripcion de la promocion");
+					String desc = "dfgh";
+					Producto prom = Controller.registrarUnaPromocion(nombre, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat, desc);
+					System.out.println("se ha creado la promocion: \n" + prom);
 				break;
 				case 8:
 					
