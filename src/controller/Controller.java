@@ -10,8 +10,9 @@ import persistencia.SuperAndesPersistence;
 public class Controller {
 	
 
-	public static Proveedor registrarProveedor() {
-		return null;
+	public static Proveedor registrarProveedor(Long nit, String nombre, Integer calificacion) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.adicionarProveedor(nit, nombre, calificacion);
 	}
 	
 	public static Producto registrarProdcuto(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0, int prom, int activa) {

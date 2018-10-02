@@ -15,6 +15,7 @@ import javax.jdo.Transaction;
 import negocio.Compra;
 import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
+import negocio.Proveedor;
 
 public class SuperAndesPersistence {
 
@@ -30,6 +31,7 @@ public class SuperAndesPersistence {
 	private SQLOrdenDeCompra sqlOrdenDeCompra;
 	private SQLOrdenDeCompra_Producto sqlOrdenDeCompraProducto;
 	private SQLCompra sqlCompra;
+	private SQLProveedor sqlProveedor;
 
 
 	public SuperAndesPersistence() {
@@ -83,6 +85,7 @@ public class SuperAndesPersistence {
 		sqlCompraProducto = new SQLCompraProducto(this);
 		sqlCompra = new SQLCompra(this);
 		sqlOrdenDeCompra= new SQLOrdenDeCompra(this);
+		sqlProveedor = new SQLProveedor(this);
 	}
 
 	public String darSeq()
@@ -121,6 +124,10 @@ public class SuperAndesPersistence {
 		return tablas.get(11);
 	}
 	
+	public String darTablaProveedores() {
+		return tablas.get(13);
+	}
+	
 	
 	public String darTablaSucursalProducto(){
 		return tablas.get(14);
@@ -145,6 +152,28 @@ public class SuperAndesPersistence {
 		return null;
 		
 		
+	}
+	
+	public Proveedor adicionarProveedor(Long nit, String nombre, Integer calificacion) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			// TODO quitar id
+			Long id = nextval();
+			sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(), id, nit, nombre, calificacion);
+			return new Proveedor(nit, nombre, calificacion);
+		}
+		catch(Exception e){
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 	
 	public Producto adicionarProducto(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0, int prom, int activa) {
