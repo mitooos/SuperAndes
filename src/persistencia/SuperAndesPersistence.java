@@ -12,6 +12,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import negocio.Compra;
 import negocio.Producto;
 
 public class SuperAndesPersistence {
@@ -25,6 +26,7 @@ public class SuperAndesPersistence {
 	private SQLUtil sqlUtil;
 	private SQLCompraProducto sqlCompraProducto;
 	private SQLProducto sqlProducto;
+	private SQLCompra sqlCompra;
 
 
 	public SuperAndesPersistence() {
@@ -45,7 +47,6 @@ public class SuperAndesPersistence {
 		tablas.add("BODEGA_PRODUCTO");
 		tablas.add("BODEGA");
 		tablas.add("CLIENTE");
-		tablas.add("COMPRA");
 		tablas.add("COMPRA");
 		tablas.add("ESTANTE_PRODUCTO");
 		tablas.add("ESTANTE");
@@ -77,6 +78,7 @@ public class SuperAndesPersistence {
 		sqlUtil = new SQLUtil(this);
 		sqlProducto = new SQLProducto(this);
 		sqlCompraProducto = new SQLCompraProducto(this);
+		sqlCompra = new SQLCompra(this);
 	}
 
 	public String darSeq()
@@ -84,12 +86,28 @@ public class SuperAndesPersistence {
 		return tablas.get(0);
 	}
 	
+	public String darTablaCompra() {
+		return tablas.get(4);
+	}
+	
+	public String darTablaEstanteProducto() {
+		return tablas.get(5);
+	}
+	
+	public String darTablaEstante() {
+		return tablas.get(6);
+	}
+	
 	public String darTablaProdcutoCompra() {
-		return tablas.get(11);
+		return tablas.get(10);
 	}
 
 	public String darTablaProductos() {
-		return tablas.get(12);
+		return tablas.get(11);
+	}
+	
+	public String darTablaSucursalProducto(){
+		return tablas.get(14);
 	}
 
 	private Long nextval() {
@@ -145,6 +163,34 @@ public class SuperAndesPersistence {
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return -1;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public Compra agregarCompra(long idCliente, long idSucursal, List<Long> idProductos, List<Integer> cantidadProductos) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			Long id = nextval();
+			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProductos, cantidadProductos, idSucursal);
+			sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1, idCliente, idSucursal);
+			int i = 0;
+			while(i<idProductos.size()) {
+				sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProductos.get(i), cantidadProductos.get(i));
+				i++;
+			}
+			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProductos, cantidadProductos, idSucursal);
+			return new Compra(id, costo, true, idCliente, idSucursal);
+			
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
 		}
 		finally {
 			if(tx.isActive()) {

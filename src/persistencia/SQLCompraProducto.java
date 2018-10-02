@@ -16,31 +16,31 @@ public class SQLCompraProducto {
 		this.sap = sap;
 	}
 	
-	public long registrarProdcutosEnCompra(PersistenceManager pm, Long idCompra, Long idProducto, int cantidad) {
+	public long registrarProdcutoEnCompra(PersistenceManager pm, Long idCompra, Long idProducto, int cantidad) {
 		Query q = pm.newQuery(SQL,"INSERT INTO " + sap.darTablaProdcutoCompra() + " (id_compra, id_producto, cantidad) values (?,?,?)");
 		q.setParameters(idCompra, idProducto, cantidad);
 		return (long) q.executeUnique();
 	}
 	
-	public List<Long> darProductosCompra(PersistenceManager pm, Long idCompra) {
-		Query q = pm.newQuery(SQL, "SELECT producto_id FROM " + sap.darTablaProdcutoCompra() + "WHERE id_compra = ?");
-		q.setParameters(idCompra);
-		q.setResultClass(long.class);
-		return (List<Long>) q.execute();
-	}
-	
-	public List<Integer> darCantidadProductosCompra(PersistenceManager pm, Long idCompra, List<Long> idProductos){
-		LinkedList<Integer> rta = new LinkedList<>();
-		int i = 0;
-		while(i<idProductos.size()) {
-			Query q = pm.newQuery(SQL, "SELECT cantidad FROM " + sap.darTablaProdcutoCompra() + "WHERE id_compra = ? AND id_prducto = ?");
-			q.setParameters(idCompra, idProductos.get(i));
-			q.setResultClass(Integer.class);
-			rta.add((Integer) q.executeUnique());
-			i++;
-		}
-		return rta;
-	}
+//	public List<Long> darProductosCompra(PersistenceManager pm, Long idCompra) {
+//		Query q = pm.newQuery(SQL, "SELECT producto_id FROM " + sap.darTablaProdcutoCompra() + "WHERE id_compra = ?");
+//		q.setParameters(idCompra);
+//		q.setResultClass(long.class);
+//		return (List<Long>) q.execute();
+//	}
+//	
+//	public List<Integer> darCantidadProductosCompra(PersistenceManager pm, Long idCompra, List<Long> idProductos){
+//		LinkedList<Integer> rta = new LinkedList<>();
+//		int i = 0;
+//		while(i<idProductos.size()) {
+//			Query q = pm.newQuery(SQL, "SELECT cantidad FROM " + sap.darTablaProdcutoCompra() + "WHERE id_compra = ? AND id_prducto = ?");
+//			q.setParameters(idCompra, idProductos.get(i));
+//			q.setResultClass(Integer.class);
+//			rta.add((Integer) q.executeUnique());
+//			i++;
+//		}
+//		return rta;
+//	}
 	
 	
 }
