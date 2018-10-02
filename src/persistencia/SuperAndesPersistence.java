@@ -159,9 +159,7 @@ public class SuperAndesPersistence {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			// TODO quitar id
-			Long id = nextval();
-			sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(), id, nit, nombre, calificacion);
+			sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(),nit, nombre, calificacion);
 			return new Proveedor(nit, nombre, calificacion);
 		}
 		catch(Exception e){
