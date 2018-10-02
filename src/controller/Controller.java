@@ -4,17 +4,19 @@ import java.util.List;
 
 import negocio.Compra;
 import negocio.Producto;
+import negocio.Proveedor;
 import persistencia.SuperAndesPersistence;
 
 public class Controller {
 	
 
-	public static void registrarProveedor() {
-		
+	public static Proveedor registrarProveedor() {
+		return null;
 	}
 	
-	public static void registrarProdcuto() {
-		
+	public static Producto registrarProdcuto(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0, int prom, int activa) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.adicionarProducto(nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, descripcion0, prom, activa);
 	}
 	
 	public static void registrarCliente() {
