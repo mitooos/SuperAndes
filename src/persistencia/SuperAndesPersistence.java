@@ -13,6 +13,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
 import negocio.Compra;
+import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 
 public class SuperAndesPersistence {
@@ -26,6 +27,8 @@ public class SuperAndesPersistence {
 	private SQLUtil sqlUtil;
 	private SQLCompraProducto sqlCompraProducto;
 	private SQLProducto sqlProducto;
+	private SQLOrdenDeCompra sqlOrdenDeCompra;
+	private SQLOrdenDeCompra_Producto sqlOrdenDeCompraProducto;
 	private SQLCompra sqlCompra;
 
 
@@ -79,12 +82,23 @@ public class SuperAndesPersistence {
 		sqlProducto = new SQLProducto(this);
 		sqlCompraProducto = new SQLCompraProducto(this);
 		sqlCompra = new SQLCompra(this);
+		sqlOrdenDeCompra= new SQLOrdenDeCompra(this);
 	}
 
 	public String darSeq()
 	{
 		return tablas.get(0);
 	}
+	
+	public String darTablaOrdenDeCompraProducto()
+	{
+	return tablas.get(9);	
+	}
+	public String darTablaOrdenDeCompra()
+	{
+	return tablas.get(10);	
+	}
+	
 	
 	public String darTablaCompra() {
 		return tablas.get(4);
@@ -104,6 +118,15 @@ public class SuperAndesPersistence {
 
 	public String darTablaProductos() {
 		return tablas.get(11);
+	}
+	
+	public OrdenDeCompra_Producto adicionarOrdenDeCompraProducto(Long idOrdenCompra0, Long idProducto0,Integer precioAcordado0,Integer volumen0)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		return null;
+		
+		
 	}
 	
 	public String darTablaSucursalProducto(){
