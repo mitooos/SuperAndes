@@ -1,5 +1,6 @@
 package view;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -179,9 +180,8 @@ public class View {
 						id = scan.nextLong();
 					}
 					List<Producto> lista = Controller.obtenerProductosQueCumplenCaracteristica(caracteristica, valor, valorMayor, i, id);
-					System.out.println(lista.get(0));
 					for(Producto producto : lista) {
-						System.out.println(producto);
+						System.out.println(producto.toString());
 					}
 				break;
 				case 16:

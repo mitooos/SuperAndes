@@ -1,6 +1,7 @@
 package persistencia;
 
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -203,7 +204,7 @@ public class SuperAndesPersistence {
 			sqlProducto.adicionarProducto(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 			tx.commit();
 
-			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, true, true, descripcion0);
+			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 
 		}
 		catch(Exception e) {
@@ -326,7 +327,7 @@ public class SuperAndesPersistence {
 			sqlProducto.adicionarPromocion(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 			tx.commit();
 
-			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, true, true, descripcion0);
+			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, 1, 1, descripcion0);
 
 		}
 		catch(Exception e) {
@@ -454,21 +455,12 @@ public class SuperAndesPersistence {
 	}
 	
 	public List<Producto> darProductoQueCumpleCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try {
-			return sqlProducto.productosQueCumplenCaracteristicaString(pmf.getPersistenceManager(), caracteristica, valorMenor, valorMayor, i, id);
+		List<BigDecimal> lista = sqlProducto.productosQueCumplenCaracteristicaString(pmf.getPersistenceManager(), caracteristica, valorMenor, valorMayor, i, id);
+		List<Producto> rta = new LinkedList<>();
+		for(BigDecimal bg : lista) {
+			rta.add(sqlProducto.obtenerProductoPorId(pmf.getPersistenceManager(), bg.longValue()));
 		}
-		catch(Exception e){
-			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally {
-			if(tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
+		return rta;
 	}
 
 

@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -47,25 +48,25 @@ public class SQLProducto {
 	 * @param i 0: igual, i:1 rango, 2:menor, 3:mayor, -1 ninguna
 	 * @return
 	 */
-	public List<Producto> productosQueCumplenCaracteristicaString(PersistenceManager pm,String caracteristica, String valorMenor, String valorMayor, int i, Long id){
-		String sql = "SELECT * FROM " + sap.darTablaProductos() + " WHERE ";
+	public List<BigDecimal> productosQueCumplenCaracteristicaString(PersistenceManager pm,String caracteristica, String valorMenor, String valorMayor, int i, Long id){
+		String sql = "SELECT id FROM " + sap.darTablaProductos() + " WHERE ";
 		if(caracteristica.equals("PROVEEDOR")) {
-			sql += " id = (SELECT id_producto FROM " + sap.darTablaProveedorProducto() + " WHERE id_proveedor = " + id.toString() + ")";
+			sql += " id in (SELECT id_producto FROM " + sap.darTablaProveedorProducto() + " WHERE id_proveedor = " + id.toString() + ")";
 		}
 		if(caracteristica.equals("SUCURSAL")) {
-			sql += "id = (SELECT id_producto FROM " + sap.darTablaSucursalProducto() + " WHERE id_sucursal = " + id.toString() + ")";
+			sql += "id in (SELECT id_producto FROM " + sap.darTablaSucursalProducto() + " WHERE id_sucursal = " + id.toString() + ")";
 		}
 		if(caracteristica.equals("BODEGA")) {
-			sql += "id = (SELECT id_producto FROM " + sap.darTablaBodegaProducto() + " WHERE id_bodega = " + id.toString() + ")"; 
+			sql += "id in (SELECT id_producto FROM " + sap.darTablaBodegaProducto() + " WHERE id_bodega = " + id.toString() + ")"; 
 		}
 		if(caracteristica.equals("ESTANTE")) {
-			sql += "id = (SELECT id_producto FROM " + sap.darTablaEstanteProducto() + " WHERE id_estante = " + id.toString() + ")";
+			sql += "id in (SELECT id_producto FROM " + sap.darTablaEstanteProducto() + " WHERE id_estante = " + id.toString() + ")";
 		}
 		if(caracteristica.equals("ORDEN_DE_COMPRA")) {
-			sql += "id = (SELECT id_producto FROM " + sap.darTablaOrdenDeCompraProducto() + " WHERE id_orden_de_compra = " + id.toString() + ")";
+			sql += "id in (SELECT id_producto FROM " + sap.darTablaOrdenDeCompraProducto() + " WHERE id_orden_de_compra = " + id.toString() + ")";
 		}
 		if(caracteristica.equals("COMPRA")) {
-			sql += "id = (SELECT id_producto FROM " + sap.darTablaProdcutoCompra() + "WHERE id_compra = " + id.toString() + ")";
+			sql += "id in (SELECT id_producto FROM " + sap.darTablaProdcutoCompra() + "WHERE id_compra = " + id.toString() + ")";
 		}
 		if( i == 0) {
 			sql += caracteristica + " = " + valorMenor;
@@ -81,8 +82,7 @@ public class SQLProducto {
 		}
 		System.out.println(sql);
 		Query q = pm.newQuery(SQL, sql);
-		q.setResultClass(Producto.class);
-		return (List<Producto>) q.executeList();
+		return  (List<BigDecimal>) q.execute();
 	}
 	
 	public List<Producto> darofertasPopulares(PersistenceManager pm )
@@ -101,7 +101,7 @@ public class SQLProducto {
 	}
 		
 	public Producto obtenerProductoPorId(PersistenceManager pm, Long id) {
-		Query q = pm.newQuery(SQL, 	"SELECT * FROM " + sap.darTablaProductos() + "WHERE ID = ?");
+		Query q = pm.newQuery(SQL, 	"SELECT * FROM " + sap.darTablaProductos() + " WHERE ID = ?");
 		q.setParameters(id);
 		q.setResultClass(Producto.class);
 		return (Producto) q.executeUnique();
