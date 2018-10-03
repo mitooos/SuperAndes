@@ -177,8 +177,9 @@ public class View {
 						id = scan.nextLong();
 					}
 					List<Producto> lista = Controller.obtenerProductosQueCumplenCaracteristica(caracteristica, valor, valorMayor, i, id);
+					System.out.println(lista.get(0));
 					for(Producto producto : lista) {
-						System.out.println(producto.getNombre());
+						System.out.println(producto);
 					}
 				break;
 				case 16:
