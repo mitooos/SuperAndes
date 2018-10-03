@@ -1,9 +1,12 @@
 package persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import negocio.VentasSucursalTotales;
 
 public class SQLCompra {
 
@@ -39,5 +42,17 @@ public class SQLCompra {
 			q.setParameters(cantidad, idProducto, idSucursal);
 			return (long)q.executeUnique();
 
+	}
+	
+	public VentasSucursalTotales darVentasTotalesPorSucursalEnUnPeriodoDeTiempo(PersistenceManager pm,BigDecimal idSucursal, String fechaInicial, String fechaFinal) {
+		Query q = pm.newQuery(SQL, "SELECT id_sucursal, SUM(PRECIO_TOTAL) AS total FROM COMPRA WHERE id_sucursal = ? AND FECHA  BETWEEN ? AND ? GROUP BY id_sucursal");
+		q.setParameters(idSucursal,fechaInicial, fechaFinal);
+		q.setResultClass(VentasSucursalTotales.class);
+		return (VentasSucursalTotales) q.executeUnique();
+	}
+	
+	public List<BigDecimal> darIdsSucursalesDondeHuboVentas(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT UNIQUE ID_SUCURSAL FROM COMPRA ");
+		return q.executeList();
 	}
 }

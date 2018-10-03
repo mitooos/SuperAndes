@@ -12,6 +12,7 @@ import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 import negocio.Proveedor;
 import negocio.Sucursal;
+import negocio.VentasSucursalTotales;
 import persistencia.SuperAndesPersistence;
 
 public class Controller {
@@ -76,6 +77,10 @@ public class Controller {
 	
 	// faltan metodos de consulta
 	
+	public static List<VentasSucursalTotales> obtenerVentasTotalesEnUnPeriodoDeTiempo(String fechaInicial, String fechaFinal) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darVentasSucursalesEnUnRango(fechaInicial, fechaFinal);
+	}
 	
 	public static List<Producto> obtenerProductosQueCumplenCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
