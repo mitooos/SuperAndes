@@ -12,12 +12,15 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import negocio.Bodega;
 import negocio.Cliente;
 import negocio.Compra;
+import negocio.Estante;
 import negocio.OrdenDeCompra;
 import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 import negocio.Proveedor;
+import negocio.Sucursal;
 
 public class SuperAndesPersistence {
 
@@ -35,6 +38,9 @@ public class SuperAndesPersistence {
 	private SQLCompra sqlCompra;
 	private SQLProveedor sqlProveedor;
 	private SQLCliente sqlCliente;
+	private SQLSucursal sqlSucursal;
+	private SQLBodega sqlBodega;
+	private SQLEstante sqlEstante;
 
 
 	public SuperAndesPersistence() {
@@ -92,6 +98,9 @@ public class SuperAndesPersistence {
 		sqlOrdenDeCompra = new SQLOrdenDeCompra(this);
 		sqlOrdenDeCompraProducto = new SQLOrdenDeCompra_Producto(this);
 		sqlCliente = new SQLCliente(this);
+		sqlSucursal = new SQLSucursal(this);
+		sqlBodega = new SQLBodega(this);
+		sqlEstante = new SQLEstante(this);
 	}
 
 	public String darSeq()
@@ -149,7 +158,7 @@ public class SuperAndesPersistence {
 	public String darTablaSucursal() {
 		return tablas.get(15);
 	}
-	
+
 	private Long nextval() {
 		return sqlUtil.nextval(pmf.getPersistenceManager());
 	}
@@ -209,7 +218,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public Cliente adicionarCliente(String tipoIdentificacion,Long identificacion, String nombre, String correo, String direccion) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -229,6 +238,79 @@ public class SuperAndesPersistence {
 			}
 			pm.close();
 		}
+	}
+
+	public Sucursal adicionarSucursal(String nombre, String ciudad, String direccion, String mercado)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			Long id = nextval();
+			sqlSucursal.adicionarSucursal(pmf.getPersistenceManager(), id, nombre, ciudad, direccion, mercado);
+			return new Sucursal(id,nombre,ciudad,direccion,mercado);
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	public Bodega adicionarBodega(Integer capacidadVol, Integer capacidadPeso, String categoria, Long idSucursal)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			Long id = nextval();
+			sqlBodega.adicionarBodega(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, idSucursal);
+			return new Bodega(id, capacidadVol, capacidadPeso, categoria, idSucursal);
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+
+	}
+	
+	public Estante adicionarEstante(Integer capacidadVol, Integer capacidadPeso, String categoria, Integer posicion, Integer nivelAbastecimiento, Long idSucursal)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			Long id = nextval();
+			sqlEstante.adicionarEstante(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, posicion, nivelAbastecimiento, idSucursal);
+			return new Estante(id, capacidadVol, capacidadPeso, categoria, idSucursal, nivelAbastecimiento, posicion);
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+
 	}
 
 	public Producto adicionarPromocionLong (String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0) {
