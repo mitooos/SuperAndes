@@ -63,5 +63,11 @@ public class Controller {
 	
 	// faltan metodos de consulta
 	
+	
+	public static List<Producto> obtenerProductosQueCumplenCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darProductoQueCumpleCaracteristica(caracteristica, valorMenor, valorMayor, i, id);
+	}
+	
 
 }

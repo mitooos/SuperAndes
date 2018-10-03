@@ -150,7 +150,36 @@ public class View {
 					
 				break;
 				case 15:
-					
+					System.out.println("Ingrese que caracteristica desea en myusculas");
+					String caracteristica = scan.next();
+					System.out.println("ingrese el numero de la opcion de como desea compar");
+					System.out.println("0: igual");
+					System.out.println("1: rango");
+					System.out.println("2. menor que el valor a imgresar despues");
+					System.out.println("3: mayor al valor a ingresar despues");
+					System.out.println("-1: si el producto se encuentra en algun lugar(orden de compra, compra, estante,...");
+					int i = scan.nextInt();
+					String valor = "";
+					String valorMayor = "";
+					long id = 0L;
+					if (i >= 0 && i != 1) {
+						System.out.println("Ingrese el valor");
+						valor = scan.next();
+					}
+					else if(i == 1) {
+						System.out.println("ingrese el valor menor");
+						valor = scan.next();
+						System.out.println("ingrese el valor mayor");
+						valorMayor = scan.next();
+					}
+					else {
+						System.out.println("ingrese el id de la caracteristica que busca");
+						id = scan.nextLong();
+					}
+					List<Producto> lista = Controller.obtenerProductosQueCumplenCaracteristica(caracteristica, valor, valorMayor, i, id);
+					for(Producto producto : lista) {
+						System.out.println(producto.getNombre());
+					}
 				break;
 				case 16:
 					
