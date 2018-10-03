@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.Controller;
+import negocio.Bodega;
 import negocio.Cliente;
 import negocio.Compra;
+import negocio.Estante;
 import negocio.Producto;
+import negocio.Sucursal;
 
 public class View {
 
@@ -81,14 +84,49 @@ public class View {
 					System.out.println(cli);
 				break;
 				case 4:
+					System.out.println("Ingrese el nombre de la sucursal");
+					String nombreS = scan.next();
+					System.out.println("ingrese la Ciudad de la sucursal");
+					String ciudad = scan.next();
+					System.out.println("Ingrese la direccion de la sucursal");
+					String direccionS = scan.next();
+					System.out.println("ingrese el mercado de la sucursal");
+					String mercado = scan.next();
+					Sucursal sucursal = Controller.registrarSucursal(nombreS, ciudad, direccionS, mercado);
+					System.out.println(sucursal);
 					
 				break;
 				case 5:
+					System.out.println("Ingrese la capacidad volumetrica en cm^3");
+					Integer capacidadVol = scan.nextInt();
+					System.out.println("ingrese la capacidad en peso en kg");
+					Integer capacidadPeso = scan.nextInt();
+					System.out.println("Ingrese la categoria de la bodega");
+					String categoria = scan.next();
+					System.out.println("ingrese el id de la sucursal a la que pertenece");
+					Long idSucursalB = scan.nextLong();
+					Bodega bodega = Controller.registrarUnaBodegaAUnaSucursal(capacidadVol, capacidadPeso, categoria, idSucursalB);
+					System.out.println(bodega);
 					
 				break;
 				case 6:
+					System.out.println("Ingrese la capacidad volumetrica en cm^3");
+					Integer capacidadVol1 = scan.nextInt();
+					System.out.println("ingrese la capacidad en peso en kg");
+					Integer capacidadPeso1 = scan.nextInt();
+					System.out.println("Ingrese la categoria de la bodega");
+					String categoria1 = scan.next();
+					System.out.println("Ingrese en que posicion va el estante");
+					Integer posicion = scan.nextInt();
+					System.out.println("ingrese el  nivel de abastecimiento del estante");
+					Integer nivelAbastecimiento = scan.nextInt();
+					System.out.println("ingrese el id de la sucursal a la que pertenece");
+					Long idSucursalE = scan.nextLong();
+					Estante estante = Controller.registrarUnEstanteAUnaSucursal(capacidadVol1, capacidadPeso1, categoria1, posicion, nivelAbastecimiento, idSucursalE);
+					System.out.println(estante);
 					
 				break;
+
 				case 7:
 					System.out.println("Ingrese el nombre del producto");
 					String nombre1 = scan.next();
