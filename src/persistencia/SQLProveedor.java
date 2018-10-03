@@ -14,7 +14,7 @@ public class SQLProveedor {
 	}
 	
 	public long adicionarProveedor(PersistenceManager pm,Long nit, String nombre, int calificacion) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaProveedores() + " (nit,nombre,calificacion) values(?,?,?,?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaProveedores() + " (nit,nombre,calificacion) values(?,?,?)");
 		q.setParameters(nit, nombre, calificacion);
 		return (long) q.executeUnique();	
 	}
