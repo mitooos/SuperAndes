@@ -22,6 +22,7 @@ import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 import negocio.Proveedor;
 import negocio.Sucursal;
+import negocio.VentasSucursalTotales;
 
 public class SuperAndesPersistence {
 
@@ -392,6 +393,15 @@ public class SuperAndesPersistence {
 			}
 			pm.close();
 		}
+	}
+	
+	public List<VentasSucursalTotales> darVentasSucursalesEnUnRango(String fechaInicial, String fechaFinal){
+		List<BigDecimal> listaIds = sqlCompra.darIdsSucursalesDondeHuboVentas(pmf.getPersistenceManager());
+		List<VentasSucursalTotales> rta = new LinkedList<>();
+		for(BigDecimal id: listaIds) {
+			rta.add(sqlCompra.darVentasTotalesPorSucursalEnUnPeriodoDeTiempo(pmf.getPersistenceManager(), id, fechaInicial, fechaFinal));
+		}
+		return rta;
 	}
 	
 	public List<Producto> darMejoresPromociones()

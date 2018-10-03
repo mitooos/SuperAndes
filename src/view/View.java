@@ -12,6 +12,7 @@ import negocio.Compra;
 import negocio.Estante;
 import negocio.Producto;
 import negocio.Sucursal;
+import negocio.VentasSucursalTotales;
 
 public class View {
 
@@ -182,7 +183,14 @@ public class View {
 					System.out.println(com);
 				break;
 				case 12:
-					
+					System.out.println("Ingrese la fecha inicial con el formato DD/MM/AAAA");
+					String fechaInicial = scan.next();
+					System.out.println("ingrese la fecha final con el formato DD/MM/AAAA");
+					String fechaFinal = scan.next();
+					List<VentasSucursalTotales> rta = Controller.obtenerVentasTotalesEnUnPeriodoDeTiempo(fechaInicial, fechaFinal);
+					for(VentasSucursalTotales vent : rta) {
+						System.out.println(vent.toString());
+					}
 				break;
 				case 13:
 					
