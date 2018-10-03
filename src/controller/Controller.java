@@ -7,6 +7,8 @@ import negocio.Bodega;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
+import negocio.OrdenDeCompra;
+import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 import negocio.Proveedor;
 import negocio.Sucursal;
@@ -56,12 +58,15 @@ public class Controller {
 		return sap.finalizarPromocion(idPromocion);
 	}
 	
-	public static void registrarUnPediddoDeUnProductoAUnaSucursal() {
+	public static OrdenDeCompra_Producto registrarUnPediddoDeUnProductoAUnaSucursal(long idProveedor,String fechaEstimadaEntrega, Long idProducto,Integer volumen ,Integer precioAcordado ,Long idSucursal) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.agregarOrdenProducto(idProveedor, fechaEstimadaEntrega, idProducto, volumen, precioAcordado, idSucursal);
 		
 	}
 	
-	public static void registrarLaLlegadaDeUnProductoAUnaSucursal() {
-		
+	public static OrdenDeCompra registrarLaLlegadaDeUnProductoAUnaSucursal(long id ,Integer calificacion) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.recibirOrden(id, calificacion);
 	}
 	
 	public static Compra registrarLaVentaDeUnProductoEnUnaSucursal(Long idCliente, Long idSucursal,String fecha, Long idProductos, Integer cantidadProductos) {

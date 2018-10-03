@@ -87,15 +87,15 @@ public class SQLProducto {
 	
 	public List<Producto> darofertasPopulares(PersistenceManager pm )
 	{
-		String sql1 ="SELECT COUNT(ID),ID";
+		String sql1 ="SELECT *";
 		sql1 += "FROM "+ sap.darTablaProductos();
 		sql1 += "JOIN " + sap.darTablaProdcutoCompra() + "ON ID = ID_PRODUCTO";
-		sql1 += "WHERE PRODUCTOS.ES_PROMOCION ==1 ";
-		sql1 += "GROUP BY ID";
-	
-		String sql ="SELECT *";
+		sql1 += "WHERE ES_PROMOCION = 1 ";
+		
+		String sql ="SELECT COUNT(ID) CANTIDAD, ID";
 		sql += "FROM ("+ sql1 +")";
 		sql += "WHERE ROWNUM <=20";
+		sql += " GROUP BY ID ";
 		Query q =pm.newQuery(SQL, sql);
 		return q.executeList();
 	}
