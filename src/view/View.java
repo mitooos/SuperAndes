@@ -67,15 +67,15 @@ public class View {
 				break;
 				case 3:
 					System.out.println("Ingrese el tipo de indentificacion del cliente");
-					String tipoIdentificacion = "Ti";
+					String tipoIdentificacion = scan.next();
 					System.out.println("ingrese la identificacion del cliente");
 					Long identificacion = scan.nextLong();
 					System.out.println("Ingrese el nombre del cliente");
-					String nombreC = "migH";
+					String nombreC = scan.next();
 					System.out.println("ingrese el correo del cliente");
-					String correo = "fgh";
+					String correo = scan.next();
 					System.out.println("ingrese la direccion del cliente");
-					String direccion = "cra568#56-87";
+					String direccion = scan.next();
 					Cliente cli = Controller.registrarCliente(tipoIdentificacion, identificacion, nombreC, correo, direccion);
 					System.out.println(cli);
 				break;
@@ -133,11 +133,13 @@ public class View {
 					long idSucursal = scan.nextLong();
 					System.out.println("Ingrese el id del cliente");
 					long idCliente = scan.nextLong();
+					System.out.println("Ingrese la fecha con el siguiente formato: dd/mm/yyyy");
+					String fechaC = scan.next();
 					System.out.println("Ingrese el id del producto");
 					long idProducto = scan.nextLong();
 					System.out.println("ingrese la cantidad del producto");
 					int cantidadProductos = scan.nextInt();
-					Compra com = Controller.registrarLaVentaDeUnProductoEnUnaSucursal(idSucursal, idCliente, idProducto, cantidadProductos);
+					Compra com = Controller.registrarLaVentaDeUnProductoEnUnaSucursal(idSucursal, idCliente, fechaC, idProducto, cantidadProductos);
 					System.out.println(com);
 				break;
 				case 12:

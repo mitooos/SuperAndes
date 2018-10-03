@@ -56,9 +56,9 @@ public class Controller {
 		
 	}
 	
-	public static Compra registrarLaVentaDeUnProductoEnUnaSucursal(Long idCliente, Long idSucursal, Long idProductos, Integer cantidadProductos) {
+	public static Compra registrarLaVentaDeUnProductoEnUnaSucursal(Long idCliente, Long idSucursal,String fecha, Long idProductos, Integer cantidadProductos) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
-		return sap.agregarCompra(idCliente, idSucursal, idProductos, cantidadProductos);
+		return sap.agregarCompra(idCliente, idSucursal,fecha, idProductos, cantidadProductos);
 	}
 	
 	// faltan metodos de consulta
