@@ -433,13 +433,13 @@ public class SuperAndesPersistence {
 //		}
 //	}
 //	
-	public Integer darIndiceOcupacion(Long idSucursal,Long idBodega ,Long idEstante)
+	public Integer darIndiceOcupacion(Long idSucursal)
 	{
 		PersistenceManager pm =pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		Integer resultado = 0;
 		try {
-			resultado = sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idBodega) + sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idEstante);
+			resultado = sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager()) + sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager());
 			return resultado;
 		}
 		catch(Exception e){

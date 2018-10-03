@@ -21,21 +21,19 @@ private final static String SQL = SuperAndesPersistence.SQL;
 	}
 	
 	
-	public  Integer  darIndiceOcupacion(PersistenceManager pm,Long idSucursal, Long idBodega)
+	public  Integer  darIndiceOcupacion(PersistenceManager pm)
 	{	
-		String sql2 ="SELECT SUM(PRODUCTO.PESO_EMPAQUE) AS PESOACTUAL ,BODEGA_PRODUCTO.ID_BODEGA AS ID";
+		String sql2 ="SELECT SUM(PESO_EMPAQUE) AS PESOACTUAL ,ID_BODEGA AS ID1";
 		sql2 += " FROM "+ sap.darTablaBodegaProducto();
 		sql2 += " JOIN " + sap.darTablaProductos() + "ON ID = ID_PRODUCTO";
 		sql2 += " GROUP BY ID_BODEGA";
 		
 		
-		String sql1 ="SELECT F.PESOACTUAL/BODEGA.CAPACIDAD_PESO AS INDICE, BODEGA.ID AS ID";
+		String sql1 ="SELECT PESOACTUAL/CAPACIDAD_PESO AS INDICE, ID AS ID";
 		sql1 += " FROM (" + sql2 + ")f";
 		sql1 += " JOIN " + sap.darTablaBodega();
-		sql1 += " ON ID = ID";
-		sql1 += " WHERE ID_SUCURSAL = ? AND ID = ?";
+		sql1 += " ON ID1 = ID";
 		Query q = pm.newQuery(SQL, sql1);
-		q.setParameters(idSucursal,idBodega);
 		return (Integer) q.executeUnique();
 	}
 	
