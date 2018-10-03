@@ -8,6 +8,8 @@ public class Compra {
 	
 	private boolean pagada;
 	
+	private String fecha;
+	
 	private Long idCliente;
 	
 	private Long idSucursal;
@@ -23,6 +25,7 @@ public class Compra {
 		this.id = 0L;
 		this.precioTotal = 0;
 		this.pagada = false;
+		this.fecha = "";
 		this.idCliente = 0L;
 		this.idSucursal = 0L;
 	}
@@ -33,10 +36,11 @@ public class Compra {
 	 * @param precioTotal0
 	 * @param pagada0
 	 */
-	public Compra(Long id0, Integer precioTotal0, boolean pagada0, Long idCliente0, Long idSucursal0) {
+	public Compra(Long id0, Integer precioTotal0, boolean pagada0,String fecha, Long idCliente0, Long idSucursal0) {
 		this.id = id0;
 		this.precioTotal = precioTotal0;
 		this.pagada = pagada0;
+		this.fecha = fecha;
 		this.idCliente = idCliente0;
 		this.idSucursal = idSucursal0;
 	}
