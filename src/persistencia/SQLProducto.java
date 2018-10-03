@@ -79,6 +79,7 @@ public class SQLProducto {
 		if(i == 3) {
 			sql += caracteristica + " > " + valorMenor.toString(); 
 		}
+		System.out.println(sql);
 		Query q = pm.newQuery(SQL, sql);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();

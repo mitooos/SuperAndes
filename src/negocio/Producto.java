@@ -59,23 +59,23 @@ public class Producto {
 	/**
 	 * construcor con valores
 	 */
-	public Producto(Long id0, String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, boolean esPromocion0, boolean activa0, String descripcion0) {
+	public Producto(Long id, String nombre, Integer tamano, String unidades, String marca, Integer precio_unitario, Integer vol_empaque,Integer peso_empaque, Integer hexa, String presentacion, Integer precio_por_unidad, String categoria, boolean esPromocion, boolean activa, String descripcion) {
 		
-		this.id = id0;
-		this.nombre = nombre0;
-		this.tamano = tamano0;
-		this.unidades = unidades0;
-		this.marca = marca0;
-		this.precioUnitario = precioUnitario0;
-		this.volEmpaque = volEmpaque0;
-		this.pesoEmpaque = pesoEmpaque0;
-		this.hexa = hexa0;
-		this.presentacion = presentacion0;
-		this.precioPorUnidad = precioporUnidad0;
-		this.categoria = categoria0;
-		this.esPromocion = esPromocion0;
-		this.activa = activa0;
-		this.descripcion = descripcion0;
+		this.id = id;
+		this.nombre = nombre;
+		this.tamano = tamano;
+		this.unidades = unidades;
+		this.marca = marca;
+		this.precioUnitario = precio_unitario;
+		this.volEmpaque = vol_empaque;
+		this.pesoEmpaque = peso_empaque;
+		this.hexa = hexa;
+		this.presentacion = presentacion;
+		this.precioPorUnidad = precio_por_unidad;
+		this.categoria = categoria;
+		this.esPromocion = esPromocion;
+		this.activa = activa;
+		this.descripcion = descripcion;
 	}
 	
 	

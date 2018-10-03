@@ -31,4 +31,8 @@ public class SQLUtil {
 			return true;
 		return false;
 	}
+	
+	public String fechaSql(String fecha) {
+		return "TO_DATE('" + fecha + "','DD/MM/YYYY')"; 
+	}
 }

@@ -15,15 +15,16 @@ public class SQLCompra {
 		this.sap = sap;
 	}
 	
-	public long agregarCompra(PersistenceManager pm, long id, Integer precioTotal, int pagada, long idCliente, long idSucursal) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaCompra() + "(id, precio_total, pagada, id_cliente, id_sucursal) "
-				+ " values (?,?,?,?,?)");
-		q.setParameters(id,precioTotal,pagada, idCliente, idSucursal);
+	public long agregarCompra(PersistenceManager pm, long id, Integer precioTotal, int pagada,String fecha, long idCliente, long idSucursal) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaCompra() + "(id, precio_total, pagada,fecha, id_cliente, id_sucursal) "
+				+ " values (?,?,?,?,?,?)");
+		q.setParameters(id,precioTotal,pagada,fecha, idCliente, idSucursal);
 		return (long) q.executeUnique();
 	}
 	
 	public Integer calcularPrecioCompra(PersistenceManager pm, Long idsProducto, Integer cantidad, Long idSede) {
-			Query q = pm.newQuery(SQL,"SELECT precio FROM " + sap.darTablaSucursalProducto() + " WHERE id_producto = ? AND id_sucursal = ?");
+		System.out.println(sap.darTablaSucursalProducto());	
+		Query q = pm.newQuery(SQL,"SELECT precio FROM " + sap.darTablaSucursalProducto() + " WHERE id_producto = ? AND id_sucursal = ?");
 			q.setParameters(idsProducto, idSede);
 			q.setResultClass(Integer.class);
 			Integer precio = (Integer) q.executeUnique();

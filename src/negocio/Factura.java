@@ -4,8 +4,6 @@ public class Factura {
 	
 	private Long numeroDeSerie;
 	
-	private String fecha;
-	
 	private Long idCompra;
 	
 	/**
@@ -13,7 +11,6 @@ public class Factura {
 	 */
 	public Factura() {
 		this.numeroDeSerie = 0L;
-		this.fecha = "";
 		this.idCompra = 0L;
 	}
 	
@@ -25,7 +22,6 @@ public class Factura {
 	 */
 	public Factura(Long numeroSerie0, String fecha0, Long idCompra0) {
 		this.numeroDeSerie = numeroSerie0;
-		this.fecha = fecha0;
 		this.idCompra = idCompra0;
 	}
 	
@@ -35,14 +31,6 @@ public class Factura {
 
 	public void setNumeroDeSerie(Long numeroDeSerie) {
 		this.numeroDeSerie = numeroDeSerie;
-	}
-
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
 	}
 
 	public Long getIdCompra() {
