@@ -2,10 +2,13 @@ package controller;
 
 import java.util.List;
 
+import negocio.Bodega;
 import negocio.Cliente;
 import negocio.Compra;
+import negocio.Estante;
 import negocio.Producto;
 import negocio.Proveedor;
+import negocio.Sucursal;
 import persistencia.SuperAndesPersistence;
 
 public class Controller {
@@ -26,17 +29,21 @@ public class Controller {
 		return sap.adicionarCliente(tipoIdentificacion, identificacion, nombre, correo, direccion);
 	}
 	
-	public static void registrarSucursal() {
-		
+	public static Sucursal registrarSucursal(String nombre, String ciudad, String direccion, String mercado) { 
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.adicionarSucursal(nombre, ciudad, direccion, mercado);
 	}
 	
-	public static void registrarUnaBodegaAUnaSucursal() {
-		
+	public static Bodega registrarUnaBodegaAUnaSucursal(Integer capacidadVol, Integer capacidadPeso, String categoria, Long idSucursal) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.adicionarBodega(capacidadVol, capacidadPeso, categoria, idSucursal);
 	}
 	
-	public static void registrarUnEstanteAUnaSucursal() {
-		
+	public static Estante registrarUnEstanteAUnaSucursal(Integer capacidadVol, Integer capacidadPeso, String categoria, Integer posicion, Integer nivelAbastecimiento, Long idSucursal) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.adicionarEstante(capacidadVol, capacidadPeso, categoria, posicion, nivelAbastecimiento, idSucursal);
 	}
+
 	
 	public static Producto registrarUnaPromocion(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
