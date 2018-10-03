@@ -84,6 +84,21 @@ public class SQLProducto {
 		return (List<Producto>) q.executeList();
 	}
 	
+	public List<Producto> darofertasPopulares(PersistenceManager pm )
+	{
+		String sql1 ="SELECT COUNT(ID),ID";
+		sql1 += "FROM "+ sap.darTablaProductos();
+		sql1 += "JOIN " + sap.darTablaProdcutoCompra() + "ON ID = ID_PRODUCTO";
+		sql1 += "WHERE PRODUCTOS.ES_PROMOCION ==1 ";
+		sql1 += "GROUP BY ID";
+	
+		String sql ="SELECT *";
+		sql += "FROM ("+ sql1 +")";
+		sql += "WHERE ROWNUM <=20";
+		Query q =pm.newQuery(SQL, sql);
+		return q.executeList();
+	}
+		
 	public Producto obtenerProductoPorId(PersistenceManager pm, Long id) {
 		Query q = pm.newQuery(SQL, 	"SELECT * FROM " + sap.darTablaProductos() + "WHERE ID = ?");
 		q.setParameters(id);
