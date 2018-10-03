@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.Controller;
+import negocio.Cliente;
 import negocio.Compra;
 import negocio.Producto;
 
@@ -65,7 +66,18 @@ public class View {
 					System.out.println("se ha creado el producto: \n" + prod);
 				break;
 				case 3:
-					
+					System.out.println("Ingrese el tipo de indentificacion del cliente");
+					String tipoIdentificacion = "Ti";
+					System.out.println("ingrese la identificacion del cliente");
+					Long identificacion = scan.nextLong();
+					System.out.println("Ingrese el nombre del cliente");
+					String nombreC = "migH";
+					System.out.println("ingrese el correo del cliente");
+					String correo = "fgh";
+					System.out.println("ingrese la direccion del cliente");
+					String direccion = "cra568#56-87";
+					Cliente cli = Controller.registrarCliente(tipoIdentificacion, identificacion, nombreC, correo, direccion);
+					System.out.println(cli);
 				break;
 				case 4:
 					

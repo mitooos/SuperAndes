@@ -12,6 +12,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import negocio.Cliente;
 import negocio.Compra;
 import negocio.OrdenDeCompra;
 import negocio.OrdenDeCompra_Producto;
@@ -33,6 +34,7 @@ public class SuperAndesPersistence {
 	private SQLOrdenDeCompra_Producto sqlOrdenDeCompraProducto;
 	private SQLCompra sqlCompra;
 	private SQLProveedor sqlProveedor;
+	private SQLCliente sqlCliente;
 
 
 	public SuperAndesPersistence() {
@@ -89,6 +91,7 @@ public class SuperAndesPersistence {
 		sqlProveedor = new SQLProveedor(this);
 		sqlOrdenDeCompra = new SQLOrdenDeCompra(this);
 		sqlOrdenDeCompraProducto = new SQLOrdenDeCompra_Producto(this);
+		sqlCliente = new SQLCliente(this);
 	}
 
 	public String darSeq()
@@ -199,6 +202,27 @@ public class SuperAndesPersistence {
 			return null;
 		}
 
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public Cliente adicionarCliente(String tipoIdentificacion,Long identificacion, String nombre, String correo, String direccion) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			Long id = nextval();
+			sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id, tipoIdentificacion,identificacion, nombre, correo, direccion);
+			return new Cliente(id, tipoIdentificacion,identificacion, nombre, correo, direccion);
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
 		finally {
 			if(tx.isActive()) {
 				tx.rollback();
