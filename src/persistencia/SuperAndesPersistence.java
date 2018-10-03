@@ -391,6 +391,66 @@ public class SuperAndesPersistence {
 		}
 	}
 	
+	public List<Producto> darMejoresPromociones()
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			return sqlProducto.darofertasPopulares(pmf.getPersistenceManager());
+		}
+		catch(Exception e){
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		
+	}
+	
+//	public Integer darIndiceEstante(Long idSucursal, Long idEstante)
+//	{
+//		PersistenceManager pm =pmf.getPersistenceManager();
+//		Transaction tx = pm.currentTransaction();
+//		try {
+//			return sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idEstante);
+//		}
+//		catch(Exception e){
+//			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+//			return null;
+//		}
+//		finally {
+//			if(tx.isActive()) {
+//				tx.rollback();
+//			}
+//			pm.close();
+//		}
+//	}
+//	
+	public Integer darIndiceOcupacion(Long idSucursal,Long idBodega ,Long idEstante)
+	{
+		PersistenceManager pm =pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Integer resultado = 0;
+		try {
+			resultado = sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idBodega) + sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idEstante);
+			return resultado;
+		}
+		catch(Exception e){
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
 	public List<Producto> darProductoQueCumpleCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
