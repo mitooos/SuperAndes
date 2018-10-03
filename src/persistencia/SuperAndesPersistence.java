@@ -369,7 +369,6 @@ public class SuperAndesPersistence {
 	public Compra agregarCompra(long idCliente, long idSucursal, Long idProducto, Integer cantidadProducto) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-
 		try {
 			Long id = nextval();
 			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
@@ -381,6 +380,24 @@ public class SuperAndesPersistence {
 
 		}
 		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public List<Producto> darProductoQueCumpleCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			return sqlProducto.productosQueCumplenCaracteristicaString(pmf.getPersistenceManager(), caracteristica, valorMenor, valorMayor, i, id);
+		}
+		catch(Exception e){
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
