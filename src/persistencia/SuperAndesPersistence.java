@@ -370,13 +370,14 @@ public class SuperAndesPersistence {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
+			tx.begin();
 			Long id = nextval()+10;
 			String fechaSql = sqlUtil.fechaSql(fecha);
 			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
-			sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1,fechaSql, idCliente, idSucursal);
+			sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1,fecha, idCliente, idSucursal);
 			sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProducto, cantidadProducto);
-
 			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
+			tx.commit();
 			return new Compra(id, costo, true, fecha,idCliente, idSucursal);
 
 		}

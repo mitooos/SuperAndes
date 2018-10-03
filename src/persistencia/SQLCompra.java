@@ -17,7 +17,7 @@ public class SQLCompra {
 	
 	public long agregarCompra(PersistenceManager pm, long id, Integer precioTotal, int pagada,String fecha, long idCliente, long idSucursal) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaCompra() + "(id, precio_total, pagada,fecha, id_cliente, id_sucursal) "
-				+ " values (?,?,?,?,?,?)");
+				+ " values (?,?,?,TO_DATE(?,'DD/MM/YY'),?,?)");
 		q.setParameters(id,precioTotal,pagada,fecha, idCliente, idSucursal);
 		return (long) q.executeUnique();
 	}

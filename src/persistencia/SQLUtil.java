@@ -33,6 +33,6 @@ public class SQLUtil {
 	}
 	
 	public String fechaSql(String fecha) {
-		return "TO_DATE('" + fecha + "','DD/MM/YYYY')"; 
+		return "TO_DATE('" + fecha + "','DD/MM/YYYY')";
 	}
 }
