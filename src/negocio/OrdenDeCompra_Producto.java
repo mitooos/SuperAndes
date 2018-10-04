@@ -1,5 +1,7 @@
 package negocio;
 
+import java.math.BigDecimal;
+
 public class OrdenDeCompra_Producto {
 	
 	private Long idOrdenCompra;	
@@ -64,6 +66,18 @@ public class OrdenDeCompra_Producto {
 
 	public void setVolumen(Integer volumen) {
 		this.volumen = volumen;
+	}
+	
+	public void setID_ORDEN_DE_COMPRA(BigDecimal dec) {
+		this.idOrdenCompra = dec.longValue();
+	}
+	
+	public void setID_PRODUCTO(BigDecimal bg) {
+		this.idProcducto = bg.longValue();
+	}
+	
+	public void setPRECIO_ACORDADO(BigDecimal bg) {
+		this.precioAcordado = bg.intValue();
 	}
 
 }

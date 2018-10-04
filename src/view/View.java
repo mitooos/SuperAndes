@@ -182,7 +182,9 @@ public class View {
 					Long idL = scan.nextLong();
 					System.out.println("Ingrese la calificacion al proveedor");
 					Integer calificacion1 = scan.nextInt();
-					Controller.registrarLaLlegadaDeUnProductoAUnaSucursal(idL, calificacion1);
+					System.out.println("Ingrese la sucursal a la que llego");
+					Long idSucursalP = scan.nextLong();
+					Controller.registrarLaLlegadaDeUnProductoAUnaSucursal(idL, calificacion1,idSucursalP);
 					
 				break;
 
