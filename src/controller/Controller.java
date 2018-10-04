@@ -59,15 +59,15 @@ public class Controller {
 		return sap.finalizarPromocion(idPromocion);
 	}
 	
-	public static OrdenDeCompra_Producto registrarUnPediddoDeUnProductoAUnaSucursal(long idProveedor,String fechaEstimadaEntrega, Long idProducto,Integer volumen ,Integer precioAcordado ,Long idSucursal) {
+	public static OrdenDeCompra registrarUnPediddoDeUnProductoAUnaSucursal(long idProveedor,String fechaEstimadaEntrega, Long idProducto,Integer volumen ,Integer precioAcordado ,Long idSucursal) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.agregarOrdenProducto(idProveedor, fechaEstimadaEntrega, idProducto, volumen, precioAcordado, idSucursal);
 		
 	}
 	
-	public static OrdenDeCompra registrarLaLlegadaDeUnProductoAUnaSucursal(long id ,Integer calificacion) {
+	public static int registrarLaLlegadaDeUnProductoAUnaSucursal(long id ,Integer calificacion,long idSucursal) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
-		return sap.recibirOrden(id, calificacion);
+		return sap.recibirOrden(id, calificacion, idSucursal);
 	}
 	
 	public static Compra registrarLaVentaDeUnProductoEnUnaSucursal(Long idCliente, Long idSucursal,String fecha, Long idProductos, Integer cantidadProductos) {
@@ -81,6 +81,12 @@ public class Controller {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.darVentasSucursalesEnUnRango(fechaInicial, fechaFinal);
 	}
+	
+	public static List<Producto> obtenerPromociones(){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darMejoresPromociones();
+	}
+
 	
 	public static List<Producto> obtenerProductosQueCumplenCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();

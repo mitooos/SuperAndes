@@ -1,5 +1,7 @@
 package negocio;
 
+import oracle.sql.DATE;
+
 public class OrdenDeCompra {
 
 	private Long id;
@@ -40,10 +42,10 @@ public class OrdenDeCompra {
 	 * @param calificacion0
 	 * @param fechaEntregado0
 	 */
-	public OrdenDeCompra(Long id0, String fechaEstimadaEntrega0, boolean entregado0, Integer calificacion0, String fechaEntregado0, Long idProveedor0,Long idSucursal0) {
+	public OrdenDeCompra(Long id0, String fechaEstimadaEntrega0, int entregado0, Integer calificacion0, String fechaEntregado0, Long idProveedor0,Long idSucursal0) {
 		this.id = id0;
 		this.fechaEstimadaEntrega = "";
-		this.entregado = entregado0;
+		this.entregado = (entregado0 == 1)? true:false;
 		this.calificacion = calificacion0;
 		this.fechaEntregado = fechaEntregado0;
 		this.idProveedor = idProveedor0;
@@ -104,6 +106,10 @@ public class OrdenDeCompra {
 
 	public void setIdSucursal(Long idSucursal) {
 		this.idSucursal = idSucursal;
+	}
+	
+	public void setFECHA_ESTIMADA_ENTREGA(DATE fech) {
+		this.fechaEstimadaEntrega = fech.stringValue();
 	}
 	
 	

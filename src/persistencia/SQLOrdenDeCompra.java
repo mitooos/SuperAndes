@@ -19,17 +19,17 @@ public class SQLOrdenDeCompra {
 		this.sap=sap;
 	}
 	
-	public OrdenDeCompra crearOrden(PersistenceManager pm, Long id0, String fechaEstimadaEntrega0, boolean entregado0, Integer calificacion0, String fechaEntregado0, Long idProveedor0, Long idSucursal0)
+	public Long crearOrden(PersistenceManager pm, Long id0, String fechaEstimadaEntrega0, int entregado0, Integer calificacion0, String fechaEntregado0, Long idProveedor0, Long idSucursal0)
 	{
-		Query q = pm.newQuery(SQL ,"INSERT INTO "+ sap.darTablaOrdenDeCompra() + "(id, fecha_Estimada_Entrega, entregado, calificacion, fecha_Entregado, id_Proveedor,id_sucursal"
+		Query q = pm.newQuery(SQL ,"INSERT INTO "+ sap.darTablaOrdenDeCompra() + "(id, fecha_Estimada_Entrega, entregado, calificacion, fecha_Entrega, id_Proveedor,id_sucursal)"
 				  +" values (?,?,?,?,?,?,?)");
-		q.setParameters(id0,fechaEstimadaEntrega0,entregado0,calificacion0,fechaEntregado0,idProveedor0);
-		return (OrdenDeCompra) q.executeUnique();
+		q.setParameters(id0,fechaEstimadaEntrega0,entregado0,calificacion0,fechaEntregado0,idProveedor0, idSucursal0);
+		return (Long) q.executeUnique();
 	}
 	
 	public OrdenDeCompra darOrdenPorId(PersistenceManager pm, long id0)
 	{
-		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ "WHERE id= ?");
+		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ " WHERE id= ?");
 		q.setResultClass(OrdenDeCompra.class);
 		q.setParameters(id0);
 		return (OrdenDeCompra) q.executeUnique();
@@ -37,7 +37,7 @@ public class SQLOrdenDeCompra {
 	
 	public OrdenDeCompra darOrdenSinEntregarProveedor(PersistenceManager pm, long idProveedor0)
 	{
-		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ "WHERE id_Proveedor= ? AND entregado = 0");
+		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ " WHERE id_Proveedor= ? AND entregado = 0");
 		q.setResultClass(OrdenDeCompra.class);
 		q.setParameters(idProveedor0);
 		return (OrdenDeCompra) q.executeUnique();
@@ -50,7 +50,7 @@ public class SQLOrdenDeCompra {
 	{
 		String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
-		Query q = pm.newQuery(SQL, "UPDATE "+ sap.darTablaOrdenDeCompra()+ "SET entregado = 1, calificacion = ?,  fecha_entregado= ? WHERE id=?");
+		Query q = pm.newQuery(SQL, "UPDATE "+ sap.darTablaOrdenDeCompra()+ " SET entregado = 1, calificacion = ?,  fecha_entrega= ? WHERE id=?");
 		q.setParameters(calificacion,date, id);
 		return (long) q.executeUnique();
 	}
