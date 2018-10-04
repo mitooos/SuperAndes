@@ -50,8 +50,8 @@ public class SuperAndesPersistence {
 		properties.setProperty("javax.jdo.PersistenceManagerFactoryClass", "org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
 		properties.setProperty("javax.jdo.option.ConnectionDriverName", "oracle.jdbc.driver.OracleDriver");
 		properties.setProperty("javax.jdo.option.ConnectionURL","jdbc:oracle:thin:@fn3.oracle.virtual.uniandes.edu.co:1521:prod");
-		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C171820");
-		properties.setProperty("javax.jdo.option.ConnectionPassword","PrVvggcFFg");
+		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C331820");
+		properties.setProperty("javax.jdo.option.ConnectionPassword","t0Hv2UpEMH");
 		properties.setProperty("javax.jdo.option.Mapping", "oracle");
 		properties.setProperty("datanucleus.schema.autoCreateAll", "false");
 		properties.setProperty("datanucleus.query.sql.allowAll", "true");
@@ -443,26 +443,26 @@ public class SuperAndesPersistence {
 //		}
 //	}
 //	
-	public Integer darIndiceOcupacion(Long idSucursal)
-	{
-		PersistenceManager pm =pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		Integer resultado = 0;
-		try {
-			resultado = sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager()) + sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager());
-			return resultado;
-		}
-		catch(Exception e){
-			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally {
-			if(tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
+//	public List<Bodega> darIndiceOcupacion()
+//	{
+//		PersistenceManager pm =pmf.getPersistenceManager();
+//		Transaction tx = pm.currentTransaction();
+//		List<Bodega> resultado = 0;
+//		try {
+//			resultado = add(sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager()));
+//			return resultado;
+//		}
+//		catch(Exception e){
+//			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+//			return null;
+//		}
+//		finally {
+//			if(tx.isActive()) {
+//				tx.rollback();
+//			}
+//			pm.close();
+//		}
+//	}
 	
 	public List<Producto> darProductoQueCumpleCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
 		List<BigDecimal> lista = sqlProducto.productosQueCumplenCaracteristicaString(pmf.getPersistenceManager(), caracteristica, valorMenor, valorMayor, i, id);

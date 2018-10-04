@@ -82,6 +82,12 @@ public class Controller {
 		return sap.darVentasSucursalesEnUnRango(fechaInicial, fechaFinal);
 	}
 	
+	public static List<Producto> obtenerPromociones(){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darMejoresPromociones();
+	}
+
+	
 	public static List<Producto> obtenerProductosQueCumplenCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.darProductoQueCumpleCaracteristica(caracteristica, valorMenor, valorMayor, i, id);

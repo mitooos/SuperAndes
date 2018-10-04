@@ -27,9 +27,10 @@ public class SQLOrdenDeCompra_Producto {
 		return (OrdenDeCompra_Producto) q.executeUnique();
 	}
 	
+	
 	public List<OrdenDeCompra_Producto> darOrdenesDeCompraProductos(PersistenceManager pm,  Long idOrdenCompra)
 	{
-		Query q = pm.newQuery(SQL,"SELECT * FROM" + sap.darTablaOrdenDeCompraProducto() + "WHERE id_orden_de_compra = ?");
+		Query q = pm.newQuery(SQL,"SELECT * FROM" + sap.darTablaOrdenDeCompraProducto() + " WHERE id_orden_de_compra = ?");
 		q.setResultClass(OrdenDeCompra_Producto.class);
 		return (List<OrdenDeCompra_Producto>) q.executeUnique();
 		
