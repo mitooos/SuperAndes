@@ -163,11 +163,29 @@ public class View {
 					System.out.println("Se ha finalizado la promocion con el id: " + idProm);
 				break;
 				case 9:
-					
+					System.out.println("Ingrese el id del proveedor");
+					Long idProveedorP = scan.nextLong();
+					System.out.println("Ingrese la fecha inicial con el formato DD/MM/AAAA");
+					String fechaEstimadaEntrega = scan.next();
+					System.out.println("Ingrese el id del producto");
+					Long idProductoP = scan.nextLong();
+					System.out.println("Ingrese el volumen deseado");
+					Integer volumen = scan.nextInt();
+					System.out.println("Ingrese el id del precio Acordado");
+					Integer precioAcordado = scan.nextInt();
+					System.out.println("Ingrese el id de la sucursal");
+					Long idSucursal1 = scan.nextLong();
+					Controller.registrarUnPediddoDeUnProductoAUnaSucursal(idProveedorP, fechaEstimadaEntrega, idProductoP, volumen, precioAcordado, idSucursal1);
 				break;
 				case 10:
+					System.out.println("Ingrese el id de la orden");
+					Long idL = scan.nextLong();
+					System.out.println("Ingrese la calificacion al proveedor");
+					Integer calificacion1 = scan.nextInt();
+					Controller.registrarLaLlegadaDeUnProductoAUnaSucursal(idL, calificacion1);
 					
 				break;
+
 				case 11:
 					System.out.println("ingrese el id de la sucursal");
 					long idSucursal = scan.nextLong();
@@ -193,6 +211,12 @@ public class View {
 					}
 				break;
 				case 13:
+					System.out.println("Las promociones son");
+					List<Producto> rta2 = Controller.obtenerPromociones();
+					for(Producto pro:rta2)
+					{
+						System.out.println(pro.toString());
+					}
 					
 				break;
 				case 14:

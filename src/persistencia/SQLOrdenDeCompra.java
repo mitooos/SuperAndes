@@ -29,7 +29,7 @@ public class SQLOrdenDeCompra {
 	
 	public OrdenDeCompra darOrdenPorId(PersistenceManager pm, long id0)
 	{
-		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ "WHERE id= ?");
+		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ " WHERE id= ?");
 		q.setResultClass(OrdenDeCompra.class);
 		q.setParameters(id0);
 		return (OrdenDeCompra) q.executeUnique();
@@ -37,7 +37,7 @@ public class SQLOrdenDeCompra {
 	
 	public OrdenDeCompra darOrdenSinEntregarProveedor(PersistenceManager pm, long idProveedor0)
 	{
-		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ "WHERE id_Proveedor= ? AND entregado = 0");
+		Query q= pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaOrdenDeCompra()+ " WHERE id_Proveedor= ? AND entregado = 0");
 		q.setResultClass(OrdenDeCompra.class);
 		q.setParameters(idProveedor0);
 		return (OrdenDeCompra) q.executeUnique();
