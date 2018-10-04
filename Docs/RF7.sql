@@ -1,0 +1,1 @@
+Insert into PRODUCTOS  values ('3','Garbanzos','Alkosto',16.000,'4100','Gr','200','4000','3ea','4 paquetes de 1000gr cada uno','4','No Perecedero',1,1,'Pague uno lleve el otro con 50% de descuento');

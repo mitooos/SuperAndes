@@ -1,0 +1,1 @@
+INSERT INTO BODEGA VALUES (1, 5000, 500000, 'No Perecedero', 1);
