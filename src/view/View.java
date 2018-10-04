@@ -1,7 +1,5 @@
 package view;
 
-import java.math.BigDecimal;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -91,7 +89,7 @@ public class View {
 					String ciudad = scan.next();
 					System.out.println("Ingrese la direccion de la sucursal");
 					String direccionS = scan.next();
-					System.out.println("ingrese el mercado de la sucursal");
+					System.out.println("ingrese el segmento de mercado de la sucursal (Alto,Medio,Bajo)");
 					String mercado = scan.next();
 					Sucursal sucursal = Controller.registrarSucursal(nombreS, ciudad, direccionS, mercado);
 					System.out.println(sucursal);
@@ -115,7 +113,7 @@ public class View {
 					Integer capacidadVol1 = scan.nextInt();
 					System.out.println("ingrese la capacidad en peso en kg");
 					Integer capacidadPeso1 = scan.nextInt();
-					System.out.println("Ingrese la categoria de la bodega");
+					System.out.println("Ingrese la categoria de la estanteria");
 					String categoria1 = scan.next();
 					System.out.println("Ingrese en que posicion va el estante");
 					Integer posicion = scan.nextInt();
@@ -171,7 +169,7 @@ public class View {
 					Long idProductoP = scan.nextLong();
 					System.out.println("Ingrese el volumen deseado");
 					Integer volumen = scan.nextInt();
-					System.out.println("Ingrese el id del precio Acordado");
+					System.out.println("Ingrese el precio Acordado");
 					Integer precioAcordado = scan.nextInt();
 					System.out.println("Ingrese el id de la sucursal");
 					Long idSucursal1 = scan.nextLong();
@@ -256,12 +254,6 @@ public class View {
 						System.out.println(producto.toString());
 					}
 				break;
-				case 16:
-					
-				break;
-				case 17:
-					
-				break;
 				case 100:
 					fin = true;
 					scan.close();
@@ -289,8 +281,6 @@ public class View {
 		System.out.println("13. Mostrar las 20 promociones mas populares");
 		System.out.println("14. Mostrar el indice de ocupamiento de todas las bodegas y estantes de una sucursal");
 		System.out.println("15. Mostrar productos que cumplen cierta caracteristica");
-		System.out.println("16. Mostrar compras de SuoerAndes");
-		System.out.println("17. Mostar ventas a un Usuario dado en un rango de tiempo \n");
 		
 		System.out.println("100. Salir \n");
 		System.out.println("Ingrese el numero de la opcion deseada y presione enter");
