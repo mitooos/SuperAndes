@@ -13,6 +13,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import org.apache.log4j.Logger;
+
 import negocio.Bodega;
 import negocio.Cliente;
 import negocio.Compra;
@@ -25,9 +27,10 @@ import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
 
 public class SuperAndesPersistence {
+	
+	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
 
 	public final static String SQL = "javax.jdo.query.SQL";
-	//	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
 
 	private static SuperAndesPersistence instance;
 	private PersistenceManagerFactory pmf;
@@ -162,6 +165,7 @@ public class SuperAndesPersistence {
 	}
 
 	private Long nextval() {
+		log.trace("generando secuencia");
 		return sqlUtil.nextval(pmf.getPersistenceManager());
 	}
 
@@ -225,13 +229,14 @@ public class SuperAndesPersistence {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
+			log.trace("prueba");
 			tx.begin();
 			Long id = nextval() + 1000;
 			sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id, tipoIdentificacion,identificacion, nombre, correo, direccion);
 			return new Cliente(id, tipoIdentificacion,identificacion, nombre, correo, direccion);
 		}
 		catch(Exception e) {
-			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
