@@ -84,5 +84,14 @@ public class Compra {
 	public void setIdSucursal(Long idSucursal) {
 		this.idSucursal = idSucursal;
 	}
+	
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
 
 }
