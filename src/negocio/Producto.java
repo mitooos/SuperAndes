@@ -1,43 +1,38 @@
 package negocio;
 
 public class Producto {
-	
-	private Long id;
-	
-	private String nombre;
-	
-	private Integer tamano;
-	
-	private String unidades;
-	
-	private String marca;
-	
-	private Integer precioUnitario;
-	
-	private Integer volEmpaque;
-	
-	private Integer pesoEmpaque;
-	
-	private Integer hexa;
-	
-	private String presentacion;
-	
-	private Integer precioPorUnidad;
-	
-	private String categoria;
-	
-	private boolean esPromocion;
 
-	private boolean activa;
-	
-	private String descripcion;
-	
-	
+	private Long id;
+
+	private String nombre;
+
+	private Integer tamano;
+
+	private String unidades;
+
+	private String marca;
+
+	private Integer precioUnitario;
+
+	private Integer volEmpaque;
+
+	private Integer pesoEmpaque;
+
+	private Integer hexa;
+
+	private String presentacion;
+
+	private Integer precioPorUnidad;
+
+	private String categoria;
+
+
+
 	/**
 	 * Constructor por defecto
 	 */
 	public Producto() {
-		
+
 		this.id = 0L;
 		this.nombre = "";
 		this.tamano = 0;
@@ -49,18 +44,14 @@ public class Producto {
 		this.hexa = 0x0;
 		this.presentacion = "";
 		this.precioPorUnidad = 0;
-		this.categoria = "";
-		this.esPromocion = false;
-		this.activa = false;
-		this.descripcion = "";
-		
+		this.categoria = "";		
 	}
-	
+
 	/**
 	 * construcor con valores
 	 */
 	public Producto(Long id, String nombre, Integer tamano, String unidades, String marca, Integer precio_unitario, Integer vol_empaque,Integer peso_empaque, Integer hexa, String presentacion, Integer precio_por_unidad, String categoria, int esPromocion, int activa, String descripcion) {
-		
+
 		this.id = id;
 		this.nombre = nombre;
 		this.tamano = tamano;
@@ -73,12 +64,10 @@ public class Producto {
 		this.presentacion = presentacion;
 		this.precioPorUnidad = precio_por_unidad;
 		this.categoria = categoria;
-		this.esPromocion = (esPromocion==1)? true:false;
-		this.activa = (activa==1)? true : false;
-		this.descripcion = descripcion;
+
 	}
-	
-	
+
+
 
 
 	public Long getId() {
@@ -155,7 +144,7 @@ public class Producto {
 	public void setHexa(Integer hexa) {
 		this.hexa = hexa;
 	}
-	
+
 
 	public String getPresentacion() {
 		return presentacion;
@@ -180,46 +169,6 @@ public class Producto {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	
-	
-	public boolean isEsPromocion() {
-		return esPromocion;
-	}
-
-	public void setEsPromocion(Integer i) {
-		this.esPromocion = (i==1)?true:false;
-	}
-	
-	public void setES_PROMOCION(String esPromocion) {
-		int i = Integer.parseInt(esPromocion);
-		this.esPromocion = (i==1)?true:false;
-	}
-
-	public boolean isActiva() {
-		return activa;
-	}
-
-	public void setActiva(String activa) {
-		int i = Integer.parseInt(activa);
-		this.activa = (i==1)?true:false;
-	}
-	
-	
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	
-	public String toString() {
-		return ("id: " + this.id + ", nombre: " + this.nombre + ", tamaño: " + this.tamano + this.unidades + ", marca: " + this.marca + ", precio unitario: " + this.precioUnitario + ", vol Empaque: " + this.volEmpaque + ", peso con empaque: " 
-				+ this.pesoEmpaque + ", codigo hexa: " + this.hexa + ",presentacion: " + this.presentacion + ", precio por unidad:" + this.precioPorUnidad + ", categoria: " + this.categoria + ", esPromocion: " + this.esPromocion + 
-				", esta activa:" + this.activa + ", descripcion de la promo: " + this.descripcion);
-	}
-
-
 
 
 }
