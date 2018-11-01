@@ -228,16 +228,16 @@ public class SuperAndesPersistence {
 		}
 	}
 
-	public Cliente adicionarCliente(String tipoIdentificacion,Long identificacion, String nombre, String correo, String direccion) {
+	public Cliente adicionarCliente(Long identificacion, String nombre, String correo, String direccion) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			log.trace("prueba");
 			tx.begin();
 			Long id = nextval() + 1000;
-			long tuplas = sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id, tipoIdentificacion,identificacion, nombre, correo, direccion);
+			long tuplas = sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id,identificacion, nombre, correo, direccion);
 			log.info("Se cambiaron " + tuplas + " tuplas");
-			return new Cliente(id, tipoIdentificacion,identificacion, nombre, correo, direccion);
+			return new Cliente(id, identificacion, nombre, correo, direccion);
 		}
 		catch(Exception e) {
 			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));

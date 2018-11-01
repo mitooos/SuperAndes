@@ -4,8 +4,6 @@ public class Cliente {
 	
 	private Long id;
 	
-	private String tipoIdentificacion;
-	
 	private String nombre;
 
 	private Long identificacion;
@@ -19,7 +17,6 @@ public class Cliente {
 	 */
 	public Cliente() {
 		this.id = 0L;
-		this.tipoIdentificacion = "";
 		this.identificacion = 0L;
 		this.nombre = "";
 		this.correo = "";
@@ -34,9 +31,8 @@ public class Cliente {
 	 * @param correo0
 	 * @param direccion0
 	 */
-	public Cliente(Long id0, String tipoIdentificacion0, Long identificacion0,String nombre0, String correo0, String direccion0) {
+	public Cliente(Long id0, Long identificacion0,String nombre0, String correo0, String direccion0) {
 		this.id = id0;
-		this.tipoIdentificacion = tipoIdentificacion0;
 		this.identificacion = identificacion0;
 		this.nombre = 
 		this.correo = correo0;
@@ -50,14 +46,6 @@ public class Cliente {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getTipoIdentificacion() {
-		return tipoIdentificacion;
-	}
-
-	public void setTipoIdentificacion(String tipoIdentificacion) {
-		this.tipoIdentificacion = tipoIdentificacion;
 	}
 
 	public Long getIdentificacion() {
