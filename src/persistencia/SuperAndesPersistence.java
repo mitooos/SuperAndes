@@ -184,11 +184,13 @@ public class SuperAndesPersistence {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(),nit, nombre, calificacion);
+			long tuplas = sqlProveedor.adicionarProveedor(pmf.getPersistenceManager(),nit, nombre, calificacion);
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Proveedor(nit, nombre, calificacion);
 		}
 		catch(Exception e){
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -206,17 +208,18 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval() + 12;
 			String hex = hexa0.toString();
-			sqlProducto.adicionarProducto(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
+			long tuplas = sqlProducto.adicionarProducto(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 			tx.commit();
+			log.info("Se cambiaron " + tuplas + " tuplas");
 
 			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
-
 		finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -232,7 +235,8 @@ public class SuperAndesPersistence {
 			log.trace("prueba");
 			tx.begin();
 			Long id = nextval() + 1000;
-			sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id, tipoIdentificacion,identificacion, nombre, correo, direccion);
+			long tuplas = sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id, tipoIdentificacion,identificacion, nombre, correo, direccion);
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Cliente(id, tipoIdentificacion,identificacion, nombre, correo, direccion);
 		}
 		catch(Exception e) {
@@ -255,11 +259,13 @@ public class SuperAndesPersistence {
 		{
 			tx.begin();
 			Long id = nextval()+1;
-			sqlSucursal.adicionarSucursal(pmf.getPersistenceManager(), id, nombre, ciudad, direccion, mercado);
+			long tuplas = sqlSucursal.adicionarSucursal(pmf.getPersistenceManager(), id, nombre, ciudad, direccion, mercado);
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Sucursal(id,nombre,ciudad,direccion,mercado);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -278,11 +284,13 @@ public class SuperAndesPersistence {
 		{
 			tx.begin();
 			Long id = nextval()+100;
-			sqlBodega.adicionarBodega(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, idSucursal);
+			long tuplas = sqlBodega.adicionarBodega(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, idSucursal);
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Bodega(id, capacidadVol, capacidadPeso, categoria, idSucursal);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -303,11 +311,13 @@ public class SuperAndesPersistence {
 		{
 			tx.begin();
 			Long id = nextval()+100;
-			sqlEstante.adicionarEstante(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, posicion, nivelAbastecimiento, idSucursal);
+			long tuplas = sqlEstante.adicionarEstante(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, posicion, nivelAbastecimiento, idSucursal);
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Estante(id, capacidadVol, capacidadPeso, categoria, idSucursal, nivelAbastecimiento, posicion);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -330,14 +340,15 @@ public class SuperAndesPersistence {
 			int prom = 1;
 			int activa = 1;
 			String hex = hexa0.toString();
-			sqlProducto.adicionarPromocion(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
+			long tuplas = sqlProducto.adicionarPromocion(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
 			tx.commit();
-
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, 1, 1, descripcion0);
 
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 
@@ -354,12 +365,14 @@ public class SuperAndesPersistence {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			sqlProducto.terminarPromocion(pmf.getPersistenceManager(), idPromocion);
+			long tuplas = sqlProducto.terminarPromocion(pmf.getPersistenceManager(), idPromocion);
 			tx.commit();
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return 1;
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return -1;
 		}
 		finally {
@@ -380,15 +393,17 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval()+10;
 			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
-			sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1,fecha, idCliente, idSucursal);
+			long tuplas = sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1,fecha, idCliente, idSucursal);
 			sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProducto, cantidadProducto);
 			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			tx.commit();
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Compra(id, costo, true, fecha,idCliente, idSucursal);
 
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -417,6 +432,7 @@ public class SuperAndesPersistence {
 		}
 		catch(Exception e){
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -487,15 +503,15 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id =nextval();
 
-			sqlOrdenDeCompra.crearOrden(pmf.getPersistenceManager(), id, fechaEstimadaEntrega, 0 , 0, "", idProveedor,idSucursal);
-			
-
+			long tuplas = sqlOrdenDeCompra.crearOrden(pmf.getPersistenceManager(), id, fechaEstimadaEntrega, 0 , 0, "", idProveedor,idSucursal);
 			sqlOrdenDeCompraProducto.crearOrdenProducto(pmf.getPersistenceManager(), id, idProducto, precioAcordado, volumen);
 			tx.commit();
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new OrdenDeCompra(id, fechaEstimadaEntrega, 0, 0, "", idProveedor, idSucursal);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -514,16 +530,17 @@ public class SuperAndesPersistence {
 
 		try
 		{
-			sqlOrdenDeCompra.registrarLLegadaOrden(pmf.getPersistenceManager(), id, calificacion);
+			long tuplas = sqlOrdenDeCompra.registrarLLegadaOrden(pmf.getPersistenceManager(), id, calificacion);
 			OrdenDeCompra_Producto orden = sqlOrdenDeCompraProducto.darOrdenesDeCompraProductos(pmf.getPersistenceManager(), id);
-
 			sqlOrdenDeCompra.actualizarInventarioDespuesDeOrden(pmf.getPersistenceManager(),orden.getIdProcducto(), orden.getVolumen(), idSucursal);
+			log.info("Se cambiaron " + tuplas + " tuplas");
 			return 1;
 		}
 
 		catch (Exception e)
 		{
 			System.out.println("Exception " + e.getMessage()+"\n"+ darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return -1;
 		}
 		finally
