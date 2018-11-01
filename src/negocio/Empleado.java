@@ -14,6 +14,8 @@ private Long id;
 	
 	private String direccion;
 	
+	private Long idSucursal;
+	
 	/**
 	 * Constructor por defecto
 	 */
@@ -24,6 +26,7 @@ private Long id;
 		this.nombre = "";
 		this.correo = "";
 		this.direccion = "";
+		this.idSucursal = 0L;
 	}
 	
 	/**
@@ -34,13 +37,14 @@ private Long id;
 	 * @param correo0
 	 * @param direccion0
 	 */
-	public Empleado(Long id0, String tipoIdentificacion0, Long identificacion0,String nombre0, String correo0, String direccion0) {
+	public Empleado(Long id0, String tipoIdentificacion0, Long identificacion0,String nombre0, String correo0, String direccion0, Long idSucursal0) {
 		this.id = id0;
 		this.tipoIdentificacion = tipoIdentificacion0;
 		this.identificacion = identificacion0;
 		this.nombre = 
 		this.correo = correo0;
 		this.direccion = direccion0;
+		this.idSucursal = idSucursal0;
 	}
 	
 
@@ -90,6 +94,14 @@ private Long id;
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+
+	public Long getIdSucursal() {
+		return idSucursal;
+	}
+
+	public void setIdSucursal(Long idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 
