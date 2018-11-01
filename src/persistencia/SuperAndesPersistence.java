@@ -28,7 +28,7 @@ import negocio.VentasSucursalTotales;
 
 public class SuperAndesPersistence {
 	
-	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
+	private static Logger log = Logger.getLogger("SuperAndes.log");
 
 	public final static String SQL = "javax.jdo.query.SQL";
 
@@ -235,12 +235,12 @@ public class SuperAndesPersistence {
 			log.trace("prueba");
 			tx.begin();
 			Long id = nextval() + 1000;
-			long tuplas = sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id,identificacion, nombre, correo, direccion);
-			log.info("Se cambiaron " + tuplas + " tuplas");
+			sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id,identificacion, nombre, correo, direccion);
+			tx.commit();
 			return new Cliente(id, identificacion, nombre, correo, direccion);
 		}
 		catch(Exception e) {
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
