@@ -69,8 +69,6 @@ public class View {
 					System.out.println("se ha creado el producto: \n" + prod);
 				break;
 				case 3:
-					System.out.println("Ingrese el tipo de indentificacion del cliente");
-					String tipoIdentificacion = scan.next();
 					System.out.println("ingrese la identificacion del cliente");
 					Long identificacion = scan.nextLong();
 					System.out.println("Ingrese el nombre del cliente");
@@ -79,7 +77,7 @@ public class View {
 					String correo = scan.next();
 					System.out.println("ingrese la direccion del cliente");
 					String direccion = scan.next();
-					Cliente cli = Controller.registrarCliente(tipoIdentificacion, identificacion, nombreC, correo, direccion);
+					Cliente cli = Controller.registrarCliente( identificacion, nombreC, correo, direccion);
 					System.out.println(cli);
 				break;
 				case 4:

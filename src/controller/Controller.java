@@ -28,9 +28,9 @@ public class Controller {
 		return sap.adicionarProducto(nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, descripcion0, prom, activa);
 	}
 	
-	public static Cliente registrarCliente(String tipoIdentificacion, Long identificacion,String nombre,String correo, String direccion) {
+	public static Cliente registrarCliente(Long identificacion,String nombre,String correo, String direccion) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
-		return sap.adicionarCliente(tipoIdentificacion, identificacion, nombre, correo, direccion);
+		return sap.adicionarCliente(identificacion, nombre, correo, direccion);
 	}
 	
 	public static Sucursal registrarSucursal(String nombre, String ciudad, String direccion, String mercado) { 
