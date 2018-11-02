@@ -414,9 +414,9 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval()+10;
 			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
-			long tuplas = sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1,fecha, idCliente, idSucursal);
+			long tuplas = sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1, idCliente, idSucursal);
 			sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProducto, cantidadProducto);
-			sqlCompra.actualizarInventariosDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
+			sqlCompra.actualizarEstantesDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			tx.commit();
 			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Compra(id, costo, true, fecha,idCliente, idSucursal);
@@ -465,17 +465,76 @@ public class SuperAndesPersistence {
 		
 	}
 	
-	public void devolverProductoDelCarrito(long idProducto, long idCarrito, long idSucursal) {
+	public void devolverProductoDelCarrito(long idProducto, long idCarrito) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
+			Long idSucursal = sqlCarrito.darSede(pmf.getPersistenceManager(), idCarrito);
 			Integer cantidad = sqlCarrito.darCantidadProductoEnCarrito(pmf.getPersistenceManager(), idCarrito, idProducto);
 			sqlEstante.adicionarProductosEstanterias(pmf.getPersistenceManager(), idProducto, idSucursal, cantidad);
 			sqlCarrito.retirarProductosDeCarritos(pmf.getPersistenceManager(), idCarrito, idProducto);
 			tx.commit();
-			System.out.println("Commit");
 		}
 		catch(Exception e){
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public void pagarCompra(Long idCarrito, Long idCliente) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			Long idCompra = nextval();
+			Long idSede = sqlCarrito.darSede(pmf.getPersistenceManager(),idCarrito);
+			sqlCompra.agregarCompra(pmf.getPersistenceManager(), idCompra, 0, 0, idCliente, idSede);
+			List<Long> productos = sqlCarrito.darProductosEnCarrito(pmf.getPersistenceManager(), idCarrito);
+			List<Integer> cantidades = sqlCarrito.darCantidadesEnCarrito(pmf.getPersistenceManager(), idCarrito);
+			int i = 0;
+			Integer precioCompra = 0;
+			while(i<productos.size()) {
+				precioCompra =+ sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), productos.get(i), cantidades.get(i), idSede);
+				sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), idCompra, productos.get(i), cantidades.get(i));
+				sqlCarrito.retirarProductosDeCarritos(pmf.getPersistenceManager(), idCarrito, productos.get(i));
+			i++;
+			}
+			sqlCarrito.eliminarCliente(pmf.getPersistenceManager(), idCarrito);
+			sqlCompra.pagarCompra(pmf.getPersistenceManager(), idCompra, precioCompra);
+			tx.commit();
+			
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public void abandonarCarrito(Long idCarrito){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			Long idSucursal = sqlCarrito.darSede(pmf.getPersistenceManager(), idCarrito);
+			List<Long> productos = sqlCarrito.darProductosEnCarrito(pmf.getPersistenceManager(), idCarrito);
+			List<Integer> cantidades = sqlCarrito.darCantidadesEnCarrito(pmf.getPersistenceManager(), idCarrito);
+			int i = 0;
+			while (i<productos.size()) {
+				devolverProductoDelCarrito(productos.get(i), idCarrito);
+				i++;
+			}
+			sqlCarrito.eliminarCliente(pmf.getPersistenceManager(), idCarrito);
+			tx.commit();
+		}
+		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 		}
 		finally {
