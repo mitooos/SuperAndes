@@ -15,6 +15,12 @@ public class SQLCarrito {
 		this.sap = sap;
 	}
 	
+	public long adicionarCarrito(PersistenceManager pm, Long id, Long idCliente, Long idSucursal) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaCarritos() + " (id,idCliente,idSucursal) values (?,?,?)");
+		q.setParameters(id, idCliente, idSucursal);
+		return (long) q.executeUnique();
+	}
+	
 	public List<Long> darProductosEnCarrito(PersistenceManager pm, long idCarrito) {
 		Query q = pm.newQuery(SQL, "SELECT IDPRODUCTO FROM " + sap.darTablaCarritoProductos() + " WHERE IDCARRITO = ?");
 		q.setParameters(idCarrito);
