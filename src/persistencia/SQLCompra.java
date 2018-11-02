@@ -41,7 +41,6 @@ public class SQLCompra {
 					+ " id_estante IN (SELECT id FROM " + sap.darTablaEstante() + " WHERE id_sucursal = ?)");
 			q.setParameters(cantidad, idProducto, idSucursal);
 			return (long)q.executeUnique();
-
 	}
 	
 	public VentasSucursalTotales darVentasTotalesPorSucursalEnUnPeriodoDeTiempo(PersistenceManager pm,BigDecimal idSucursal, String fechaInicial, String fechaFinal) {
@@ -55,4 +54,6 @@ public class SQLCompra {
 		Query q = pm.newQuery(SQL, "SELECT UNIQUE ID_SUCURSAL FROM COMPRA ");
 		return q.executeList();
 	}
+	
+	
 }
