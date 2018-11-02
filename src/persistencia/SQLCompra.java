@@ -26,11 +26,17 @@ public class SQLCompra {
 	}
 	
 	public Integer calcularPrecioCompra(PersistenceManager pm, Long idsProducto, Integer cantidad, Long idSede) {
-		System.out.println(sap.darTablaSucursalProducto());	
+		Query q1 = pm.newQuery(SQL, "SELECT precio FROM " + sap.darTablaPromociones() + "WHERE IDPRODUCTO = ? AND (SELECT SYSDATE FROM DUAL) <= FECHAFIN AND (SELECT SYSDATE FROM DUAL) >= FACHAINICIO");
 		Query q = pm.newQuery(SQL,"SELECT precio FROM " + sap.darTablaSucursalProducto() + " WHERE id_producto = ? AND id_sucursal = ?");
+		q1.setParameters(idsProducto);
+		q1.setResultClass(Integer.class);
+		Integer precio = (Integer) q1.executeUnique();
+		if(precio==null) {
 			q.setParameters(idsProducto, idSede);
 			q.setResultClass(Integer.class);
-			Integer precio = (Integer) q.executeUnique();
+			precio = (Integer) q.executeUnique();
+		}
+			
 			System.out.println("El costo total de la compra es: " + precio*cantidad + "$");
 			return precio * cantidad;
 	}
