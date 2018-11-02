@@ -28,7 +28,7 @@ import negocio.VentasSucursalTotales;
 
 public class SuperAndesPersistence {
 	
-	private static Logger log = Logger.getLogger(SuperAndesPersistence.class.getName());
+	private static Logger log = Logger.getLogger("SuperAndes.log");
 
 	public final static String SQL = "javax.jdo.query.SQL";
 
@@ -46,7 +46,7 @@ public class SuperAndesPersistence {
 	private SQLSucursal sqlSucursal;
 	private SQLBodega sqlBodega;
 	private SQLEstante sqlEstante;
-
+	private SQLCarrito sqlCarrito;
 
 	public SuperAndesPersistence() {
 		Properties properties = new Properties();
@@ -78,6 +78,10 @@ public class SuperAndesPersistence {
 		tablas.add("PROVEEDOR");
 		tablas.add("SUCURSAL_PRODUCTO");
 		tablas.add("SUCURSAL");
+		tablas.add("PROMOCIONES");
+		tablas.add("PROMOCION_PRODUCTO");
+		tablas.add("CARRITOS");
+		tablas.add("CARRITO_PRODUCTO");
 	}
 
 	public static SuperAndesPersistence getInstance() {
@@ -106,6 +110,8 @@ public class SuperAndesPersistence {
 		sqlSucursal = new SQLSucursal(this);
 		sqlBodega = new SQLBodega(this);
 		sqlEstante = new SQLEstante(this);
+		sqlCarrito = new SQLCarrito(this);
+		
 	}
 
 	public String darSeq()
@@ -163,9 +169,24 @@ public class SuperAndesPersistence {
 	public String darTablaSucursal() {
 		return tablas.get(15);
 	}
+	
+	public String darTablaPromociones() {
+		return tablas.get(16);
+	}
+	
+	public String darTablaPromocionProducto() {
+		return tablas.get(17);
+	}
+	
+	public String darTablaCarritos() {
+		return tablas.get(18);
+	}
+	
+	public String darTablaCarritoProductos() {
+		return tablas.get(19);
+	}
 
 	private Long nextval() {
-		log.trace("generando secuencia");
 		return sqlUtil.nextval(pmf.getPersistenceManager());
 	}
 
@@ -235,12 +256,12 @@ public class SuperAndesPersistence {
 			log.trace("prueba");
 			tx.begin();
 			Long id = nextval() + 1000;
-			long tuplas = sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id,identificacion, nombre, correo, direccion);
-			log.info("Se cambiaron " + tuplas + " tuplas");
+			sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id,identificacion, nombre, correo, direccion);
+			tx.commit();
 			return new Cliente(id, identificacion, nombre, correo, direccion);
 		}
 		catch(Exception e) {
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -442,6 +463,27 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 		
+	}
+	
+	public void devolverProductoDelCarrito(long idProducto, long idCarrito, long idSucursal) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			Integer cantidad = sqlCarrito.darCantidadProductoEnCarrito(pmf.getPersistenceManager(), idCarrito, idProducto);
+			sqlEstante.adicionarProductosEstanterias(pmf.getPersistenceManager(), idProducto, idSucursal, cantidad);
+			sqlCarrito.retirarProductosDeCarritos(pmf.getPersistenceManager(), idCarrito, idProducto);
+			tx.commit();
+			System.out.println("Commit");
+		}
+		catch(Exception e){
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 	
 //	public Integer darIndiceEstante(Long idSucursal, Long idEstante)

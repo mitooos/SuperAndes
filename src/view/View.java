@@ -252,6 +252,16 @@ public class View {
 						System.out.println(producto.toString());
 					}
 				break;
+				
+				case 20:
+					System.out.println("Ingrese el id de la sucursal");
+					long idCarrito20 = scan.nextLong();
+					System.out.println("Ingrese el id del carrito");
+					long idSucursal20 = scan.nextLong();
+					System.out.println("Ingrese el id del prodcuto que va a devolver");
+					long idProducto20 = scan.nextLong();
+					Controller.devolverProductoDeUnCarritoDeCompras(idProducto20, idCarrito20, idSucursal20);
+				break;
 				case 100:
 					fin = true;
 					scan.close();
@@ -279,6 +289,11 @@ public class View {
 		System.out.println("13. Mostrar las 20 promociones mas populares");
 		System.out.println("14. Mostrar el indice de ocupamiento de todas las bodegas y estantes de una sucursal");
 		System.out.println("15. Mostrar productos que cumplen cierta caracteristica");
+		// rfc 5 16
+		// rfc 6 17
+		//rf 12 18
+		// rf 13 19
+		System.out.println("20. Devolver un producto del carrito de compras");
 		
 		System.out.println("100. Salir \n");
 		System.out.println("Ingrese el numero de la opcion deseada y presione enter");
