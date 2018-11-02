@@ -38,5 +38,11 @@ public class SQLCarrito {
 		q.setParameters(idCarrito, idProducto);
 		return (long) q.execute();
 	}
+	
+	public Long eliminarCliente(PersistenceManager pm, Long idCarrito) {
+		Query q = pm.newQuery(SQL, "ALTER " + sap.darTablaCarritos() + " SET IDCLIENTE = NULL WHERE ID = ?");
+		q.setParameters(idCarrito);
+		return (Long) q.executeUnique();
+	}
 
 }

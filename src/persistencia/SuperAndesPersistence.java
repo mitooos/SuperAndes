@@ -499,7 +499,9 @@ public class SuperAndesPersistence {
 			while(i<productos.size()) {
 				precioCompra =+ sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), productos.get(i), cantidades.get(i), idSede);
 				sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), idCompra, productos.get(i), cantidades.get(i));
+				sqlCarrito.retirarProductosDeCarritos(pmf.getPersistenceManager(), idCarrito, productos.get(i));
 			}
+			sqlCarrito.eliminarCliente(pmf.getPersistenceManager(), idCarrito);
 			sqlCompra.pagarCompra(pmf.getPersistenceManager(), idCompra, precioCompra);
 			tx.commit();
 			
