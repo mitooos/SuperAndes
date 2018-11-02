@@ -100,5 +100,15 @@ public class Controller {
 		sap.devolverProductoDelCarrito(idProducto, idCarrito);
 	}
 	
+	public static void pagarCompra(long idCarrito, long idCliente) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		sap.pagarCompra(idCarrito, idCliente);
+	}
+	
+	public static void abandonarCarrito(long idCarrito) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		sap.abandonarCarrito(idCarrito);
+	}
+	
 
 }

@@ -260,6 +260,17 @@ public class View {
 					long idProducto20 = scan.nextLong();
 					Controller.devolverProductoDeUnCarritoDeCompras(idProducto20, idCarrito20);
 				break;
+				case 21:
+					System.out.println("Ingrese el id del Carrito");
+					Long idCarrito21 = scan.nextLong();
+					System.out.println("Ingrese el id del cliente");
+					Long idCliente21 = scan.nextLong();
+					Controller.pagarCompra(idCarrito21, idCliente21);
+				break;
+				case 22:
+					System.out.println("Ingrese el id del carrito");
+					Long idCarrito22 = scan.nextLong();
+					Controller.abandonarCarrito(idCarrito22);
 				case 100:
 					fin = true;
 					scan.close();
@@ -292,6 +303,8 @@ public class View {
 		//rf 12 18
 		// rf 13 19
 		System.out.println("20. Devolver un producto del carrito de compras");
+		System.out.println("21. Pagar Compra");
+		System.out.println("22. Abandonar Carrito");
 		
 		System.out.println("100. Salir \n");
 		System.out.println("Ingrese el numero de la opcion deseada y presione enter");

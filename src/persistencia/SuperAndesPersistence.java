@@ -519,7 +519,7 @@ public class SuperAndesPersistence {
 		}
 	}
 	
-	public void AbandonarCarrito(Long idCarrito){
+	public void abandonarCarrito(Long idCarrito){
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
