@@ -18,15 +18,15 @@ public class SQLCompra {
 		this.sap = sap;
 	}
 	
-	public long agregarCompra(PersistenceManager pm, long id, Integer precioTotal, int pagada,String fecha, long idCliente, long idSucursal) {
+	public long agregarCompra(PersistenceManager pm, long id, Integer precioTotal, int pagada, long idCliente, long idSucursal) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaCompra() + "(id, precio_total, pagada,fecha, id_cliente, id_sucursal) "
-				+ " values (?,?,?,TO_DATE(?,'DD/MM/YY'),?,?)");
-		q.setParameters(id,precioTotal,pagada,fecha, idCliente, idSucursal);
+				+ " values (?,?,?,(SELECT SYSDATE FROM DUAL),?,?)");
+		q.setParameters(id,precioTotal,pagada, idCliente, idSucursal);
 		return (long) q.executeUnique();
 	}
 	
 	public Integer calcularPrecioCompra(PersistenceManager pm, Long idsProducto, Integer cantidad, Long idSede) {
-		Query q1 = pm.newQuery(SQL, "SELECT precio FROM " + sap.darTablaPromociones() + "WHERE IDPRODUCTO = ? AND (SELECT SYSDATE FROM DUAL) <= FECHAFIN AND (SELECT SYSDATE FROM DUAL) >= FACHAINICIO");
+		Query q1 = pm.newQuery(SQL, "SELECT precio FROM " + sap.darTablaPromociones() + " WHERE ID = (SELECT IDPROMOCION FROM " +sap.darTablaPromocionProducto() + " WHERE IDPRODUCTO = ?) AND (SELECT SYSDATE FROM DUAL) <= FECHAFINAL AND (SELECT SYSDATE FROM DUAL) >= FACHAINICIO");
 		Query q = pm.newQuery(SQL,"SELECT precio FROM " + sap.darTablaSucursalProducto() + " WHERE id_producto = ? AND id_sucursal = ?");
 		q1.setParameters(idsProducto);
 		q1.setResultClass(Integer.class);
@@ -41,7 +41,7 @@ public class SQLCompra {
 			return precio * cantidad;
 	}
 	
-	public long actualizarInventariosDespuesDeCompra(PersistenceManager pm, Long idProducto, Integer cantidad, Long idSucursal) {
+	public long actualizarEstantesDespuesDeCompra(PersistenceManager pm, Long idProducto, Integer cantidad, Long idSucursal) {
 
 			Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaEstanteProducto() + " SET cantidad = cantidad - ? WHERE id_producto = ? AND "
 					+ " id_estante IN (SELECT id FROM " + sap.darTablaEstante() + " WHERE id_sucursal = ?)");
@@ -59,6 +59,12 @@ public class SQLCompra {
 	public List<BigDecimal> darIdsSucursalesDondeHuboVentas(PersistenceManager pm){
 		Query q = pm.newQuery(SQL, "SELECT UNIQUE ID_SUCURSAL FROM COMPRA ");
 		return q.executeList();
+	}
+	
+	public Long pagarCompra(PersistenceManager pm,Long idCompra, Integer precio) {
+		Query q = pm.newQuery(SQL,"ALTER " + sap.darTablaCompra() + " SET PRECIO_TOTAL = ? AND PAGADA = 1 WHERE ID = ?");
+		q.setParameters(precio,idCompra);
+		return (Long) q.executeUnique();
 	}
 	
 	
