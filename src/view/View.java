@@ -254,13 +254,11 @@ public class View {
 				break;
 				
 				case 20:
-					System.out.println("Ingrese el id de la sucursal");
-					long idCarrito20 = scan.nextLong();
 					System.out.println("Ingrese el id del carrito");
-					long idSucursal20 = scan.nextLong();
+					long idCarrito20 = scan.nextLong();
 					System.out.println("Ingrese el id del prodcuto que va a devolver");
 					long idProducto20 = scan.nextLong();
-					Controller.devolverProductoDeUnCarritoDeCompras(idProducto20, idCarrito20, idSucursal20);
+					Controller.devolverProductoDeUnCarritoDeCompras(idProducto20, idCarrito20);
 				break;
 				case 100:
 					fin = true;

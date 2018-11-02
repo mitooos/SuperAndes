@@ -95,9 +95,9 @@ public class Controller {
 	
 	// iteracion 2
 	
-	public static void devolverProductoDeUnCarritoDeCompras(long idProducto, long idCarrito, long idSucursal) {
+	public static void devolverProductoDeUnCarritoDeCompras(long idProducto, long idCarrito) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
-		sap.devolverProductoDelCarrito(idProducto, idCarrito, idSucursal);
+		sap.devolverProductoDelCarrito(idProducto, idCarrito);
 	}
 	
 

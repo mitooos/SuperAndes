@@ -44,5 +44,12 @@ public class SQLCarrito {
 		q.setParameters(idCarrito);
 		return (Long) q.executeUnique();
 	}
+	
+	public Long darSede(PersistenceManager pm, Long idCarrito) {
+		Query q = pm.newQuery(SQL, "SELECT IDSUCURSAL FROM " + sap.darTablaCarritos() + "WHERE ID = ?");
+		q.setParameters(idCarrito);
+		q.setResultClass(Long.class);
+		return (Long) q.executeResultUnique();
+	}
 
 }
