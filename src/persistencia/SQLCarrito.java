@@ -21,6 +21,20 @@ public class SQLCarrito {
 		return (long) q.executeUnique();
 	}
 	
+	public long registrarProductoEnCarro(PersistenceManager pm, Long idCarrito, Long idProducto, int cantidad) {
+		Query q = pm.newQuery(SQL,"INSERT INTO " + sap.darTablaCarritoProductos() + " (idCarrito, idProducto, cantidad) values (?,?,?)");
+		q.setParameters(idCarrito, idProducto, cantidad);
+		return (long) q.executeUnique();
+	}
+	
+	public long actualizarEstantesDespuesDeCarro(PersistenceManager pm, Long idProducto, Integer cantidad, Long idSucursal) {
+
+		Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaEstanteProducto() + " SET cantidad = cantidad - ? WHERE id_producto = ? AND "
+				+ " id_estante IN (SELECT id FROM " + sap.darTablaEstante() + " WHERE id_sucursal = ?)");
+		q.setParameters(cantidad, idProducto, idSucursal);
+		return (long)q.executeUnique();
+}
+	
 	public List<Long> darProductosEnCarrito(PersistenceManager pm, long idCarrito) {
 		Query q = pm.newQuery(SQL, "SELECT IDPRODUCTO FROM " + sap.darTablaCarritoProductos() + " WHERE IDCARRITO = ?");
 		q.setParameters(idCarrito);
