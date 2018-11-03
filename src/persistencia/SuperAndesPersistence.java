@@ -311,12 +311,11 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval()+1;
 			long tuplas = sqlSucursal.adicionarSucursal(pmf.getPersistenceManager(), id, nombre, ciudad, direccion, mercado);
-			log.info("Se cambiaron " + tuplas + " tuplas");
+			tx.commit();
 			return new Sucursal(id,nombre,ciudad,direccion,mercado);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -336,12 +335,11 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval()+100;
 			long tuplas = sqlBodega.adicionarBodega(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, idSucursal);
-			log.info("Se cambiaron " + tuplas + " tuplas");
+			tx.commit();
 			return new Bodega(id, capacidadVol, capacidadPeso, categoria, idSucursal);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -586,6 +584,16 @@ public class SuperAndesPersistence {
 				tx.rollback();
 			}
 			pm.close();
+		}
+	}
+	
+	public List<OrdenDeCompra> darComprasAProveedores(){
+		try{
+			return sqlOrdenDeCompra.darOrdenesALosProveedores(pmf.getPersistenceManager());
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
 		}
 	}
 	

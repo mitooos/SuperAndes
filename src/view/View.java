@@ -11,6 +11,7 @@ import negocio.Carrito_Producto;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
+import negocio.OrdenDeCompra;
 import negocio.Producto;
 import negocio.Promocion;
 import negocio.Sucursal;
@@ -245,7 +246,12 @@ public class View {
 						System.out.println(producto.toString());
 					}
 				break;
-				
+				case 16:
+					List<OrdenDeCompra> compras = Controller.darComprasAProveedores();
+					for(OrdenDeCompra comp16: compras) {
+						System.out.println(comp16.toString());
+					}
+				break;
 				case 18:
 					System.out.println("ingrese el id del cliente al cual se le asignara el carro");
 					Long idCliente22 = scan.nextLong();
@@ -311,7 +317,7 @@ public class View {
 		System.out.println("13. Mostrar las 20 promociones mas populares");
 		System.out.println("14. Mostrar el indice de ocupamiento de todas las bodegas y estantes de una sucursal");
 		System.out.println("15. Mostrar productos que cumplen cierta caracteristica");
-		// rfc 5 16
+		System.out.println("16. Dar compras a los proveedores");
 		// rfc 6 17
 		System.out.println("18. Registrar un carrito a un cliente");
 		System.out.println("19. Agregar un producto a un caarrito");

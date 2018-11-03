@@ -1,6 +1,6 @@
 package negocio;
 
-import oracle.sql.DATE;
+import java.util.Date;
 
 public class OrdenDeCompra {
 
@@ -108,9 +108,34 @@ public class OrdenDeCompra {
 		this.idSucursal = idSucursal;
 	}
 	
-	public void setFECHA_ESTIMADA_ENTREGA(DATE fech) {
-		this.fechaEstimadaEntrega = fech.stringValue();
+	public void setFECHA_ESTIMADA_ENTREGA(Date fech) {
+		this.fechaEstimadaEntrega = fech.toString();
 	}
+	
+	public void setEntregado(int i) {
+		this.entregado = (i==1)? true :false;
+	}
+	
+	public void setFECHA_ENTREGA(Date fech) {
+		this.fechaEntregado = fech.toString();
+	}
+	
+	public void setID_PROVEEDOR(Long id) {
+		this.idProveedor = id;
+	}
+	
+	public void setID_SUCURSAL(long id) {
+		this.idSucursal = id;
+	}
+	
+
+
+	@Override
+	public String toString() {
+		return "Id proveedor" + this.idProveedor + "Id: " + this.id + ", Fecha estimada de entrega: " + this.fechaEstimadaEntrega + ", calificacion: " + this.calificacion + ", fecha entrega: " + this.fechaEntregado
+				+ ", id sucursal:" + this.idSucursal;
+	}
+	
 	
 	
 	

@@ -98,6 +98,11 @@ public class Controller {
 	
 	// iteracion 2
 	
+	public static List<OrdenDeCompra> darComprasAProveedores(){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darComprasAProveedores();
+	}
+	
 	public static Carrito adicionarCarrito(long idCliente, long idSucursal) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.adicionarCarrito(idCliente, idSucursal);
