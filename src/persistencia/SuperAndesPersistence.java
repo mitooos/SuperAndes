@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import negocio.Bodega;
 import negocio.Carrito;
+import negocio.Carrito_Producto;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
@@ -445,6 +446,30 @@ public class SuperAndesPersistence {
 			tx.commit();
 			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Compra(id, costo, true, fecha,idCliente, idSucursal);
+
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public Carrito_Producto agregarProducto(long idSucursal, long idCarrito, long idProducto, Integer cantidad) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			sqlCarrito.registrarProductoEnCarro(pmf.getPersistenceManager(), idCarrito, idProducto, cantidad);
+			sqlCarrito.actualizarEstantesDespuesDeCarro(pmf.getPersistenceManager(), idProducto, cantidad, idSucursal);
+			tx.commit();
+			return new Carrito_Producto(idCarrito, idProducto, cantidad);
 
 		}
 		catch(Exception e) {

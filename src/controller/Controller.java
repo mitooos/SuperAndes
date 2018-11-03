@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import negocio.Bodega;
+import negocio.Carrito;
+import negocio.Carrito_Producto;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
@@ -94,6 +96,16 @@ public class Controller {
 	}
 	
 	// iteracion 2
+	
+	public static Carrito adicionarCarrito(long idCliente, long idSucursal) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.adicionarCarrito(idCliente, idSucursal);
+	}
+	
+	public static Carrito_Producto adicionarProducto(long idSucursal, long idCarrito, long idProducto, int cantidad) {
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.agregarProducto(idSucursal, idCarrito, idProducto, cantidad);
+	}
 	
 	public static void devolverProductoDeUnCarritoDeCompras(long idProducto, long idCarrito) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
