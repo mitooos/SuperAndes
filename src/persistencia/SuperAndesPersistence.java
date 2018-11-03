@@ -16,6 +16,7 @@ import javax.jdo.Transaction;
 import org.apache.log4j.Logger;
 
 import negocio.Bodega;
+import negocio.Carrito;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
@@ -259,6 +260,30 @@ public class SuperAndesPersistence {
 			sqlCliente.adicionarCliente(pmf.getPersistenceManager(), id,identificacion, nombre, correo, direccion);
 			tx.commit();
 			return new Cliente(id, identificacion, nombre, correo, direccion);
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public Carrito  adicionarCarrito(Long idCliente,Long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			//log.trace("prueba");
+			tx.begin();
+			Long id = nextval() + 1000;
+			sqlCarrito.adicionarCarrito(pmf.getPersistenceManager(), id,idCliente, idSucursal);
+			tx.commit();
+			return new Carrito(id, idCliente, idSucursal);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
