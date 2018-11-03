@@ -132,7 +132,7 @@ public class OrdenDeCompra {
 
 	@Override
 	public String toString() {
-		return "Id proveedor" + this.idProveedor + "Id: " + this.id + ", Fecha estimada de entrega: " + this.fechaEstimadaEntrega + ", calificacion: " + this.calificacion + ", fecha entrega: " + this.fechaEntregado
+		return "Id proveedor: " + this.idProveedor + " Id: " + this.id + ", Fecha estimada de entrega: " + this.fechaEstimadaEntrega + ", calificacion: " + this.calificacion + ", fecha entrega: " + this.fechaEntregado
 				+ ", id sucursal:" + this.idSucursal;
 	}
 	

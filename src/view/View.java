@@ -250,6 +250,26 @@ public class View {
 					List<OrdenDeCompra> compras = Controller.darComprasAProveedores();
 					for(OrdenDeCompra comp16: compras) {
 						System.out.println(comp16.toString());
+						List<Producto> prods16 = Controller.darProductosEnOrdenDeCompra(comp16.getId());
+						for(Producto prod16 : prods16) {
+							System.out.println("   " + prod16.toString());
+						}
+					}
+				break;
+				case 17:
+					System.out.println("Ingrese el id del cliente");
+					Long idCliente17 = scan.nextLong();
+					System.out.println("Ingrese la fecha inicial");
+					String fechaInic17 = scan.next();
+					System.out.println("Ingrese la fecha final");
+					String fechaFin17 = scan.next();
+					List<Compra> ventas17 = Controller.darVentasACliente(idCliente17, fechaInic17, fechaFin17);
+					for(Compra cmp : ventas17) {
+						System.out.println(cmp.toString());
+						List<Producto> prods17 = Controller.darProductosVenta(cmp.getId());
+						for(Producto prd17 : prods17) {
+							System.out.println("   " + prd17.toString());
+						}
 					}
 				break;
 				case 18:
@@ -318,7 +338,7 @@ public class View {
 		System.out.println("14. Mostrar el indice de ocupamiento de todas las bodegas y estantes de una sucursal");
 		System.out.println("15. Mostrar productos que cumplen cierta caracteristica");
 		System.out.println("16. Dar compras a los proveedores");
-		// rfc 6 17
+		System.out.println("17. Dar ventas a un cliente");
 		System.out.println("18. Registrar un carrito a un cliente");
 		System.out.println("19. Agregar un producto a un caarrito");
 		System.out.println("20. Devolver un producto del carrito de compras");

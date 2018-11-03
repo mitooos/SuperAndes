@@ -169,6 +169,11 @@ public class Producto {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
+	
+	@Override
+	public String toString() {
+		return "Id: " + this.id + ", Nombre: " + this.nombre +"  " +this.tamano + this.unidades + ", marca: " +this.marca;
+	}
 
 
 }

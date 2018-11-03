@@ -597,6 +597,34 @@ public class SuperAndesPersistence {
 		}
 	}
 	
+	public List<Producto> darProductosEnCompraAProveedor(Long idOrden){
+		List<BigDecimal> prods = sqlOrdenDeCompra.darProductosEnOrdenCompra(pmf.getPersistenceManager(), idOrden);
+		List<Producto> rta = new LinkedList<>();
+		for(BigDecimal bg : prods) {
+			rta.add(sqlProducto.obtenerProductoPorId(pmf.getPersistenceManager(), bg.longValue()));
+		}
+		return rta;
+	}
+	
+	public List<Compra> darVentasACliente(Long idCliente, String fechaInic, String fechaFin){
+		try {
+			return sqlCompra.darVentasAUnCliente(pmf.getPersistenceManager(), idCliente, fechaInic, fechaFin);
+		}
+		catch(Exception e){
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+	}
+	
+	public List<Producto> darProductosEnVenta(Long idVenta){
+		List<BigDecimal> prods = sqlCompra.darProductosEnVentas(pmf.getPersistenceManager(), idVenta);
+		List<Producto> rta = new LinkedList<>();
+		for(BigDecimal bg : prods) {
+			rta.add(sqlProducto.obtenerProductoPorId(pmf.getPersistenceManager(), bg.longValue()));
+		}
+		return rta;
+	}
+	
 //	public Integer darIndiceEstante(Long idSucursal, Long idEstante)
 //	{
 //		PersistenceManager pm =pmf.getPersistenceManager();
