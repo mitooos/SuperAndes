@@ -24,6 +24,7 @@ import negocio.Estante;
 import negocio.OrdenDeCompra;
 import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
+import negocio.Promocion;
 import negocio.Proveedor;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
@@ -49,6 +50,7 @@ public class SuperAndesPersistence {
 	private SQLBodega sqlBodega;
 	private SQLEstante sqlEstante;
 	private SQLCarrito sqlCarrito;
+	private SQLPromocion sqlPromocion;
 
 	public SuperAndesPersistence() {
 		Properties properties = new Properties();
@@ -113,6 +115,8 @@ public class SuperAndesPersistence {
 		sqlBodega = new SQLBodega(this);
 		sqlEstante = new SQLEstante(this);
 		sqlCarrito = new SQLCarrito(this);
+		sqlPromocion = new SQLPromocion(this);
+		
 		
 	}
 
@@ -359,12 +363,11 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval()+100;
 			long tuplas = sqlEstante.adicionarEstante(pmf.getPersistenceManager(), id, capacidadVol, capacidadPeso, categoria, posicion, nivelAbastecimiento, idSucursal);
-			log.info("Se cambiaron " + tuplas + " tuplas");
+			tx.commit();
 			return new Estante(id, capacidadVol, capacidadPeso, categoria, idSucursal, nivelAbastecimiento, posicion);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -377,25 +380,22 @@ public class SuperAndesPersistence {
 
 	}
 
-	public Producto adicionarPromocionLong (String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0) {
+	public Promocion adicionarPromocionLong (String descripcion, String fechaInic, String fechaFin, Integer precio, List<Long> idsProductos) {
 
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			Long id = nextval()+12;
-			int prom = 1;
-			int activa = 1;
-			String hex = hexa0.toString();
-			long tuplas = sqlProducto.adicionarPromocion(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
+			Long id = nextval() + 20;
+			sqlPromocion.agregarPromcocion(pmf.getPersistenceManager(), id, descripcion, fechaInic, fechaFin, precio);
+			for(Long ln: idsProductos) {
+				sqlPromocion.agregarProductoAPromocion(pmf.getPersistenceManager(), id, ln);
+			}
 			tx.commit();
-			log.info("Se cambiaron " + tuplas + " tuplas");
-			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, 1, 1, descripcion0);
-
+			return new Promocion(id, descripcion, fechaInic, fechaFin, precio);
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 
@@ -407,19 +407,17 @@ public class SuperAndesPersistence {
 		}
 	}
 
-	public int finalizarPromocion(Long idPromocion) {
+	public int finalizarPromocion(Long idPromocion, String fechaFin) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-			long tuplas = sqlProducto.terminarPromocion(pmf.getPersistenceManager(), idPromocion);
+			sqlPromocion.finalizarPromocion(pmf.getPersistenceManager(), idPromocion, fechaFin);
 			tx.commit();
-			log.info("Se cambiaron " + tuplas + " tuplas");
 			return 1;
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return -1;
 		}
 		finally {
@@ -444,13 +442,11 @@ public class SuperAndesPersistence {
 			sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProducto, cantidadProducto);
 			sqlCompra.actualizarEstantesDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			tx.commit();
-			log.info("Se cambiaron " + tuplas + " tuplas");
 			return new Compra(id, costo, true, fecha,idCliente, idSucursal);
 
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
@@ -474,7 +470,7 @@ public class SuperAndesPersistence {
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+//			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
