@@ -103,6 +103,21 @@ public class Controller {
 		return sap.darComprasAProveedores();
 	}
 	
+	public static List<Producto> darProductosEnOrdenDeCompra(Long idOrden){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darProductosEnCompraAProveedor(idOrden);
+	}
+	
+	public static List<Compra> darVentasACliente(Long idCliente, String fechaInic, String fechaFin){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darVentasACliente(idCliente, fechaInic, fechaFin);
+	}
+	
+	public static List<Producto> darProductosVenta(Long idVenta){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darProductosEnVenta(idVenta);
+	}
+	
 	public static Carrito adicionarCarrito(long idCliente, long idSucursal) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.adicionarCarrito(idCliente, idSucursal);

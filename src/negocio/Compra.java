@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.Date;
+
 public class Compra {
 	
 	private Long id;
@@ -91,6 +93,30 @@ public class Compra {
 
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
+	}
+	
+	public void setFecha(Date fech) {
+		this.fecha = fech.toString();
+	}
+	
+	public void setPRECIO_TOTAL(Integer i) {
+		this.precioTotal = i;
+	}
+	
+	public void setPagada(int i) {
+		this.pagada = (i==1)? true:false;
+	}
+	
+	public void setID_CLIENTE(Long id) {
+		this.idCliente = id;
+	}
+	
+	public void setID_SUCURSAL(Long id) {
+		this.idSucursal = id;
+	}
+	
+	public String toString() {
+		return "Id: " + this.id + ", id cliente: " + this.idCliente + ", precio total: " + this.precioTotal + ", fecha: " + this.fecha + ", id sucursal: " + this.idSucursal;
 	}
 
 

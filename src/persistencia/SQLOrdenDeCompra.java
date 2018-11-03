@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -69,6 +70,12 @@ public class SQLOrdenDeCompra {
 	public List<OrdenDeCompra> darOrdenesALosProveedores(PersistenceManager pm){
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + sap.darTablaOrdenDeCompra() + " WHERE ENTREGADO = 1 ORDER BY ID_PROVEEDOR");
 		q.setResultClass(OrdenDeCompra.class);
+		return q.executeList();
+	}
+	
+	public List<BigDecimal> darProductosEnOrdenCompra(PersistenceManager pm, Long idOrden){
+		Query q = pm.newQuery(SQL, "SELECT ID_PRODUCTO FROM " + sap.darTablaOrdenDeCompraProducto() + " WHERE ID_ORDEN_DE_COMPRA = ?");
+		q.setParameters(idOrden);
 		return q.executeList();
 	}
 

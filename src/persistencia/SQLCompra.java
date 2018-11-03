@@ -6,6 +6,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import negocio.Compra;
+import negocio.Producto;
 import negocio.VentasSucursalTotales;
 
 public class SQLCompra {
@@ -67,5 +69,17 @@ public class SQLCompra {
 		return (Long) q.executeUnique();
 	}
 	
+	public List<Compra> darVentasAUnCliente(PersistenceManager pm, Long idCliente, String fechaInic, String fechaFin){
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + sap.darTablaCompra() + " WHERE ID_CLIENTE = ? AND FECHA <= TO_DATE(?,'DD/MM/YYYY') AND FECHA >= TO_DATE(?,'DD/MM/YYYY') ORDER BY FECHA");
+		q.setParameters(idCliente, fechaFin , fechaInic);
+		q.setResultClass(Compra.class);
+		return q.executeList();
+	}
+	
+	public List<BigDecimal> darProductosEnVentas(PersistenceManager pm, Long idCompra){
+		Query q = pm.newQuery(SQL, "SELECT ID_PRODUCTO FROM " + sap.darTablaProdcutoCompra() + " WHERE ID_COMPRA = ?");
+		q.setParameters(idCompra);
+		return q.executeList();
+	}
 	
 }
