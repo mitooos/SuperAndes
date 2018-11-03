@@ -278,15 +278,14 @@ public class SuperAndesPersistence {
 		}
 	}
 	
-	public Carrito  adicionarCarrito(Long idCliente,Long idSucursal)
+	public Carrito  adicionarCarrito(Long id,Long idCliente, Long idSucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			//log.trace("prueba");
 			tx.begin();
-			Long id = nextval() + 1000;
-			sqlCarrito.adicionarCarrito(pmf.getPersistenceManager(), id,idCliente, idSucursal);
+			sqlCarrito.adicionarCarrito(pmf.getPersistenceManager(), id,idCliente,idSucursal);
 			tx.commit();
 			return new Carrito(id, idCliente, idSucursal);
 		}
