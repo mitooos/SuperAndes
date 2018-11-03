@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import controller.Controller;
 import negocio.Bodega;
+import negocio.Carrito;
+import negocio.Carrito_Producto;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
@@ -253,6 +255,26 @@ public class View {
 					}
 				break;
 				
+				case 18:
+					System.out.println("ingrese el id del cliente al cual se le asignara el carro");
+					Long idCliente22 = scan.nextLong();
+					System.out.println("Ingrese el id de la sucursal a la cual pertenece el carro");
+					Long idSucursal22 = scan.nextLong();
+					Carrito carrito = Controller.adicionarCarrito(idCliente22, idSucursal22);
+					System.out.println(carrito);
+				break;
+				
+				case 19:
+					System.out.println("ingrese el id de la sucursal");
+					long idSucursalca = scan.nextLong();
+					System.out.println("Ingrese el id del cliente");
+					long idCarritoca = scan.nextLong();
+					System.out.println("Ingrese el id del producto");
+					long idProductoca = scan.nextLong();
+					System.out.println("ingrese la cantidad del producto");
+					int cantidadca = scan.nextInt();
+					Carrito_Producto caripro = Controller.adicionarProducto(idSucursalca, idCarritoca, idProductoca, cantidadca);
+					System.out.println(caripro);	
 				case 20:
 					System.out.println("Ingrese el id del carrito");
 					long idCarrito20 = scan.nextLong();
@@ -300,8 +322,8 @@ public class View {
 		System.out.println("15. Mostrar productos que cumplen cierta caracteristica");
 		// rfc 5 16
 		// rfc 6 17
-		//rf 12 18
-		// rf 13 19
+		System.out.println("18. Registrar un carrito a un cliente");
+		System.out.println("19. Agregar un producto a un caarrito");
 		System.out.println("20. Devolver un producto del carrito de compras");
 		System.out.println("21. Pagar Compra");
 		System.out.println("22. Abandonar Carrito");
