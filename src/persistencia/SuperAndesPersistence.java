@@ -548,9 +548,7 @@ public class SuperAndesPersistence {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
-			Long idSucursal = sqlCarrito.darSede(pmf.getPersistenceManager(), idCarrito);
 			List<Long> productos = sqlCarrito.darProductosEnCarrito(pmf.getPersistenceManager(), idCarrito);
-			List<Integer> cantidades = sqlCarrito.darCantidadesEnCarrito(pmf.getPersistenceManager(), idCarrito);
 			int i = 0;
 			while (i<productos.size()) {
 				devolverProductoDelCarrito(productos.get(i), idCarrito);
