@@ -2,6 +2,7 @@ package persistencia;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -63,6 +64,12 @@ public class SQLOrdenDeCompra {
 				 + " id_Bodega IN (SELECT id FROM "+ sap.darTablaBodega() +" WHERE id_sucursal = ?)");
 		q.setParameters(cantidad, idProducto ,idSucursal);
 		return (long) q.executeUnique();
+	}
+	
+	public List<OrdenDeCompra> darOrdenesALosProveedores(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + sap.darTablaOrdenDeCompra() + " WHERE ENTREGADO = 1 ORDER BY ID_PROVEEDOR");
+		q.setResultClass(OrdenDeCompra.class);
+		return q.executeList();
 	}
 
 }

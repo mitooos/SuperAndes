@@ -1,5 +1,6 @@
 package view;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +11,9 @@ import negocio.Carrito_Producto;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
+import negocio.OrdenDeCompra;
 import negocio.Producto;
+import negocio.Promocion;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
 
@@ -127,38 +130,27 @@ public class View {
 				break;
 
 				case 7:
-					System.out.println("Ingrese el nombre del producto");
-					String nombre1 = scan.next();
-					System.out.println("Ingrese el tamano del producto (solo el numero)");
-					int tamano1 = scan.nextInt();
-					System.out.println("ingrese las unidades del tamano (ej. gr)");
-					String uni1 = scan.next();
-					System.out.println("Ingrese la marca del producto");
-					String marca1 = scan.next();
-					System.out.println("inserte el precio unitario");
-					int precioUni1 = scan.nextInt();
-					System.out.println("ingrese el volumen del empaque");
-					int vol1 = scan.nextInt();
-					System.out.println("ingrese el peso del producto con empaque");
-					int peso1 = scan.nextInt();
-					System.out.println("ingrese el codigo hexadecimal del producto, sin el 0x al principio");
-					Integer hex1 = scan.nextInt(16);
-					System.out.println("ingrese la presentacion del producto (ej. 12 paquetes 5gr)7");
-					String presentacion1 = scan.next();
-					System.out.println("Ingrese el precio por unidad (solo el numero)");
-					int precioPUni1 = scan.nextInt();
-					System.out.println("ingrese la categoria del producto (Abarrote, Perecedero, No Perecedero");
-					String cat1 = scan.next();
 					System.out.println("ingrese la descripcion de la promocion");
 					String desc1 = scan.next();
-					Producto prom1 = Controller.registrarUnaPromocion(nombre1, tamano1, uni1, marca1, precioUni1, vol1, peso1, hex1, presentacion1, precioPUni1, cat1, desc1);
+					System.out.println("Ingrese la fecha inicial de la promocion");
+					String fechaInic = scan.next();
+					System.out.println("Ingrese la fecha final de la promocion");
+					String fechaFin = scan.next();
+					System.out.println("Ingrese el precio de la promocion");
+					Integer precio7 = scan.nextInt();
+					LinkedList<Long> prods = new LinkedList<>();
+					System.out.println("Ingrese el id del producto asociado a la promocion");
+					prods.add(scan.nextLong());
+					Promocion prom1 = Controller.registrarUnaPromocion(desc1, fechaInic, fechaFin, precio7, prods);
 					System.out.println("se ha creado la promocion: \n" + prom1);
 				break;
 				case 8:
 					System.out.println("Ingrese el id de la promocion");
-					Long idProm = scan.nextLong();
-					Controller.finalizarUnaPromocion(idProm);
-					System.out.println("Se ha finalizado la promocion con el id: " + idProm);
+					Long idProm8 = scan.nextLong();
+					System.out.println("Ingrese la fecha en la que desea dinalizar la promocion");
+					String fechaFin8 = scan.next();
+					Controller.finalizarUnaPromocion(idProm8,fechaFin8);
+					System.out.println("Se ha finalizado la promocion con el id: " + idProm8);
 				break;
 				case 9:
 					System.out.println("Ingrese el id del proveedor");
@@ -254,7 +246,12 @@ public class View {
 						System.out.println(producto.toString());
 					}
 				break;
-				
+				case 16:
+					List<OrdenDeCompra> compras = Controller.darComprasAProveedores();
+					for(OrdenDeCompra comp16: compras) {
+						System.out.println(comp16.toString());
+					}
+				break;
 				case 18:
 					System.out.println("ingrese el id del cliente al cual se le asignara el carro");
 					Long idCliente22 = scan.nextLong();
@@ -320,7 +317,7 @@ public class View {
 		System.out.println("13. Mostrar las 20 promociones mas populares");
 		System.out.println("14. Mostrar el indice de ocupamiento de todas las bodegas y estantes de una sucursal");
 		System.out.println("15. Mostrar productos que cumplen cierta caracteristica");
-		// rfc 5 16
+		System.out.println("16. Dar compras a los proveedores");
 		// rfc 6 17
 		System.out.println("18. Registrar un carrito a un cliente");
 		System.out.println("19. Agregar un producto a un caarrito");

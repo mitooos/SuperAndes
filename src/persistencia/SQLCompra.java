@@ -26,7 +26,7 @@ public class SQLCompra {
 	}
 	
 	public Integer calcularPrecioCompra(PersistenceManager pm, Long idsProducto, Integer cantidad, Long idSede) {
-		Query q1 = pm.newQuery(SQL, "SELECT precio FROM " + sap.darTablaPromociones() + " WHERE ID = (SELECT IDPROMOCION FROM " +sap.darTablaPromocionProducto() + " WHERE IDPRODUCTO = ?) AND (SELECT SYSDATE FROM DUAL) <= FECHAFINAL AND (SELECT SYSDATE FROM DUAL) >= FACHAINICIO");
+		Query q1 = pm.newQuery(SQL, "SELECT precio FROM " + sap.darTablaPromociones() + " WHERE ID = (SELECT IDPROMOCION FROM " +sap.darTablaPromocionProducto() + " WHERE IDPRODUCTO = ?) AND (SELECT SYSDATE FROM DUAL) <= FECHAFINAL AND (SELECT SYSDATE FROM DUAL) >= FECHAINICIO");
 		Query q = pm.newQuery(SQL,"SELECT precio FROM " + sap.darTablaSucursalProducto() + " WHERE id_producto = ? AND id_sucursal = ?");
 		q1.setParameters(idsProducto);
 		q1.setResultClass(Integer.class);
