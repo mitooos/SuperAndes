@@ -16,8 +16,8 @@ public class SQLCarrito {
 	}
 	
 	public long adicionarCarrito(PersistenceManager pm, Long id, Long idCliente, Long idSucursal) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + sap.darTablaCarritos() + " (id,idCliente,idSucursal) values (?,?,?)");
-		q.setParameters(id, idCliente, idSucursal);
+		Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaCarritos() + " SET IDCLIENTE = ? WHERE ID = ? AND IDSUCURSAL = ? ");
+		q.setParameters(id, idCliente,idSucursal);
 		return (long) q.executeUnique();
 	}
 	
@@ -71,5 +71,4 @@ public class SQLCarrito {
 		q.setResultClass(Long.class);
 		return (Long) q.executeResultUnique();
 	}
-
 }

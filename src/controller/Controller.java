@@ -119,9 +119,9 @@ public class Controller {
 		return sap.darProductosEnVenta(idVenta);
 	}
 	
-	public static Carrito adicionarCarrito(long idCliente, long idSucursal) {
+	public static Carrito adicionarCarrito(Long id, long idCliente, Long idSucursal) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
-		return sap.adicionarCarrito(idCliente, idSucursal);
+		return sap.adicionarCarrito(id, idCliente, idSucursal);
 	}
 	
 	public static Carrito_Producto adicionarProducto(long idSucursal, long idCarrito, long idProducto, int cantidad) {
@@ -144,6 +144,7 @@ public class Controller {
 		sap.abandonarCarrito(idCarrito);
 	}
 	
+
 	public static List<fechaSucursalCont> darFechaMenorDemanda(String categoria){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.darFechaMenorDemanda(categoria);
@@ -162,6 +163,11 @@ public class Controller {
 	public static List<fechaSucursalCont> darFechaMayorIngresos(String categoria){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.darFechaMayorIngresos(categoria);
+	}
+	public static void recolectarProductos(Long idCarrito)
+	{
+		SuperAndesPersistence sap= SuperAndesPersistence.getInstance();
+		sap.RecolectarProductos(idCarrito);
 	}
 
 }
