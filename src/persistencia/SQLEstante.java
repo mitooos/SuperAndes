@@ -37,8 +37,8 @@ private final static String SQL = SuperAndesPersistence.SQL;
 	}
 	
 	public long adicionarProductosEstanterias(PersistenceManager pm, long idProducto, long idSucursal, Integer cantidad) {
-		Query q = pm.newQuery(SQL,"UPDATE " + sap.darTablaEstanteProducto() + " SET CANTIDAD + ? WHERE id_prodcuto ? AND id_estante IN"
-				+ " (SELECT ID FROM " + sap.darTablaEstante() + " WHERE id_sucursal = ?");
+		Query q = pm.newQuery(SQL,"UPDATE " + sap.darTablaEstanteProducto() + " SET CANTIDAD = CANTIDAD + ? WHERE id_producto =  ? AND id_estante IN"
+				+ " (SELECT ID FROM " + sap.darTablaEstante() + " WHERE id_sucursal = ?)");
 		q.setParameters(cantidad, idProducto, idSucursal);
 		return (long) q.executeUnique();
 	}

@@ -58,8 +58,8 @@ public class SuperAndesPersistence {
 		properties.setProperty("javax.jdo.PersistenceManagerFactoryClass", "org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
 		properties.setProperty("javax.jdo.option.ConnectionDriverName", "oracle.jdbc.driver.OracleDriver");
 		properties.setProperty("javax.jdo.option.ConnectionURL","jdbc:oracle:thin:@fn3.oracle.virtual.uniandes.edu.co:1521:prod");
-		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C331820");
-		properties.setProperty("javax.jdo.option.ConnectionPassword","t0Hv2UpEMH");
+		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C171820");
+		properties.setProperty("javax.jdo.option.ConnectionPassword","PrVvggcFFg");
 		properties.setProperty("javax.jdo.option.Mapping", "oracle");
 		properties.setProperty("datanucleus.schema.autoCreateAll", "false");
 		properties.setProperty("datanucleus.query.sql.allowAll", "true");
@@ -229,18 +229,18 @@ public class SuperAndesPersistence {
 		}
 	}
 
-	public Producto adicionarProducto(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0, String descripcion0, int prom, int activa) {
+	public Producto adicionarProducto(String nombre0, Integer tamano0, String unidades0, String marca0, Integer precioUnitario0, Integer volEmpaque0,Integer pesoEmpaque0, Integer hexa0, String presentacion0, Integer precioporUnidad0, String categoria0) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
 			Long id = nextval() + 12;
 			String hex = hexa0.toString();
-			long tuplas = sqlProducto.adicionarProducto(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
+			long tuplas = sqlProducto.adicionarProducto(pmf.getPersistenceManager(), id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hex, presentacion0, precioporUnidad0, categoria0);
 			tx.commit();
 			log.info("Se cambiaron " + tuplas + " tuplas");
 
-			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0, prom, activa, descripcion0);
+			return new Producto(id, nombre0, tamano0, unidades0, marca0, precioUnitario0, volEmpaque0, pesoEmpaque0, hexa0, presentacion0, precioporUnidad0, categoria0);
 
 		}
 		catch(Exception e) {
@@ -436,7 +436,7 @@ public class SuperAndesPersistence {
 			tx.begin();
 			Long id = nextval()+10;
 			Integer costo = sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
-			long tuplas = sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1, idCliente, idSucursal);
+			sqlCompra.agregarCompra(pmf.getPersistenceManager(), id, costo, 1, idCliente, idSucursal);
 			sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), id, idProducto, cantidadProducto);
 			sqlCompra.actualizarEstantesDespuesDeCompra(pmf.getPersistenceManager(), idProducto, cantidadProducto, idSucursal);
 			tx.commit();
@@ -468,7 +468,6 @@ public class SuperAndesPersistence {
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-//			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
 		finally {
