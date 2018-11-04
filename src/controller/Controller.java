@@ -16,6 +16,7 @@ import negocio.Promocion;
 import negocio.Proveedor;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
+import negocio.fechaSucursalCont;
 import persistencia.SuperAndesPersistence;
 
 public class Controller {
@@ -143,5 +144,24 @@ public class Controller {
 		sap.abandonarCarrito(idCarrito);
 	}
 	
+	public static List<fechaSucursalCont> darFechaMenorDemanda(String categoria){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darFechaMenorDemanda(categoria);
+	}
+	
+	public static List<fechaSucursalCont> darFechaMayorDemanda(String categoria){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darFechaMayorDemanda(categoria);
+	}
+	
+	public static List<fechaSucursalCont> darFechaMenorIngresos(String categoria){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darFcehaMenorIngresos(categoria);
+	}
+	
+	public static List<fechaSucursalCont> darFechaMayorIngresos(String categoria){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darFechaMayorIngresos(categoria);
+	}
 
 }

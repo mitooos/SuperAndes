@@ -7,6 +7,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import negocio.Producto;
+import negocio.fechaSucursalCont;
 
 public class SQLProducto {
 
@@ -105,6 +106,34 @@ public class SQLProducto {
 		q.setParameters(id);
 		q.setResultClass(Producto.class);
 		return (Producto) q.executeUnique();
+	}
+	
+	public List<fechaSucursalCont> darFechaMayorIngresos(PersistenceManager pm,String categoria) {
+		Query q = pm.newQuery(SQL, "SELECT MAX(CONT) AS CONT, FECHA ,ID_SUCURSAL FROM (SELECT SUM(PRECIO_TOTAL) AS CONT, FECHA, ID_SUCURSAL FROM COMPRA WHERE ID IN (SELECT ID_COMPRA FROM PRODUCTO_COMPRA WHERE ID_PRODUCTO IN (SELECT ID FROM PRODUCTOS WHERE CATEGORIA = ?))GROUP BY ID_SUCURSAL, FECHA) GROUP BY FECHA, ID_SUCURSAL");
+		q.setParameters(categoria);
+		q.setResultClass(fechaSucursalCont.class);
+		return  q.executeList();
+	}
+	
+	public List<fechaSucursalCont> darFechaMenorIngresos(PersistenceManager pm,String categoria) {
+		Query q = pm.newQuery(SQL, "SELECT MIN(CONT) AS CONT, FECHA ,ID_SUCURSAL FROM (SELECT SUM(PRECIO_TOTAL) AS CONT, FECHA, ID_SUCURSAL FROM COMPRA WHERE ID IN (SELECT ID_COMPRA FROM PRODUCTO_COMPRA WHERE ID_PRODUCTO IN (SELECT ID FROM PRODUCTOS WHERE CATEGORIA = ?))GROUP BY ID_SUCURSAL, FECHA) GROUP BY FECHA, ID_SUCURSAL");
+		q.setParameters(categoria);
+		q.setResultClass(fechaSucursalCont.class);
+		return  q.executeList();
+	}
+	
+	public List<fechaSucursalCont> darFechaMayorDemanda(PersistenceManager pm, String categoria){
+		Query q = pm.newQuery(SQL, "SELECT MAX(CUNT) AS CONT, FECHA, ID_SUCURSAL FROM (SELECT SUM(PRODUCTO_COMPRA.CANTIDAD) AS CUNT, COMPRA.ID_SUCURSAL AS ID_SUCURSAL, COMPRA.FECHA AS FECHA FROM PRODUCTO_COMPRA, COMPRA WHERE ID_PRODUCTO IN(SELECT ID FROM PRODUCTOS  WHERE CATEGORIA = ?) AND PRODUCTO_COMPRA.ID_COMPRA = COMPRA.ID GROUP BY COMPRA.ID_SUCURSAL, COMPRA.FECHA) GROUP BY FECHA, ID_SUCURSAL");
+		q.setParameters(categoria);
+		q.setResultClass(fechaSucursalCont.class);
+		return q.executeList();
+	}
+	
+	public List<fechaSucursalCont> darFechamenorDemanda(PersistenceManager pm, String categoria){
+		Query q = pm.newQuery(SQL, "SELECT MIN(CUNT) AS CONT, FECHA, ID_SUCURSAL FROM (SELECT SUM(PRODUCTO_COMPRA.CANTIDAD) AS CUNT, COMPRA.ID_SUCURSAL AS ID_SUCURSAL, COMPRA.FECHA AS FECHA FROM PRODUCTO_COMPRA, COMPRA WHERE ID_PRODUCTO IN(SELECT ID FROM PRODUCTOS  WHERE CATEGORIA = ?) AND PRODUCTO_COMPRA.ID_COMPRA = COMPRA.ID GROUP BY COMPRA.ID_SUCURSAL, COMPRA.FECHA) GROUP BY FECHA, ID_SUCURSAL");
+		q.setParameters(categoria);
+		q.setResultClass(fechaSucursalCont.class);
+		return q.executeList();
 	}
 	
 }
