@@ -279,16 +279,16 @@ public class SuperAndesPersistence {
 		}
 	}
 	
-	public Carrito  adicionarCarrito(Long id,Long idCliente, Long idSucursal)
+	public Long  adicionarCarrito(Long id,Long idCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			//log.trace("prueba");
 			tx.begin();
-			sqlCarrito.adicionarCarrito(pmf.getPersistenceManager(), id,idCliente,idSucursal);
+			sqlCarrito.adicionarCarrito(pmf.getPersistenceManager(), id,idCliente);
 			tx.commit();
-			return new Carrito(id, idCliente, idSucursal);
+			return new Carrito().getId();
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));

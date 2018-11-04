@@ -1,3 +1,5 @@
+/controller/
+/log4j.properties
+/negocio/
 /persistencia/
 /view/
-/controller/
