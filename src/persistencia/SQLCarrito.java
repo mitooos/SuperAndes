@@ -38,37 +38,40 @@ public class SQLCarrito {
 	public List<Long> darProductosEnCarrito(PersistenceManager pm, long idCarrito) {
 		Query q = pm.newQuery(SQL, "SELECT IDPRODUCTO FROM " + sap.darTablaCarritoProductos() + " WHERE IDCARRITO = ?");
 		q.setParameters(idCarrito);
+		q.setResultClass(Long.class);
 		return q.executeList();
 	}
 	
 	public List<Integer> darCantidadesEnCarrito(PersistenceManager pm, long idCarrito){
 		Query q = pm.newQuery(SQL,"SELECT CANTIDAD FROM " + sap.darTablaCarritoProductos() + " WHERE IDCARRITO = ?");
 		q.setParameters(idCarrito);
+		q.setResultClass(Integer.class);
 		return q.executeList();
 	}
 	
 	public Integer darCantidadProductoEnCarrito(PersistenceManager pm, long idCarrito, long idProdcuto) {
 		Query q = pm.newQuery(SQL, "SELECT CANTIDAD FROM " + sap.darTablaCarritoProductos() + " WHERE IDCARRITO = ? AND IDPRODUCTO = ?");
 		q.setParameters(idCarrito, idProdcuto);
-		return (Integer) q.executeResultUnique();
+		q.setResultClass(Integer.class);
+		return (Integer) q.executeUnique();
 	}
 	
 	public long retirarProductosDeCarritos(PersistenceManager pm, long idCarrito, long idProducto) {
 		Query q = pm.newQuery(SQL, "DELETE FROM " + sap.darTablaCarritoProductos() + " WHERE IDCARRITO = ? AND IDPRODUCTO = ?");
 		q.setParameters(idCarrito, idProducto);
-		return (long) q.execute();
+		return (long) q.executeUnique();
 	}
 	
 	public Long eliminarCliente(PersistenceManager pm, Long idCarrito) {
-		Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaCarritos() + " SET IDCLIENTE = NULL WHERE ID = ?");
+		Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaCarritos() + " SET IDCLIENTE = CAST(NULL AS NUMBER) WHERE ID = ?");
 		q.setParameters(idCarrito);
 		return (Long) q.executeUnique();
 	}
 	
 	public Long darSede(PersistenceManager pm, Long idCarrito) {
-		Query q = pm.newQuery(SQL, "SELECT IDSUCURSAL FROM " + sap.darTablaCarritos() + "WHERE ID = ?");
+		Query q = pm.newQuery(SQL, "SELECT IDSUCURSAL FROM " + sap.darTablaCarritos() + " WHERE ID = ?");
 		q.setParameters(idCarrito);
 		q.setResultClass(Long.class);
-		return (Long) q.executeResultUnique();
+		return (Long) q.executeUnique();
 	}
 }

@@ -64,14 +64,7 @@ public class View {
 				int precioPUni = scan.nextInt();
 				System.out.println("ingrese la categoria del producto (Abarrote, Perecedero, No Perecedero");
 				String cat = scan.next();
-				System.out.println("ingrese si es una promocion(si:1, no:0)");
-				int prom = scan.nextInt();
-				String desc = "";
-				if(prom == 1) {
-					System.out.println("ingrese la descripcion de la promocion");
-					desc = scan.nextLine();
-				}
-				Producto prod = Controller.registrarProdcuto(nombreP, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat, desc, prom, prom);
+				Producto prod = Controller.registrarProdcuto(nombreP, tamano, uni, marca, precioUni, vol, peso, hex, presentacion, precioPUni, cat);
 				System.out.println("se ha creado el producto: \n" + prod);
 				break;
 			case 3:
@@ -292,13 +285,15 @@ public class View {
 				System.out.println("ingrese la cantidad del producto");
 				int cantidadca = scan.nextInt();
 				Carrito_Producto caripro = Controller.adicionarProducto(idSucursalca, idCarritoca, idProductoca, cantidadca);
-				System.out.println(caripro);	
+				System.out.println(caripro);
+				break;
 			case 20:
 				System.out.println("Ingrese el id del carrito");
 				long idCarrito20 = scan.nextLong();
 				System.out.println("Ingrese el id del prodcuto que va a devolver");
 				long idProducto20 = scan.nextLong();
 				Controller.devolverProductoDeUnCarritoDeCompras(idProducto20, idCarrito20);
+				System.out.println("Se han devuelto los prodcutos a los estantes");
 				break;
 			case 21:
 				System.out.println("Ingrese el id del Carrito");

@@ -50,7 +50,7 @@ public class Producto {
 	/**
 	 * construcor con valores
 	 */
-	public Producto(Long id, String nombre, Integer tamano, String unidades, String marca, Integer precio_unitario, Integer vol_empaque,Integer peso_empaque, Integer hexa, String presentacion, Integer precio_por_unidad, String categoria, int esPromocion, int activa, String descripcion) {
+	public Producto(Long id, String nombre, Integer tamano, String unidades, String marca, Integer precio_unitario, Integer vol_empaque,Integer peso_empaque, Integer hexa, String presentacion, Integer precio_por_unidad, String categoria) {
 
 		this.id = id;
 		this.nombre = nombre;
