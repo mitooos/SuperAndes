@@ -143,5 +143,10 @@ public class Controller {
 		sap.abandonarCarrito(idCarrito);
 	}
 	
+	public static void recolectarProductos(Long idCarrito)
+	{
+		SuperAndesPersistence sap= SuperAndesPersistence.getInstance();
+		sap.RecolectarProductos(idCarrito);
+	}
 
 }

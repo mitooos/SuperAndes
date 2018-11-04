@@ -57,8 +57,8 @@ public class SuperAndesPersistence {
 		properties.setProperty("javax.jdo.PersistenceManagerFactoryClass", "org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
 		properties.setProperty("javax.jdo.option.ConnectionDriverName", "oracle.jdbc.driver.OracleDriver");
 		properties.setProperty("javax.jdo.option.ConnectionURL","jdbc:oracle:thin:@fn3.oracle.virtual.uniandes.edu.co:1521:prod");
-		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C171820");
-		properties.setProperty("javax.jdo.option.ConnectionPassword","PrVvggcFFg");
+		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C331820");
+		properties.setProperty("javax.jdo.option.ConnectionPassword","t0Hv2UpEMH");
 		properties.setProperty("javax.jdo.option.Mapping", "oracle");
 		properties.setProperty("datanucleus.schema.autoCreateAll", "false");
 		properties.setProperty("datanucleus.query.sql.allowAll", "true");
@@ -585,6 +585,31 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
+	
+	public void RecolectarProductos(Long idCarrito){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			List<Long> productos = sqlCarrito.darProductosEnCarrito(pmf.getPersistenceManager(), idCarrito);
+			int i = 0;
+			while (i<productos.size()) {
+				devolverProductoDelCarrito(productos.get(i), idCarrito);
+				i++;
+			}
+			tx.commit();
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
 	
 	public List<OrdenDeCompra> darComprasAProveedores(){
 		try{
