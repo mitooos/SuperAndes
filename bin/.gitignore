@@ -1,4 +1,10 @@
+/controller/
+/log4j.properties
+/negocio/
 /persistencia/
 /view/
+<<<<<<< HEAD
 /controller/
 /negocio/
+=======
+>>>>>>> 23000f73b75894428060963d6dbe8ca4e7ab8dce

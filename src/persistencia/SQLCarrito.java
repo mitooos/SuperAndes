@@ -15,9 +15,9 @@ public class SQLCarrito {
 		this.sap = sap;
 	}
 	
-	public long adicionarCarrito(PersistenceManager pm, Long id, Long idCliente, Long idSucursal) {
-		Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaCarritos() + " SET IDCLIENTE = ? WHERE ID = ? AND IDSUCURSAL = ? ");
-		q.setParameters(id, idCliente,idSucursal);
+	public long adicionarCarrito(PersistenceManager pm, Long id, Long idCliente) {
+		Query q = pm.newQuery(SQL, "UPDATE " + sap.darTablaCarritos() + " SET IDCLIENTE = ? WHERE ID = ? ");
+		q.setParameters(id, idCliente);
 		return (long) q.executeUnique();
 	}
 	

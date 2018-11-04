@@ -271,9 +271,7 @@ public class View {
 				Long idCarrito18 = scan.nextLong();
 				System.out.println("ingrese el id del cliente al cual se le asignara el carro");
 				Long idCliente22 = scan.nextLong();
-				System.out.println("Ingrese el id de la sucursal a la cual pertenece el carro");
-				Long idSucursal22 = scan.nextLong();
-				Carrito carrito = Controller.adicionarCarrito(idCarrito18,idCliente22, idSucursal22);
+				Long carrito = Controller.adicionarCarrito(idCarrito18,idCliente22);
 				System.out.println(carrito);
 				break;
 

@@ -118,9 +118,9 @@ public class Controller {
 		return sap.darProductosEnVenta(idVenta);
 	}
 	
-	public static Carrito adicionarCarrito(Long id, long idCliente, Long idSucursal) {
+	public static Long adicionarCarrito(Long id, long idCliente) {
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
-		return sap.adicionarCarrito(id, idCliente, idSucursal);
+		return sap.adicionarCarrito(id, idCliente);
 	}
 	
 	public static Carrito_Producto adicionarProducto(long idSucursal, long idCarrito, long idProducto, int cantidad) {
