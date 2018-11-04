@@ -28,6 +28,7 @@ import negocio.Promocion;
 import negocio.Proveedor;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
+import negocio.fechaSucursalCont;
 
 public class SuperAndesPersistence {
 	
@@ -757,7 +758,22 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
+	
+	public List<fechaSucursalCont> darFechaMenorDemanda(String categoria){
+		return sqlProducto.darFechamenorDemanda(pmf.getPersistenceManager(), categoria);
+	}
+	
+	public List<fechaSucursalCont> darFechaMayorDemanda(String categoria){
+		return sqlProducto.darFechaMayorDemanda(pmf.getPersistenceManager(), categoria);
+	}
+	
+	public List<fechaSucursalCont> darFechaMayorIngresos(String categoria){
+		return sqlProducto.darFechaMayorIngresos(pmf.getPersistenceManager(), categoria);
+	}
 
+	public List<fechaSucursalCont> darFcehaMenorIngresos(String categoria){
+		return sqlProducto.darFechaMenorIngresos(pmf.getPersistenceManager(), categoria);	
+	}
 
 
 }
