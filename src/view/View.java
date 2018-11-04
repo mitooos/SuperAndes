@@ -293,7 +293,9 @@ public class View {
 					System.out.println("ingrese la cantidad del producto");
 					int cantidadca = scan.nextInt();
 					Carrito_Producto caripro = Controller.adicionarProducto(idSucursalca, idCarritoca, idProductoca, cantidadca);
-					System.out.println(caripro);	
+					System.out.println(caripro);
+				break;
+				
 				case 20:
 					System.out.println("Ingrese el id del carrito");
 					long idCarrito20 = scan.nextLong();
@@ -312,6 +314,11 @@ public class View {
 					System.out.println("Ingrese el id del carrito");
 					Long idCarrito22 = scan.nextLong();
 					Controller.abandonarCarrito(idCarrito22);
+				break;
+				case 23:
+					System.out.println("Ingrese el id del carrito");
+					Long idCarritooo = scan.nextLong();
+					Controller.recolectarProductos(idCarritooo);
 				case 100:
 					fin = true;
 					scan.close();
@@ -346,6 +353,7 @@ public class View {
 		System.out.println("20. Devolver un producto del carrito de compras");
 		System.out.println("21. Pagar Compra");
 		System.out.println("22. Abandonar Carrito");
+		System.out.println("23. Recolectar Productos carro abandonado");
 		
 		System.out.println("100. Salir \n");
 		System.out.println("Ingrese el numero de la opcion deseada y presione enter");
