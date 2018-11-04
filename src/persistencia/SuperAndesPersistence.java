@@ -773,6 +773,20 @@ public class SuperAndesPersistence {
 	public List<fechaSucursalCont> darFcehaMenorIngresos(String categoria){
 		return sqlProducto.darFechaMenorIngresos(pmf.getPersistenceManager(), categoria);	
 	}
+	
+	public List<Cliente> darClientesFirmes(Long idSucursal){
+//		Integer meses = sqlUtil.darMesesFuncionamiento(pmf.getPersistenceManager());
+		Integer i = 0;
+		List<Cliente> rta = new LinkedList<>();
+		while(i<10) {
+			List<Long> ids = (sqlCliente.darIdsDeClientesFrecuentes(pmf.getPersistenceManager(), idSucursal, i));
+			for(Long ln : ids) {
+				rta.add(sqlCliente.darCliente(pmf.getPersistenceManager(), ln));
+			}
+			i++;
+		}
+		return rta;
+	}
 
 
 }

@@ -168,5 +168,10 @@ public class Controller {
 		SuperAndesPersistence sap= SuperAndesPersistence.getInstance();
 		sap.RecolectarProductos(idCarrito);
 	}
+	
+	public static List<Cliente> darClientesFrecuentes(Long idSucursal){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darClientesFirmes(idSucursal);
+	}
 
 }

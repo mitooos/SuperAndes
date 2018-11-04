@@ -336,6 +336,14 @@ public class View {
 					System.out.println("   "+cnt.toString());
 				}
 				break;
+			case 25:
+				System.out.println("Ingrese el id de la sucursal");
+				Long idSucursal25 = scan.nextLong();
+				List<Cliente> lista25 = Controller.darClientesFrecuentes(idSucursal25);
+				for(Cliente ln : lista25) {
+					System.out.println(ln.getNombre());
+				}
+				break;
 			case 100:
 				fin = true;
 				scan.close();
@@ -372,6 +380,7 @@ public class View {
 		System.out.println("22. Abandonar Carrito");
 		System.out.println("23. Recolectar Productos carro abandonado");
 		System.out.println("24. Analizar operacion SuperAndes");
+		System.out.println("25. Dar clientes frecuentes de sucursal");
 
 
 		System.out.println("100. Salir \n");

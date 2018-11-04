@@ -35,4 +35,10 @@ public class SQLUtil {
 	public String fechaSql(String fecha) {
 		return "TO_DATE('" + fecha + "','DD/MM/YYYY')";
 	}
+	
+	public Integer darMesesFuncionamiento(PersistenceManager pm) {
+		Query q = pm.newQuery(SQL, "(SELECT MONTHS_BETWEEN(LAST_DAY(ADD_MONTHS(SYSDATE,-1)), TO_DATE('01/01/2018','DD/MM/YYYY')) FROM DUAL)");
+		q.setResultClass(Integer.class);
+		return (Integer) q.executeUnique();
+	}
 }
