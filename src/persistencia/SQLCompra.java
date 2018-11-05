@@ -64,7 +64,7 @@ public class SQLCompra {
 	}
 	
 	public Long pagarCompra(PersistenceManager pm,Long idCompra, Integer precio) {
-		Query q = pm.newQuery(SQL,"UPFDATE " + sap.darTablaCompra() + " SET PRECIO_TOTAL = ? AND PAGADA = 1 WHERE ID = ?");
+		Query q = pm.newQuery(SQL,"UPDATE " + sap.darTablaCompra() + " SET PRECIO_TOTAL = ? AND PAGADA = 1 WHERE ID = ?");
 		q.setParameters(precio,idCompra);
 		return (Long) q.executeUnique();
 	}
