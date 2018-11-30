@@ -344,6 +344,30 @@ public class View {
 					System.out.println(ln.getNombre());
 				}
 				break;
+			case 26:
+				System.out.println("Ingrese el id del producto");
+				Long idProducto26 = scan.nextLong();
+				System.out.println("Ingrese la fecha inicial");
+				String fechaInic26 = scan.next();
+				System.out.println("Ingrese la fecha final");
+				String fechaFin26 = scan.next();
+				List<Cliente> lista26 = Controller.consultarConsumo1(idProducto26, fechaInic26, fechaFin26);
+				for(Cliente cli26: lista26) {
+					System.out.println(cli26.toString());
+				}
+				break;
+			case 27:
+				System.out.println("Ingrese el id del producto");
+				Long idProducto27 = scan.nextLong();
+				System.out.println("Ingrese la fecha inicial");
+				String fechaInic27 = scan.next();
+				System.out.println("Ingrese la fecha final");
+				String fechaFin27 = scan.next();
+				List<Cliente> lista27 = Controller.consultarConsumo2(idProducto27, fechaInic27, fechaFin27);
+				for(Cliente cli27: lista27) {
+					System.out.println(cli27.toString());
+				}
+				break;
 			case 100:
 				fin = true;
 				scan.close();
@@ -381,6 +405,8 @@ public class View {
 		System.out.println("23. Recolectar Productos carro abandonado");
 		System.out.println("24. Analizar operacion SuperAndes");
 		System.out.println("25. Dar clientes frecuentes de sucursal");
+		System.out.println("26. Dar consumo 1");
+		System.out.println("27. Dar consumo 2");
 
 
 		System.out.println("100. Salir \n");
