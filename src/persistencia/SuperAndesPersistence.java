@@ -787,6 +787,22 @@ public class SuperAndesPersistence {
 		}
 		return rta;
 	}
+	
+	public List<Cliente> consultarConsumo1(Long idProducto, String fechaInic, String fechaFin){
+		Long start = System.currentTimeMillis();
+		List<Cliente> rta = sqlCompraProducto.darClientesQueCompraronProducto(pmf.getPersistenceManager(), idProducto, fechaInic, fechaFin);
+		Long end = System.currentTimeMillis();
+		System.out.println((start - end ) + "ms");
+		return rta;
+	}
+	
+	public List<Cliente> consultarConsumo2(Long idProducto, String fechaInic, String fechaFin){
+		Long start = System.currentTimeMillis();
+		List<Cliente> rta = sqlCompraProducto.darClientesQueNoCompraronProducto(pmf.getPersistenceManager(), idProducto, fechaInic, fechaFin);
+		Long end = System.currentTimeMillis();
+		System.out.println((start - end ) + "ms");
+		return rta;
+	}
 
 
 }
