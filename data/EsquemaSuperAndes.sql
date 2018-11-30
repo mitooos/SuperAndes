@@ -14,7 +14,7 @@ PRESENTACION VARCHAR2(64) NOT NULL,
 PRECIO_POR_UNIDAD NUMBER NOT NULL,
 CATEGORIA VARCHAR2(64) NOT NULL,
 CONSTRAINT PRODUCTOS_PK PRIMARY KEY(ID),
-CONSTRAINT CHK_Producto CHECK (CATEGORIA  IN('Perecedero','No Perecedero','Abarrote','Limpieza','Higiene')));
+CONSTRAINT CHK_Producto CHECK (CATEGORIA  IN('Perecedero','No Perecedero','Abarrote','Limpieza','Higiene','Tecnologia','Herramienta')));
 
 
 CREATE TABLE SUCURSAL(
