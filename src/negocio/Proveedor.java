@@ -53,5 +53,10 @@ public class Proveedor {
 	public void setCalificacion(Integer calificacion) {
 		this.calificacion = calificacion;
 	}
+	
+	@Override
+	public String toString() {
+		return "Nit: "+ this.nit + ", Nombre: " + this.nombre;
+	}
 
 }

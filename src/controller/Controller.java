@@ -13,6 +13,7 @@ import negocio.OrdenDeCompra;
 import negocio.Producto;
 import negocio.Promocion;
 import negocio.Proveedor;
+import negocio.RFC12;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
 import negocio.fechaSucursalCont;
@@ -174,6 +175,8 @@ public class Controller {
 		return sap.darClientesFirmes(idSucursal);
 	}
 	
+	// Iteracion 3
+	
 	public static List<Cliente> consultarConsumo1(Long idProducto, String fechaInic, String fechaFin){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.consultarConsumo1(idProducto, fechaInic, fechaFin);
@@ -182,6 +185,16 @@ public class Controller {
 	public static List<Cliente> consultarConsumo2(Long idProducto, String fechaInic, String fechaFin){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.consultarConsumo2(idProducto, fechaInic, fechaFin);
+	}
+	
+	public static List<RFC12> consultarFuncionamiento(){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.conultarFuncionamiento();
+	}
+	
+	public static List<Cliente> darMejoresClientes(){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darMejoresClientes();
 	}
 
 }

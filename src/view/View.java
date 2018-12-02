@@ -14,6 +14,7 @@ import negocio.Estante;
 import negocio.OrdenDeCompra;
 import negocio.Producto;
 import negocio.Promocion;
+import negocio.RFC12;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
 import negocio.fechaSucursalCont;
@@ -368,6 +369,18 @@ public class View {
 					System.out.println(cli27.toString());
 				}
 				break;
+			case 28:
+				List<RFC12> list28 = Controller.consultarFuncionamiento();
+				for(RFC12 rf : list28) {
+					System.out.println(rf.toString());
+				}
+				break;
+			case 29:
+				List<Cliente> list29 = Controller.darMejoresClientes();
+				for(Cliente cli29 : list29) {
+					System.out.println(cli29.toString());
+				}
+				break;
 			case 100:
 				fin = true;
 				scan.close();
@@ -407,6 +420,8 @@ public class View {
 		System.out.println("25. Dar clientes frecuentes de sucursal");
 		System.out.println("26. Dar consumo 1");
 		System.out.println("27. Dar consumo 2");
+		System.out.println("28. Consulatr funcionamiento");
+		System.out.println("29. Dar mejores clientes");
 
 
 		System.out.println("100. Salir \n");
