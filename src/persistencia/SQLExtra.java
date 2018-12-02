@@ -53,6 +53,7 @@ public class SQLExtra {
 	public List<Cliente> darMejoresClientes(PersistenceManager pm){
 		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTE WHERE ID IN (SELECT ID_CLIENTE FROM (SELECT ID_CLIENTE, COUNT(ID_CLIENTE) AS CONT FROM COMPRA WHERE ID IN (SELECT ID_COMPRA FROM PRODUCTO_COMPRA WHERE ID_PRODUCTO IN (SELECT ID FROM PRODUCTOS WHERE (CATEGORIA IN 'Tecnologia' OR CATEGORIA IN 'Herramienta') AND PRECIO_UNITARIO >= 100)) GROUP BY ID_CLIENTE) WHERE CONT >=  1)");
 		q.setResultClass(Cliente.class);
+		q.setRange(0l, 500l);
 		return q.executeList();
 	}
 
