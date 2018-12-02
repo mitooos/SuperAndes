@@ -21,17 +21,19 @@ import negocio.Carrito_Producto;
 import negocio.Cliente;
 import negocio.Compra;
 import negocio.Estante;
+import negocio.FechasSemana;
 import negocio.OrdenDeCompra;
 import negocio.OrdenDeCompra_Producto;
 import negocio.Producto;
 import negocio.Promocion;
 import negocio.Proveedor;
+import negocio.RFC12;
 import negocio.Sucursal;
 import negocio.VentasSucursalTotales;
 import negocio.fechaSucursalCont;
 
 public class SuperAndesPersistence {
-	
+
 	private static Logger log = Logger.getLogger("SuperAndes.log");
 
 	public final static String SQL = "javax.jdo.query.SQL";
@@ -52,14 +54,15 @@ public class SuperAndesPersistence {
 	private SQLEstante sqlEstante;
 	private SQLCarrito sqlCarrito;
 	private SQLPromocion sqlPromocion;
+	private SQLExtra sqlExtra;
 
 	public SuperAndesPersistence() {
 		Properties properties = new Properties();
 		properties.setProperty("javax.jdo.PersistenceManagerFactoryClass", "org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
 		properties.setProperty("javax.jdo.option.ConnectionDriverName", "oracle.jdbc.driver.OracleDriver");
 		properties.setProperty("javax.jdo.option.ConnectionURL","jdbc:oracle:thin:@fn3.oracle.virtual.uniandes.edu.co:1521:prod");
-		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C171820");
-		properties.setProperty("javax.jdo.option.ConnectionPassword","PrVvggcFFg");
+		properties.setProperty("javax.jdo.option.ConnectionUserName","ISIS2304C331820");
+		properties.setProperty("javax.jdo.option.ConnectionPassword","t0Hv2UpEMH");
 		properties.setProperty("javax.jdo.option.Mapping", "oracle");
 		properties.setProperty("datanucleus.schema.autoCreateAll", "false");
 		properties.setProperty("datanucleus.query.sql.allowAll", "true");
@@ -117,8 +120,9 @@ public class SuperAndesPersistence {
 		sqlEstante = new SQLEstante(this);
 		sqlCarrito = new SQLCarrito(this);
 		sqlPromocion = new SQLPromocion(this);
-		
-		
+		sqlExtra = new SQLExtra(this);
+
+
 	}
 
 	public String darSeq()
@@ -176,19 +180,19 @@ public class SuperAndesPersistence {
 	public String darTablaSucursal() {
 		return tablas.get(15);
 	}
-	
+
 	public String darTablaPromociones() {
 		return tablas.get(16);
 	}
-	
+
 	public String darTablaPromocionProducto() {
 		return tablas.get(17);
 	}
-	
+
 	public String darTablaCarritos() {
 		return tablas.get(18);
 	}
-	
+
 	public String darTablaCarritoProductos() {
 		return tablas.get(19);
 	}
@@ -278,7 +282,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public Long  adicionarCarrito(Long id,Long idCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -351,7 +355,7 @@ public class SuperAndesPersistence {
 
 
 	}
-	
+
 	public Estante adicionarEstante(Integer capacidadVol, Integer capacidadPeso, String categoria, Integer posicion, Integer nivelAbastecimiento, Long idSucursal)
 	{
 		PersistenceManager pm =pmf.getPersistenceManager();
@@ -454,7 +458,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public Carrito_Producto agregarProducto(long idSucursal, long idCarrito, long idProducto, Integer cantidad) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -477,7 +481,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public List<VentasSucursalTotales> darVentasSucursalesEnUnRango(String fechaInicial, String fechaFinal){
 		List<BigDecimal> listaIds = sqlCompra.darIdsSucursalesDondeHuboVentas(pmf.getPersistenceManager());
 		List<VentasSucursalTotales> rta = new LinkedList<>();
@@ -486,7 +490,7 @@ public class SuperAndesPersistence {
 		}
 		return rta;
 	}
-	
+
 	public List<Producto> darMejoresPromociones()
 	{
 		PersistenceManager pm =pmf.getPersistenceManager();
@@ -505,9 +509,9 @@ public class SuperAndesPersistence {
 			}
 			pm.close();
 		}
-		
+
 	}
-	
+
 	public void devolverProductoDelCarrito(long idProducto, long idCarrito) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -528,7 +532,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public void pagarCompra(Long idCarrito, Long idCliente) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -544,12 +548,12 @@ public class SuperAndesPersistence {
 				precioCompra =+ sqlCompra.calcularPrecioCompra(pmf.getPersistenceManager(), productos.get(i), cantidades.get(i), idSede);
 				sqlCompraProducto.registrarProdcutoEnCompra(pmf.getPersistenceManager(), idCompra, productos.get(i), cantidades.get(i));
 				sqlCarrito.retirarProductosDeCarritos(pmf.getPersistenceManager(), idCarrito, productos.get(i));
-			i++;
+				i++;
 			}
 			sqlCarrito.eliminarCliente(pmf.getPersistenceManager(), idCarrito);
 			sqlCompra.pagarCompra(pmf.getPersistenceManager(), idCompra, precioCompra);
 			tx.commit();
-			
+
 		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
@@ -561,7 +565,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public void abandonarCarrito(Long idCarrito){
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -585,7 +589,7 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public void RecolectarProductos(Long idCarrito){
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -608,9 +612,9 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
-	
-	
+
+
+
 	public List<OrdenDeCompra> darComprasAProveedores(){
 		try{
 			return sqlOrdenDeCompra.darOrdenesALosProveedores(pmf.getPersistenceManager());
@@ -620,7 +624,7 @@ public class SuperAndesPersistence {
 			return null;
 		}
 	}
-	
+
 	public List<Producto> darProductosEnCompraAProveedor(Long idOrden){
 		List<BigDecimal> prods = sqlOrdenDeCompra.darProductosEnOrdenCompra(pmf.getPersistenceManager(), idOrden);
 		List<Producto> rta = new LinkedList<>();
@@ -629,7 +633,7 @@ public class SuperAndesPersistence {
 		}
 		return rta;
 	}
-	
+
 	public List<Compra> darVentasACliente(Long idCliente, String fechaInic, String fechaFin){
 		try {
 			return sqlCompra.darVentasAUnCliente(pmf.getPersistenceManager(), idCliente, fechaInic, fechaFin);
@@ -639,7 +643,7 @@ public class SuperAndesPersistence {
 			return null;
 		}
 	}
-	
+
 	public List<Producto> darProductosEnVenta(Long idVenta){
 		List<BigDecimal> prods = sqlCompra.darProductosEnVentas(pmf.getPersistenceManager(), idVenta);
 		List<Producto> rta = new LinkedList<>();
@@ -648,47 +652,47 @@ public class SuperAndesPersistence {
 		}
 		return rta;
 	}
-	
-//	public Integer darIndiceEstante(Long idSucursal, Long idEstante)
-//	{
-//		PersistenceManager pm =pmf.getPersistenceManager();
-//		Transaction tx = pm.currentTransaction();
-//		try {
-//			return sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idEstante);
-//		}
-//		catch(Exception e){
-//			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-//			return null;
-//		}
-//		finally {
-//			if(tx.isActive()) {
-//				tx.rollback();
-//			}
-//			pm.close();
-//		}
-//	}
-//	
-//	public List<Bodega> darIndiceOcupacion()
-//	{
-//		PersistenceManager pm =pmf.getPersistenceManager();
-//		Transaction tx = pm.currentTransaction();
-//		List<Bodega> resultado = 0;
-//		try {
-//			resultado = add(sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager()));
-//			return resultado;
-//		}
-//		catch(Exception e){
-//			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
-//			return null;
-//		}
-//		finally {
-//			if(tx.isActive()) {
-//				tx.rollback();
-//			}
-//			pm.close();
-//		}
-//	}
-	
+
+	//	public Integer darIndiceEstante(Long idSucursal, Long idEstante)
+	//	{
+	//		PersistenceManager pm =pmf.getPersistenceManager();
+	//		Transaction tx = pm.currentTransaction();
+	//		try {
+	//			return sqlEstante.darIndiceOcupacion(pmf.getPersistenceManager(), idSucursal, idEstante);
+	//		}
+	//		catch(Exception e){
+	//			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+	//			return null;
+	//		}
+	//		finally {
+	//			if(tx.isActive()) {
+	//				tx.rollback();
+	//			}
+	//			pm.close();
+	//		}
+	//	}
+	//	
+	//	public List<Bodega> darIndiceOcupacion()
+	//	{
+	//		PersistenceManager pm =pmf.getPersistenceManager();
+	//		Transaction tx = pm.currentTransaction();
+	//		List<Bodega> resultado = 0;
+	//		try {
+	//			resultado = add(sqlBodega.darIndiceOcupacion(pmf.getPersistenceManager()));
+	//			return resultado;
+	//		}
+	//		catch(Exception e){
+	//			System.out.println("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+	//			return null;
+	//		}
+	//		finally {
+	//			if(tx.isActive()) {
+	//				tx.rollback();
+	//			}
+	//			pm.close();
+	//		}
+	//	}
+
 	public List<Producto> darProductoQueCumpleCaracteristica(String caracteristica, String valorMenor, String valorMayor, int i, Long id){
 		List<BigDecimal> lista = sqlProducto.productosQueCumplenCaracteristicaString(pmf.getPersistenceManager(), caracteristica, valorMenor, valorMayor, i, id);
 		List<Producto> rta = new LinkedList<>();
@@ -757,15 +761,15 @@ public class SuperAndesPersistence {
 			pm.close();
 		}
 	}
-	
+
 	public List<fechaSucursalCont> darFechaMenorDemanda(String categoria){
 		return sqlProducto.darFechamenorDemanda(pmf.getPersistenceManager(), categoria);
 	}
-	
+
 	public List<fechaSucursalCont> darFechaMayorDemanda(String categoria){
 		return sqlProducto.darFechaMayorDemanda(pmf.getPersistenceManager(), categoria);
 	}
-	
+
 	public List<fechaSucursalCont> darFechaMayorIngresos(String categoria){
 		return sqlProducto.darFechaMayorIngresos(pmf.getPersistenceManager(), categoria);
 	}
@@ -773,9 +777,9 @@ public class SuperAndesPersistence {
 	public List<fechaSucursalCont> darFcehaMenorIngresos(String categoria){
 		return sqlProducto.darFechaMenorIngresos(pmf.getPersistenceManager(), categoria);	
 	}
-	
+
 	public List<Cliente> darClientesFirmes(Long idSucursal){
-//		Integer meses = sqlUtil.darMesesFuncionamiento(pmf.getPersistenceManager());
+		//		Integer meses = sqlUtil.darMesesFuncionamiento(pmf.getPersistenceManager());
 		Integer i = 0;
 		List<Cliente> rta = new LinkedList<>();
 		while(i<10) {
@@ -787,7 +791,7 @@ public class SuperAndesPersistence {
 		}
 		return rta;
 	}
-	
+
 	public List<Cliente> consultarConsumo1(Long idProducto, String fechaInic, String fechaFin){
 		Long start = System.currentTimeMillis();
 		List<Cliente> rta = sqlCompraProducto.darClientesQueCompraronProducto(pmf.getPersistenceManager(), idProducto, fechaInic, fechaFin);
@@ -795,7 +799,7 @@ public class SuperAndesPersistence {
 		System.out.println((start - end ) + "ms");
 		return rta;
 	}
-	
+
 	public List<Cliente> consultarConsumo2(Long idProducto, String fechaInic, String fechaFin){
 		Long start = System.currentTimeMillis();
 		List<Cliente> rta = sqlCompraProducto.darClientesQueNoCompraronProducto(pmf.getPersistenceManager(), idProducto, fechaInic, fechaFin);
@@ -804,5 +808,16 @@ public class SuperAndesPersistence {
 		return rta;
 	}
 
-
+	public List<RFC12> conultarFuncionamiento(){
+		List<FechasSemana> fechas = sqlUtil.darFechasSemana(pmf.getPersistenceManager());
+		List<RFC12> rta = new LinkedList<>();
+		for(FechasSemana fechs: fechas) {
+			Producto productoMenosSolicitado = sqlExtra.darProductoMenosSolicitadoPorSemana(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
+			Producto productoMasSolicitado = sqlExtra.darProductoMasSolicitadoPorSemana(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
+			Proveedor proveedorMenosSolicitado = sqlExtra.darProveedorMenosSolicitado(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
+			Proveedor proveedorMasSolicitado = sqlExtra.darProveedorMasSolicitado(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
+			rta.add(new RFC12(productoMenosSolicitado, productoMasSolicitado, proveedorMenosSolicitado, proveedorMasSolicitado));
+		}
+		return rta;
+	}
 }
