@@ -375,6 +375,12 @@ public class View {
 					System.out.println(rf.toString());
 				}
 				break;
+			case 29:
+				List<Cliente> list29 = Controller.darMejoresClientes();
+				for(Cliente cli29 : list29) {
+					System.out.println(cli29.toString());
+				}
+				break;
 			case 100:
 				fin = true;
 				scan.close();
@@ -415,6 +421,7 @@ public class View {
 		System.out.println("26. Dar consumo 1");
 		System.out.println("27. Dar consumo 2");
 		System.out.println("28. Consulatr funcionamiento");
+		System.out.println("29. Dar mejores clientes");
 
 
 		System.out.println("100. Salir \n");

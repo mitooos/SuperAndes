@@ -1,6 +1,5 @@
 package persistencia;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -35,6 +34,7 @@ public class SQLCompraProducto {
 	public List<Cliente> darClientesQueNoCompraronProducto(PersistenceManager pm, Long idProducto, String fechaInic, String fechaFin){
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ sap.darTablaCliente() +" WHERE ID NOT IN (SELECT UNIQUE ID_CLIENTE FROM " + sap.darTablaCompra() + " WHERE FECHA >= ? AND FECHA <= ? AND ID IN (SELECT ID_COMPRA FROM " + sap.darTablaProdcutoCompra() + " WHERE ID_PRODUCTO = ?))");
 		q.setParameters(fechaInic, fechaFin, idProducto);
+		q.setRange(0l, 500l);
 		q.setResultClass(Cliente.class);
 		return q.executeList();
 		

@@ -804,6 +804,7 @@ public class SuperAndesPersistence {
 		Long start = System.currentTimeMillis();
 		List<Cliente> rta = sqlCompraProducto.darClientesQueNoCompraronProducto(pmf.getPersistenceManager(), idProducto, fechaInic, fechaFin);
 		Long end = System.currentTimeMillis();
+		System.out.println(end);
 		System.out.println((start - end ) + "ms");
 		return rta;
 	}
@@ -811,6 +812,7 @@ public class SuperAndesPersistence {
 	public List<RFC12> conultarFuncionamiento(){
 		List<FechasSemana> fechas = sqlUtil.darFechasSemana(pmf.getPersistenceManager());
 		List<RFC12> rta = new LinkedList<>();
+		Long start = System.currentTimeMillis();
 		for(FechasSemana fechs: fechas) {
 			Producto productoMenosSolicitado = sqlExtra.darProductoMenosSolicitadoPorSemana(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
 			Producto productoMasSolicitado = sqlExtra.darProductoMasSolicitadoPorSemana(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
@@ -818,6 +820,16 @@ public class SuperAndesPersistence {
 			Proveedor proveedorMasSolicitado = sqlExtra.darProveedorMasSolicitado(pmf.getPersistenceManager(), fechs.fechaInic, fechs.fechaFin);
 			rta.add(new RFC12(productoMenosSolicitado, productoMasSolicitado, proveedorMenosSolicitado, proveedorMasSolicitado));
 		}
+		Long end = System.currentTimeMillis();
+		System.out.println((end-start) + "ms");
+		return rta;
+	}
+	
+	public List<Cliente> darMejoresClientes(){
+		Long start = System.currentTimeMillis();
+		List<Cliente> rta =  sqlExtra.darMejoresClientes(pmf.getPersistenceManager());
+		Long end = System.currentTimeMillis();
+		System.out.println((start - end ) + "ms");
 		return rta;
 	}
 }

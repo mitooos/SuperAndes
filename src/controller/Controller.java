@@ -175,6 +175,8 @@ public class Controller {
 		return sap.darClientesFirmes(idSucursal);
 	}
 	
+	// Iteracion 3
+	
 	public static List<Cliente> consultarConsumo1(Long idProducto, String fechaInic, String fechaFin){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.consultarConsumo1(idProducto, fechaInic, fechaFin);
@@ -188,6 +190,11 @@ public class Controller {
 	public static List<RFC12> consultarFuncionamiento(){
 		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
 		return sap.conultarFuncionamiento();
+	}
+	
+	public static List<Cliente> darMejoresClientes(){
+		SuperAndesPersistence sap = SuperAndesPersistence.getInstance();
+		return sap.darMejoresClientes();
 	}
 
 }
